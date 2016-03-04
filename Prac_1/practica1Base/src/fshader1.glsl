@@ -6,6 +6,7 @@
 #define OUT out
 #endif
 
+
 IN vec4 color;
 IN vec2 v_texcoord;
 

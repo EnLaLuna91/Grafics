@@ -42,4 +42,6 @@ OTHER_FILES += \
 
 RESOURCES += resources.qrc
 
-DISTFILES +=
+DISTFILES += \
+    vshader1.glsl \
+    fshader1.glsl

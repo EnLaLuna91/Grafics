@@ -6,6 +6,14 @@
 #define OUT out
 #endif
 
+struct v
+{
+    vec3 kd;
+    vec3 ks;
+    vec3 ka;
+};
+
+uniform Intensity light;
 
 IN vec4 vPosition;
 IN vec4 vColor;
