@@ -1,23 +1,30 @@
 #include "llum.h"
 
 Llum::Llum(Lights t) {
-//    this->puntual = {1.0, 1.0, 1.0};
-//    this->direccional = {1.0, 1.0, 1.0};
+//    this->ambiental = {1.0, 1.0, 1.0};
+//    this->especular = {1.0, 1.0, 1.0};
 //    this->spotLight = {1.0, 1.0, 1.0};
 
     this->luces = t;
 
-    this->puntual[0] = 1.0;
-    this->puntual[1] = 1.0;
-    this->puntual[2] = 1.0;
+    this->ambiental[0] = 1.0;
+    this->ambiental[1] = 1.0;
+    this->ambiental[2] = 1.0;
 
-    this->direccional[0] = 1.0;
-    this->direccional[1] = 1.0;
-    this->direccional[2] = 1.0;
+    this->especular[0] = 1.0;
+    this->especular[1] = 1.0;
+    this->especular[2] = 1.0;
 
-    this->spotLight[0] = 1.0;
-    this->spotLight[1] = 1.0;
-    this->spotLight[2] = 1.0;
+    this->difusa[0] = 1.0;
+    this->difusa[1] = 1.0;
+    this->difusa[2] = 1.0;
+
+    this->coordenadas[0] = 1.0;
+    this->coordenadas[1] = 1.0;
+    this->coordenadas[2] = 1.0;
+    this->coordenadas[3] = 1.0;
+
+    this->angulo = 0.0;
 
 }
 
@@ -27,12 +34,12 @@ void Llum::setTipusLlum(Lights t) {
 
 vec3 Llum::getDiffuseIntensity() {
 // A canviar
-    return(vec3(0.0, 0.0, 0.0));
+    return this->difusa;
 }
 
 vec4 Llum::getLightPosition() {
     // A canviar
-    return(vec4(0.0, 0.0, 0.0, 0.0));
+    return this->coordenadas;
 }
 
 void Llum::setDiffuseIntensity(vec3 i) {
@@ -40,10 +47,45 @@ void Llum::setDiffuseIntensity(vec3 i) {
 }
 
 void Llum::setLightPosition(vec4 v) {
-
+    this->coordenadas = v;
 }
 
 void Llum::switchOnOff() {
     // Si esta en on la posa a off i a l'inreves
 
+}
+
+
+/* Getterts & Setters extras */
+
+vec3 Llum::getAmbientaIntensity(){
+    return this->ambiental;
+}
+
+vec3 Llum::getEspecularIntensity(){
+    return this->especular;
+}
+
+float Llum::getAngle(){
+    return this->angulo;
+}
+
+int Llum::getType(){
+    return this->type;
+}
+
+void Llum::setAmbientaIntensity(vec3 i){
+    this->ambiental = i;
+}
+
+void Llum::setEspecularIntensity(vec3 i){
+    this->especular = i;
+}
+
+void Llum::setAngle(float a){
+    this->angulo = a;
+}
+
+void Llum::setType(int i){
+    this->type = i;
 }

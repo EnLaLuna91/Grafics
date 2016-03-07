@@ -13,11 +13,21 @@ enum Lights {Puntual, Direccional, SpotLight};
 // Classe que representa els atributs d'una llum
 class Llum {
     private:
-        RGB puntual;
-        RGB direccional;
-        RGB spotLight;
+        /* Declaro los tipos de luz */
+        RGB ambiental;
+        RGB especular;
+        RGB difusa;
 
+        /* Lights */
         Lights luces;
+
+        /* Coordenadas de la luz */
+        vec4 coordenadas;
+
+        /* Angulo para el SpotLight */
+        float angulo;
+
+        int type;
 
 
     public:
@@ -28,6 +38,17 @@ class Llum {
         void setDiffuseIntensity(vec3 i);
         void setLightPosition(vec4 v);
         void switchOnOff();
+
+        /* Getterts & Setters extras */
+
+        vec3 getAmbientaIntensity();
+        vec3 getEspecularIntensity();
+        float getAngle();
+        int getType();
+        void setAmbientaIntensity(vec3 i);
+        void setEspecularIntensity(vec3 i);
+        void setAngle(float a);
+        void setType(int i);
 };
 
 #endif // LLUM_H

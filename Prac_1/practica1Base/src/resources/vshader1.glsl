@@ -19,13 +19,18 @@ struct Intensity
 uniform Intensity IMaterial;
 
 /*
- * Structura
+ * Structura para pasar las luces
  */
 //struct Light
 //{
-
+//    vec3 ambiental;
+//    vec3 especular;
+//    vec3 difusa;
+//    vec4 coordenadas;
+//    int tipo;
+//    float angulo
 //};
-//uniform Ligth
+//uniform Light luz[3];
 
 
 IN vec4 vPosition;

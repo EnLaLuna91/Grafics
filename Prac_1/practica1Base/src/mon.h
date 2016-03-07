@@ -22,6 +22,8 @@ using namespace std;
 
 
 class Mon {
+private:
+//    Llum luz;
 
 public:
     Mon();
