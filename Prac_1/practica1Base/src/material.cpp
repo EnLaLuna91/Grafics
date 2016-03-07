@@ -79,10 +79,10 @@ void Material::toGPU(QGLShaderProgram *program){
 
     // obtencio dels identificadors de la GPU
 
-    GL_Intesity.kd = program->uniformLocation("test.kd");
-    GL_Intesity.ks = program->uniformLocation("test.ks");
-    GL_Intesity.ka = program->uniformLocation("test.ka");
-    GL_Intesity.shininess = program->uniformLocation("test.shininess");
+    GL_Intesity.kd = program->uniformLocation("IMaterial.kd");
+    GL_Intesity.ks = program->uniformLocation("IMaterial.ks");
+    GL_Intesity.ka = program->uniformLocation("IMaterial.ka");
+    GL_Intesity.shininess = program->uniformLocation("IMaterial.shininess");
 
     // Bind de les zones de memòria que corresponen a la GPU a valors de les variables de la CPU
     glUniform3fv(GL_Intesity.kd, 1, kd);

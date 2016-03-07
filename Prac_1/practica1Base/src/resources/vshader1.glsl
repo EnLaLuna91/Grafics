@@ -14,7 +14,7 @@ struct Intensity
     vec3 ka;
     float shininess;
 };
-uniform Intensity test;
+uniform Intensity IMaterial;
 
 IN vec4 vPosition;
 IN vec4 vColor;
@@ -26,6 +26,6 @@ OUT vec4 color;
 void main()
 {
   gl_Position = vPosition;
-  color = vec4(test.kd[0], test.kd[1], test.kd[2], 1.0);
+  color = vec4(IMaterial.kd[0], IMaterial.kd[1], IMaterial.kd[2], 1.0);
 //  color = vColor;
 }
