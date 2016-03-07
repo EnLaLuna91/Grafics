@@ -1,9 +1,28 @@
 #include "llum.h"
 
 Llum::Llum(Lights t) {
+//    this->puntual = {1.0, 1.0, 1.0};
+//    this->direccional = {1.0, 1.0, 1.0};
+//    this->spotLight = {1.0, 1.0, 1.0};
+
+    this->luces = t;
+
+    this->puntual[0] = 1.0;
+    this->puntual[1] = 1.0;
+    this->puntual[2] = 1.0;
+
+    this->direccional[0] = 1.0;
+    this->direccional[1] = 1.0;
+    this->direccional[2] = 1.0;
+
+    this->spotLight[0] = 1.0;
+    this->spotLight[1] = 1.0;
+    this->spotLight[2] = 1.0;
+
 }
 
 void Llum::setTipusLlum(Lights t) {
+    this->luces = t;
 }
 
 vec3 Llum::getDiffuseIntensity() {

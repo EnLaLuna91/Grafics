@@ -3,11 +3,23 @@
 
 #include <Common.h>
 
+using namespace std;
+
+typedef Common::vec3 RGB;
+
 // Tipus de llums
 enum Lights {Puntual, Direccional, SpotLight};
 
 // Classe que representa els atributs d'una llum
 class Llum {
+    private:
+        RGB puntual;
+        RGB direccional;
+        RGB spotLight;
+
+        Lights luces;
+
+
     public:
         Llum(Lights l);
         void setTipusLlum(Lights t);

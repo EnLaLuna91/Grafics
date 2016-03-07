@@ -6,7 +6,9 @@
 #define OUT out
 #endif
 
-
+/*
+ * Strucrura para pasar los matereiales
+ */
 struct Intensity
 {
     vec3 kd;
@@ -15,6 +17,16 @@ struct Intensity
     float shininess;
 };
 uniform Intensity IMaterial;
+
+/*
+ * Structura
+ */
+//struct Light
+//{
+
+//};
+//uniform Ligth
+
 
 IN vec4 vPosition;
 IN vec4 vColor;
