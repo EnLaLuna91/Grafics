@@ -1,6 +1,7 @@
 #include "mon.h"
 
 Mon::Mon() {    
+     cout << "Entrando en MON " << endl;
 }
 
 Mon::~Mon() {
@@ -25,36 +26,54 @@ Llum* Mon::getLlumActual() {
 
 void Mon::llumsToGPU(QGLShaderProgram *program){
 
-//    // 1. Es declara un vector d'identificadors
-//    struct {
-//        GLuint ambiental;
-//        GLuint especular;
-//        GLuint difusa;
-//        GLuint coordenadas;
-//        GLuint tipo;
-//        GLuint angulo;
-//    } gl_Light gl_LightVector[3];
-
-//    // 2. obtencio dels identificadors de la GPU: Suposem i l'index de l'i-èssim element del vector
-////    gl_IdVect[ i ].ex1 = program->uniformLocation(QString("conjunt[%1]. exemple1").arg( i ));
-
-//    gl_LightVector[ 0 ].ex1 = program->uniformLocation(QString("luz[0].ambiental").arg( 0 ));
-//    gl_LightVector[ 1 ].ex1 = program->uniformLocation(QString("luz[1].especular").arg( 1 ));
-//    gl_LightVector[ 2 ].ex1 = program->uniformLocation(QString("luz[2].difusa").arg( 2 ));
-//    gl_LightVector[ 3 ].ex1 = program->uniformLocation(QString("luz[3].coordenadas").arg( 3 ));
-//    gl_LightVector[ 4 ].ex1 = program->uniformLocation(QString("luz[4].tipo").arg( 4 ));
-//    gl_LightVector[ 5 ].ex1 = program->uniformLocation(QString("luz[5].angulo").arg( 5 ));
+    cout << "Entrando a llumsToGPU " << endl;
 
 
-//    // 3. Bind de les zones de memoria que corresponen
-////    glUniform4fv(gl_IdVect[ i ].ex1, 1, vectorProva);   // vectorProva és una variable de tipus vec4
 
-//    glUniform3fv(gl_LightVector[ 0 ].ambiental, 1, luz.getAmbientaIntensity());
-//    glUniform3fv(gl_LightVector[ 1 ].especular, 1, luz.especular());
-//    glUniform3fv(gl_LightVector[ 2 ].difusa, 1, luz.getDiffuseIntensity());
-//    glUniform3fv(gl_LightVector[ 3 ].coordenadas, 1, luz.getLightPosition());
-//    glUniform1f(gl_LightVector[ 4 ].tipo, luz.getType());
-//    glUniform1f(gl_LightVector[ 5 ].angulo, luz.getAngle());
+    // 1. Es declara un vector d'identificadors
+    struct gl_Light{
+        GLuint ambiental;
+        GLuint especular;
+        GLuint difusa;
+        GLuint coordenadas;
+        GLuint tipo;
+        GLuint angulo;
+    };
+    gl_Light gl_LightVector[3];
+
+
+    // 2. obtencio dels identificadors de la GPU: Suposem i l'index de l'i-èssim element del vector
+    // gl_IdVect[ i ].ex1 = program->uniformLocation(QString("conjunt[%1]. exemple1").arg( i ));
+
+    for (int i=0; i<3; i++){
+        gl_LightVector[ i ].ambiental = program->uniformLocation(QString("luz[i].ambiental").arg( i ));
+        gl_LightVector[ i ].especular = program->uniformLocation(QString("luz[i].especular").arg( i ));
+        gl_LightVector[ i ].difusa = program->uniformLocation(QString("luz[i].difusa").arg( i ));
+        gl_LightVector[ i ].coordenadas = program->uniformLocation(QString("luz[i].coordenadas").arg( i ));
+        gl_LightVector[ i ].tipo = program->uniformLocation(QString("luz[i].tipo").arg( i ));
+        gl_LightVector[ i ].angulo = program->uniformLocation(QString("luz[i].angulo").arg( i ));
+    }
+
+
+    // 3. Bind de les zones de memoria que corresponen
+    // glUniform4fv(gl_IdVect[ i ].ex1, 1, vectorProva);   // vectorProva és una variable de tipus vec4
+
+    for (int i=0; i<3; i++){
+        glUniform3fv(gl_LightVector[ i ].ambiental, 1, llums[i]->getAmbientaIntensity());
+        glUniform3fv(gl_LightVector[ i ].especular, 1, llums[i]->getEspecularIntensity());
+        glUniform3fv(gl_LightVector[ i ].difusa, 1, llums[i]->getDiffuseIntensity());
+        glUniform3fv(gl_LightVector[ i ].coordenadas, 1, llums[i]->getLightPosition());
+        glUniform1f(gl_LightVector[ i ].tipo, llums[i]->getType());
+        glUniform1f(gl_LightVector[ i ].angulo, llums[i]->getAngle());
+    }
+
+    cout << "Saliendo de llumsToGPU " << endl;
+    cout << "lums[0]->ambiental = " << llums[0]->getAmbientaIntensity() << endl;
+    cout << "lums[0]->especular = " << llums[0]->getEspecularIntensity() << endl;
+    cout << "lums[0]->difusa = " << llums[0]->getDiffuseIntensity() << endl;
+    cout << "lums[0]->coordenadas = " << llums[0]->getLightPosition() << endl;
+    cout << "lums[0]->tipo = " << llums[0]->getType() << endl;
+    cout << "lums[0]->angulo = " << llums[0]->getAngle() << endl;
 
 }
 

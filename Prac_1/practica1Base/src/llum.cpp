@@ -16,15 +16,21 @@ Llum::Llum(Lights t) {
     this->especular[2] = 1.0;
 
     this->difusa[0] = 1.0;
-    this->difusa[1] = 1.0;
-    this->difusa[2] = 1.0;
+    this->difusa[1] = 0.0;
+    this->difusa[2] = 0.0;
 
-    this->coordenadas[0] = 1.0;
-    this->coordenadas[1] = 1.0;
-    this->coordenadas[2] = 1.0;
-    this->coordenadas[3] = 1.0;
+//    this->coordenadas[0] = 1.0;
+//    this->coordenadas[1] = 1.0;
+//    this->coordenadas[2] = 1.0;
+//    this->coordenadas[3] = 1.0;
 
     this->angulo = 0.0;
+
+}
+
+void Llum::ToGPU(){
+
+
 
 }
 
@@ -44,6 +50,7 @@ vec4 Llum::getLightPosition() {
 
 void Llum::setDiffuseIntensity(vec3 i) {
 // el float que es reb ha de multiplicar els tres valors de la intensitat digusa de la llum
+    this->difusa = i;
 }
 
 void Llum::setLightPosition(vec4 v) {

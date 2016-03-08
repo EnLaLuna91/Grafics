@@ -49,6 +49,7 @@ class Llum {
         void setEspecularIntensity(vec3 i);
         void setAngle(float a);
         void setType(int i);
+        void ToGPU();
 };
 
 #endif // LLUM_H
