@@ -68,7 +68,7 @@ Material::~Material(){
 
 void Material::toGPU(QGLShaderProgram *program){
 
-    cout << "Entrando en toGPU" << endl;
+//    cout << "Entrando en toGPU" << endl;
 
     struct{
         GLuint kd;
@@ -90,12 +90,12 @@ void Material::toGPU(QGLShaderProgram *program){
     glUniform3fv(GL_Intesity.ka, 1, ka);
     glUniform1f(GL_Intesity.shininess, shininess);
 
-    cout << "kd = " << kd << endl;
-    cout << "ks = " << ks << endl;
-    cout << "ka = " << ka << endl;
-    cout << "shininess = " << shininess << endl;
+//    cout << "kd = " << kd << endl;
+//    cout << "ks = " << ks << endl;
+//    cout << "ka = " << ka << endl;
+//    cout << "shininess = " << shininess << endl;
 
 
-    cout << "Saliendo de toGPU" << endl;
+//    cout << "Saliendo de toGPU" << endl;
 
 }
