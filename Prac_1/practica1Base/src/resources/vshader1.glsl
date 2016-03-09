@@ -44,6 +44,6 @@ void main()
 {
   gl_Position = vPosition;
 //  color = vec4(IMaterial.kd[0], IMaterial.kd[1], IMaterial.kd[2], 1.0);
-  color = vec4(luz[0].difusa[0], luz[0].difusa[1], luz[0].difusa[2], 1.0);
+  color = vec4(luz[0].ambiental[0], luz[0].ambiental[1], luz[0].ambiental[2], 1.0);
 //  color = vColor;
 }

@@ -26,6 +26,8 @@ Llum::Llum(Lights t) {
 
     this->angulo = 0.0;
 
+    cout << "Lights: " << this->luces <<  endl;
+
 }
 
 void Llum::ToGPU(){

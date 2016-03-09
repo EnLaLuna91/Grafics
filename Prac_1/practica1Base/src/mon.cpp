@@ -21,13 +21,18 @@ void Mon::draw() {
 Llum* Mon::getLlumActual() {
     // Ara per ara dona com a llum actual la darrera que s'ha inserit, però es podria canviar segons el
     // que es vulgui fer en la GUI
+//    cout << "Luz actual: " << llums[llums.size()-1] << endl;
+//    cout << "Total Luces: " << llums.size() << endl;
+
+
+//    for (int i=0; i < llums.size(); i++)
+//        cout << "Luz: " << llums[i] << endl;
     return (llums[llums.size()-1]);
 }
 
 void Mon::llumsToGPU(QGLShaderProgram *program){
 
     cout << "Entrando a llumsToGPU " << endl;
-
 
 
     // 1. Es declara un vector d'identificadors
