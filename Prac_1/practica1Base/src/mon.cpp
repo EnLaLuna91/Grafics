@@ -45,27 +45,27 @@ void Mon::llumsToGPU(QGLShaderProgram *program){
     // 2. obtencio dels identificadors de la GPU: Suposem i l'index de l'i-èssim element del vector
     // gl_IdVect[ i ].ex1 = program->uniformLocation(QString("conjunt[%1]. exemple1").arg( i ));
 
-    for (int i=0; i<3; i++){
-        gl_LightVector[ i ].ambiental = program->uniformLocation(QString("luz[i].ambiental").arg( i ));
-        gl_LightVector[ i ].especular = program->uniformLocation(QString("luz[i].especular").arg( i ));
-        gl_LightVector[ i ].difusa = program->uniformLocation(QString("luz[i].difusa").arg( i ));
-        gl_LightVector[ i ].coordenadas = program->uniformLocation(QString("luz[i].coordenadas").arg( i ));
-        gl_LightVector[ i ].tipo = program->uniformLocation(QString("luz[i].tipo").arg( i ));
-        gl_LightVector[ i ].angulo = program->uniformLocation(QString("luz[i].angulo").arg( i ));
-    }
+//    for (int i=0; i<3; i++){
+        gl_LightVector[ 0 ].ambiental = program->uniformLocation(QString("luz[0].ambiental").arg( 0 ));
+        gl_LightVector[ 0 ].especular = program->uniformLocation(QString("luz[0].especular").arg( 0 ));
+        gl_LightVector[ 0 ].difusa = program->uniformLocation(QString("luz[0].difusa").arg( 0 ));
+        gl_LightVector[ 0 ].coordenadas = program->uniformLocation(QString("luz[0].coordenadas").arg( 0 ));
+        gl_LightVector[ 0 ].tipo = program->uniformLocation(QString("luz[0].tipo").arg( 0 ));
+        gl_LightVector[ 0 ].angulo = program->uniformLocation(QString("luz[0].angulo").arg( 0 ));
+//    }
 
 
     // 3. Bind de les zones de memoria que corresponen
     // glUniform4fv(gl_IdVect[ i ].ex1, 1, vectorProva);   // vectorProva és una variable de tipus vec4
 
-    for (int i=0; i<3; i++){
-        glUniform3fv(gl_LightVector[ i ].ambiental, 1, llums[i]->getAmbientaIntensity());
-        glUniform3fv(gl_LightVector[ i ].especular, 1, llums[i]->getEspecularIntensity());
-        glUniform3fv(gl_LightVector[ i ].difusa, 1, llums[i]->getDiffuseIntensity());
-        glUniform3fv(gl_LightVector[ i ].coordenadas, 1, llums[i]->getLightPosition());
-        glUniform1f(gl_LightVector[ i ].tipo, llums[i]->getType());
-        glUniform1f(gl_LightVector[ i ].angulo, llums[i]->getAngle());
-    }
+//    for (int i=0; i<3; i++){
+        glUniform3fv(gl_LightVector[ 0 ].ambiental, 1, llums[0]->getAmbientaIntensity());
+        glUniform3fv(gl_LightVector[ 0 ].especular, 1, llums[0]->getEspecularIntensity());
+        glUniform3fv(gl_LightVector[ 0 ].difusa, 1, llums[0]->getDiffuseIntensity());
+        glUniform3fv(gl_LightVector[ 0 ].coordenadas, 1, llums[0]->getLightPosition());
+        glUniform1f(gl_LightVector[ 0 ].tipo, llums[0]->getType());
+        glUniform1f(gl_LightVector[ 0 ].angulo, llums[0]->getAngle());
+//    }
 
     cout << "Saliendo de llumsToGPU " << endl;
     cout << "lums[0]->ambiental = " << llums[0]->getAmbientaIntensity() << endl;

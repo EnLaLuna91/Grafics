@@ -8,16 +8,16 @@ Llum::Llum(Lights t) {
     this->luces = t;
 
     this->ambiental[0] = 1.0;
-    this->ambiental[1] = 1.0;
+    this->ambiental[1] = 0.0;
     this->ambiental[2] = 1.0;
 
     this->especular[0] = 1.0;
     this->especular[1] = 1.0;
-    this->especular[2] = 1.0;
+    this->especular[2] = 0.0;
 
-    this->difusa[0] = 1.0;
+    this->difusa[0] = 0.0;
     this->difusa[1] = 0.0;
-    this->difusa[2] = 0.0;
+    this->difusa[2] = 1.0;
 
 //    this->coordenadas[0] = 1.0;
 //    this->coordenadas[1] = 1.0;
