@@ -37,6 +37,9 @@ public:
     void addLlum(Llum *l);
     Llum *getLlumActual();
     void llumsToGPU(QGLShaderProgram *program);
+    //Intensitat global que es passarà a la GPU per a
+    //ser utilitzada pels shaders
+    void setAmbientToGPU(QGLShaderProgram *program);
 
     vector <Objecte*> elements;
     vector<Llum*> llums;
