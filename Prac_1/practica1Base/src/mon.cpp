@@ -81,3 +81,7 @@ void Mon::addLlum(Llum *l) {
     llums.push_back(l);
 
 }
+void Mon::setAmbientToGPU(QGLShaderProgram *program){
+    cout << "Void de moment " << endl;
+
+}
