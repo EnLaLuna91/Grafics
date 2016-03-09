@@ -1,4 +1,4 @@
-#include "llumambient.h"
+#include "llumpuntual.h"
 
 llumAmbient::llumAmbient()
 {

@@ -14,25 +14,31 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     glwidget.cpp \
     Common.cpp \
+    llumdireccional.cpp \
     objecte.cpp \
     cara.cpp \
+    llumspotlight.cpp \
     readfile.cpp \
     llum.cpp \
     material.cpp \
-    mon.cpp
+    mon.cpp \
+    llumpuntual.cpp
 
 HEADERS  += mainwindow.h \
     vec.h \
     mat.h \
     glwidget.h \
     Common.h \
+    llumdireccional.h \
+    llumspotlight.h \
     objecte.h \
     cara.h \
     readfile.h \
     plabase.h \
     llum.h \
     material.h \
-    mon.h
+    mon.h \
+    llumpuntual.h
 
 FORMS    += mainwindow.ui
 
