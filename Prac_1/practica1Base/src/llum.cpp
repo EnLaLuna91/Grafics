@@ -5,7 +5,19 @@ Llum::Llum(Lights t) {
 //    this->especular = {1.0, 1.0, 1.0};
 //    this->spotLight = {1.0, 1.0, 1.0};
 
+
     this->luces = t;
+
+//    if (t == Puntual){
+//        this->luces.Puntual = t;
+//        cout << "Luz Puntual: " << t << endl;
+//    }else if (t == Direccional){
+//        this->luces.Direccional = t;
+//        cout << "Luz Direccional: " << t << endl;
+//    }else if (t == SpotLight){
+//        this->luces.SpotLight = t;
+//        cout << "Luz SpotLight: " << t << endl;
+//    }
 
     this->ambiental[0] = 1.0;
     this->ambiental[1] = 0.0;
@@ -37,7 +49,19 @@ void Llum::ToGPU(){
 }
 
 void Llum::setTipusLlum(Lights t) {
+
     this->luces = t;
+
+    if (t == Puntual){
+//        this->luces.Puntual = t;
+        cout << "Luz Puntual: " << t << endl;
+    }else if (t == Direccional){
+//        this->luces.Direccional = t;
+        cout << "Luz Direccional: " << t << endl;
+    }else if (t == SpotLight){
+//        this->luces.SpotLight = t;
+        cout << "Luz SpotLight: " << t << endl;
+    }
 }
 
 vec3 Llum::getDiffuseIntensity() {

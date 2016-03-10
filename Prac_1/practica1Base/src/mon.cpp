@@ -34,6 +34,8 @@ void Mon::llumsToGPU(QGLShaderProgram *program){
 
     cout << "Entrando a llumsToGPU " << endl;
 
+    getLlumActual();
+
 
     // 1. Es declara un vector d'identificadors
     struct gl_Light{
