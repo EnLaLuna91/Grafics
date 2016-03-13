@@ -19,30 +19,32 @@ Llum::Llum(Lights t) {
 //        cout << "Luz SpotLight: " << t << endl;
 //    }
 
-    this->ambiental[0] = 1.0;
-    this->ambiental[1] = 0.0;
-    this->ambiental[2] = 1.0;
+//    this->ambiental[0] = 1.0;
+//    this->ambiental[1] = 0.0;
+//    this->ambiental[2] = 1.0;
 
-    this->especular[0] = 1.0;
-    this->especular[1] = 1.0;
-    this->especular[2] = 0.0;
+//    this->especular[0] = 1.0;
+//    this->especular[1] = 1.0;
+//    this->especular[2] = 0.0;
 
-    this->difusa[0] = 0.0;
-    this->difusa[1] = 0.0;
-    this->difusa[2] = 1.0;
+//    this->difusa[0] = 0.0;
+//    this->difusa[1] = 0.0;
+//    this->difusa[2] = 1.0;
 
 //    this->coordenadas[0] = 1.0;
 //    this->coordenadas[1] = 1.0;
 //    this->coordenadas[2] = 1.0;
 //    this->coordenadas[3] = 1.0;
 
-    this->angulo = 0.0;
-
-    cout << "Lights: " << this->luces <<  endl;
+//    cout << "Lights: " << this->luces <<  endl;
 
 }
 
-void Llum::ToGPU(){
+Llum::~Llum(){
+
+}
+
+void Llum::ToGPU(QGLShaderProgram *program){
 
 
 
@@ -51,17 +53,6 @@ void Llum::ToGPU(){
 void Llum::setTipusLlum(Lights t) {
 
     this->luces = t;
-
-    if (t == Puntual){
-//        this->luces.Puntual = t;
-        cout << "Luz Puntual: " << t << endl;
-    }else if (t == Direccional){
-//        this->luces.Direccional = t;
-        cout << "Luz Direccional: " << t << endl;
-    }else if (t == SpotLight){
-//        this->luces.SpotLight = t;
-        cout << "Luz SpotLight: " << t << endl;
-    }
 }
 
 vec3 Llum::getDiffuseIntensity() {
@@ -99,12 +90,8 @@ vec3 Llum::getEspecularIntensity(){
     return this->especular;
 }
 
-float Llum::getAngle(){
-    return this->angulo;
-}
-
 int Llum::getType(){
-    return this->type;
+    return this->luces;
 }
 
 void Llum::setAmbientaIntensity(vec3 i){
@@ -113,10 +100,6 @@ void Llum::setAmbientaIntensity(vec3 i){
 
 void Llum::setEspecularIntensity(vec3 i){
     this->especular = i;
-}
-
-void Llum::setAngle(float a){
-    this->angulo = a;
 }
 
 void Llum::setType(int i){

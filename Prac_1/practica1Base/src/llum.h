@@ -2,6 +2,7 @@
 #define LLUM_H
 
 #include <Common.h>
+#include <QGLShaderProgram>
 
 using namespace std;
 
@@ -13,43 +14,44 @@ enum Lights {Puntual, Direccional, SpotLight};
 // Classe que representa els atributs d'una llum
 class Llum {
     private:
+        /* Lights */
+        Lights luces;
+
         /* Declaro los tipos de luz */
         RGB ambiental;
         RGB especular;
         RGB difusa;
 
-        /* Lights */
-        Lights luces;
-
         /* Coordenadas de la luz */
         vec4 coordenadas;
 
-        /* Angulo para el SpotLight */
-        float angulo;
-
         int type;
-
-
     public:
         Llum(Lights l);
+        virtual ~Llum();
         void setTipusLlum(Lights t);
-        vec3 getDiffuseIntensity();
-        vec4 getLightPosition();
-        void setDiffuseIntensity(vec3 i);
-        void setLightPosition(vec4 v);
-        void switchOnOff();
+        virtual vec3 getDiffuseIntensity();
+        virtual vec4 getLightPosition();
+        virtual void setDiffuseIntensity(vec3 i);
+        virtual void setLightPosition(vec4 v);
+        virtual void switchOnOff();
 
         /* Getterts & Setters extras */
 
+
+        virtual int getType();
+        virtual void ToGPU(QGLShaderProgram *program);
+
         vec3 getAmbientaIntensity();
         vec3 getEspecularIntensity();
-        float getAngle();
-        int getType();
         void setAmbientaIntensity(vec3 i);
         void setEspecularIntensity(vec3 i);
-        void setAngle(float a);
         void setType(int i);
-        void ToGPU();
+
+
+
+
+
 };
 
 #endif // LLUM_H

@@ -13,6 +13,9 @@
 #include <Common.h>
 #include <objecte.h>
 #include <llum.h>
+#include <llumdireccional.h>
+#include <llumpuntual.h>
+#include <llumspotlight.h>
 
 using namespace std;
 
@@ -24,6 +27,9 @@ using namespace std;
 class Mon {
 private:
 //    Llum luz;
+    llumPuntual *LuzPunt;
+    llumDireccional *LuzDirec;
+    llumSpotlight *LuzSpot;
 
 public:
     Mon();
@@ -42,7 +48,7 @@ public:
     void setAmbientToGPU(QGLShaderProgram *program);
 
     vector <Objecte*> elements;
-    vector<Llum*> llums;
+    vector<Llum*> llums;    
 
 };
 

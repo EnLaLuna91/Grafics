@@ -50,16 +50,19 @@ void GLWidget::ensenyaMenuLlum0() {
 void GLWidget::changePositionLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
     mon->getLlumActual()->setTipusLlum(Puntual);
+    mon->llumsToGPU(program);
 
 }
 void GLWidget::changeDirectionalLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
    mon->getLlumActual()->setTipusLlum(Direccional);
+   mon->llumsToGPU(program);
 
 }
 void GLWidget::changeSpotLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
     mon->getLlumActual()->setTipusLlum(SpotLight);
+    mon->llumsToGPU(program);
 
 }
 void GLWidget::updateXPositionLight(int xposition) {
@@ -92,6 +95,7 @@ void GLWidget::updateLightIntensity(int intens) {
     intensitat[2] = intens/200.0; // el 200 es l'escala del scrollbar
 
      mon->getLlumActual()->setDiffuseIntensity(intensitat);
+
 }
 
 void GLWidget::activateLight(){
@@ -145,8 +149,8 @@ void GLWidget::initializeGL() {
 
     // Creacio d'una llum per apoder modificar el seus valors amb la interficie
     Llum *l = new Llum(Puntual);
-    l->setTipusLlum(Direccional);
-    l->setTipusLlum(SpotLight);
+//    l->setTipusLlum(Direccional);
+//    l->setTipusLlum(SpotLight);
     mon->addLlum(l);
     mon->llumsToGPU(program);
 
@@ -156,6 +160,8 @@ void GLWidget::initializeGL() {
 void GLWidget::paintGL() {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     mon->draw();
+//    mon->llumsToGPU(program);
+
 }
 
 

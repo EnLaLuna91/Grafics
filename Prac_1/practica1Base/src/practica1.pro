@@ -30,6 +30,7 @@ HEADERS  += mainwindow.h \
     glwidget.h \
     Common.h \
     llumdireccional.h \
+    llumpuntual.h \
     llumspotlight.h \
     objecte.h \
     cara.h \
@@ -37,8 +38,7 @@ HEADERS  += mainwindow.h \
     plabase.h \
     llum.h \
     material.h \
-    mon.h \
-    llumpuntual.h
+    mon.h
 
 FORMS    += mainwindow.ui
 

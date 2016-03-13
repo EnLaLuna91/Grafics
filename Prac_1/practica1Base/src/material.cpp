@@ -5,7 +5,7 @@
  */
 Material::Material() {
 
-    cout << "Inicilizo Material" << endl;
+//    cout << "Inicilizo Material" << endl;
 
     /* Gold Material */
 //    this->kd = {0.75164, 0.60648, 0.22648};
@@ -41,7 +41,7 @@ Material::Material() {
 //    this->ka = {0.19225, 0.19225, 0.19225};
 //    this->shininess = 0.4;
 
-    cout << "Saliendo del constructor de Material" << endl;
+//    cout << "Saliendo del constructor de Material" << endl;
 }
 
 /*
