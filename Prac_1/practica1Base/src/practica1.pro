@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     llum.cpp \
     material.cpp \
     mon.cpp \
-    llumpuntual.cpp
+    llumpuntual.cpp \
+    gouraud.cpp
 
 HEADERS  += mainwindow.h \
     vec.h \
@@ -38,7 +39,8 @@ HEADERS  += mainwindow.h \
     plabase.h \
     llum.h \
     material.h \
-    mon.h
+    mon.h \
+    gouraud.h
 
 FORMS    += mainwindow.ui
 

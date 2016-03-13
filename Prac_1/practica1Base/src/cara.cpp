@@ -45,3 +45,11 @@ void Cara::calculaNormal(vector<Vertices> &v)
 //  normal.normalize();
 }
 
+vec3 Cara::getNormal(){
+    return this->normal;
+}
+
+vec4 Cara::getVertices(){
+    return this->idxVertices;
+}
+
