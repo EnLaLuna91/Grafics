@@ -7,12 +7,10 @@
 
 using namespace std;
 
-typedef vector gouraud;
-
 class Gouraud
 {
 private:
-    gouraud<vec3> normales;
+    vector<vec3> normales;
     vector<Cara> caras;
     void calculaNormalGouraud();
 public:

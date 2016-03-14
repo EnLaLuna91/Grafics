@@ -31,7 +31,7 @@ Gouraud::~Gouraud(){
  * Parameters:
  *      vector<Cara> --> Conjunto de caras
  */
-void Gouraud::setCaras(vector<Cara>){
+void Gouraud::setCaras(vector<Cara> c){
     this->caras = c;
     calculaNormalGouraud();
 }
@@ -46,9 +46,9 @@ void Gouraud::setCaras(vector<Cara>){
  * Return:
  *      vector<vec3> --> Conjunto de normales de vertice
  */
-vec3 Gouraud::getNormalVertex(){
-    return this->normales;
-}
+//vec3 Gouraud::getNormalVertex(){
+//    return this->normales;
+//}
 
 /*
  * Para cada cara calcula la normal, el resultado lo guarda en la posicion
@@ -59,7 +59,7 @@ vec3 Gouraud::getNormalVertex(){
 void Gouraud::calculaNormalGouraud(){
     vec4 verticesCara;
     Cara tmp;
-    float norml = 0.0;
+    vec3 norml = 0.0;
 
     for (int i=0; i < this->caras.size(); i++){
         tmp = this->caras[i];
@@ -67,6 +67,5 @@ void Gouraud::calculaNormalGouraud(){
         this->normales[verticesCara[0]] += norml;
         this->normales[verticesCara[1]] += norml;
         this->normales[verticesCara[2]] += norml;
-        norml = 0.0;
     }
 }

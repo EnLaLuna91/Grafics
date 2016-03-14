@@ -49,7 +49,3 @@ vec3 Cara::getNormal(){
     return this->normal;
 }
 
-vec4 Cara::getVertices(){
-    return this->idxVertices;
-}
-

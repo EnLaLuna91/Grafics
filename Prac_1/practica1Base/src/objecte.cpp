@@ -47,7 +47,8 @@ void Objecte::draw(){
     // Aqui es torna a repetir el pas de dades a la GPU per si hi ha més d'un objecte
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
-    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index, &points[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index,  &points[0] );
+
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
 
     int vertexLocation = program->attributeLocation("vPosition");
