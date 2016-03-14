@@ -9,8 +9,8 @@ llumDireccional::llumDireccional():Llum(Direccional)
     this->ambiental[1] = 0.0;
     this->ambiental[2] = 0.0;
 
-    this->especular[0] = 0.0;
-    this->especular[1] = 1.0;
+    this->especular[0] = 1.0;
+    this->especular[1] = 0.0;
     this->especular[2] = 0.0;
 
     this->difusa[0] = 0.0;

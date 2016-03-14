@@ -9,9 +9,9 @@ llumSpotlight::llumSpotlight():Llum(SpotLight)
     this->ambiental[1] = 0.5;
     this->ambiental[2] = 0.5;
 
-    this->especular[0] = 0.5;
-    this->especular[1] = 1.0;
-    this->especular[2] = 0.5;
+    this->especular[0] = 0.0;
+    this->especular[1] = 0.0;
+    this->especular[2] = 1.0;
 
     this->difusa[0] = 0.5;
     this->difusa[1] = 0.5;
