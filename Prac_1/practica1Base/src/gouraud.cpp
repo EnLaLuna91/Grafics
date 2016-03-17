@@ -57,15 +57,15 @@ void Gouraud::setCaras(vector<Cara> c){
  * aparece ese vertice.
  */
 void Gouraud::calculaNormalGouraud(){
-    vec4 verticesCara;
-    Cara tmp;
-    vec3 norml = 0.0;
+//    vec4 verticesCara;
+//    Cara tmp;
+//    vec3 norml = 0.0;
 
-    for (int i=0; i < this->caras.size(); i++){
-        tmp = this->caras[i];
-        norml = tmp.getNormal();
-        this->normales[verticesCara[0]] += norml;
-        this->normales[verticesCara[1]] += norml;
-        this->normales[verticesCara[2]] += norml;
-    }
+//    for (int i=0; i < this->caras.size(); i++){
+//        tmp = this->caras[i];
+//        norml = tmp.getNormal();
+//        this->normales[verticesCara[0]] += norml;
+//        this->normales[verticesCara[1]] += norml;
+//        this->normales[verticesCara[2]] += norml;
+//    }
 }

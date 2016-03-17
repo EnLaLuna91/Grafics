@@ -16,6 +16,12 @@ llumPuntual::llumPuntual():Llum(Puntual)
     this->difusa[0] = 1.0;
     this->difusa[1] = 0.0;
     this->difusa[2] = 1.0;
+
+    coordenadas[0] = 1.0;
+    coordenadas[1] = 1.0;
+    coordenadas[2] = 1.0;
+    coordenadas[3] = 1.0;
+
 }
 
 llumPuntual::~llumPuntual(){
@@ -23,19 +29,19 @@ llumPuntual::~llumPuntual(){
 }
 
 vec3 llumPuntual::getDiffuseIntensity(){
-    return this->difusa;
+    return Llum::getDiffuseIntensity();
 }
 
 vec4 llumPuntual::getLightPosition(){
-    return this->coordenadas;
+    return Llum::getLightPosition();
 }
 
 void llumPuntual::setDiffuseIntensity(vec3 i){
-    this->difusa = i;
+    Llum::setDiffuseIntensity(i);
 }
 
 void llumPuntual::setLightPosition(vec4 v){
-    this->coordenadas = v;
+    Llum::setLightPosition(v);
 }
 
 void llumPuntual::switchOnOff(){
@@ -43,23 +49,14 @@ void llumPuntual::switchOnOff(){
 }
 
 int llumPuntual::getType(){
-    return this->type;
+    return Llum::getType();
 }
 
 void llumPuntual::ToGPU(QGLShaderProgram *program){
 
 //    cout << "Entrando a llumPuntual::ToGPU " << endl;
 
-    // 1. Es declara un vector d'identificadors
-    struct gl_Light{
-        GLuint ambiental;
-        GLuint especular;
-        GLuint difusa;
-        GLuint coordenadas;
-        GLuint tipo;
-        GLuint angulo;
-    };
-    gl_Light gl_LightVector[3];
+
 
     int i = this->type;
 

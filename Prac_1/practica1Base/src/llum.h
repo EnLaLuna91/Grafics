@@ -13,7 +13,7 @@ enum Lights {Puntual, Direccional, SpotLight};
 
 // Classe que representa els atributs d'una llum
 class Llum {
-    private:
+    protected:
         /* Lights */
         Lights luces;
 
@@ -26,6 +26,19 @@ class Llum {
         vec4 coordenadas;
 
         int type;
+
+        // 1. Es declara un vector d'identificadors
+        struct gl_Light{
+            GLuint ambiental;
+            GLuint especular;
+            GLuint difusa;
+            GLuint coordenadas;
+            GLuint tipo;
+            GLuint angulo;
+        };
+        gl_Light gl_LightVector[3];
+
+
     public:
         Llum(Lights l);
         virtual ~Llum();

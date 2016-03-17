@@ -25,8 +25,6 @@ class Cara
     vec3 normal;
     void calculaNormal(vector<Vertices> &);
 
-    vec3 getNormal();
-    vec4 getVertices(); //definir
 };
 
 

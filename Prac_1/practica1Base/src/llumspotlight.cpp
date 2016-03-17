@@ -18,6 +18,12 @@ llumSpotlight::llumSpotlight():Llum(SpotLight)
     this->difusa[2] = 1.0;
 
     this->angulo = 5.0;
+
+    coordenadas[0] = 1.0;
+    coordenadas[1] = 1.0;
+    coordenadas[2] = 1.0;
+    coordenadas[3] = 1.0;
+
 }
 
 llumSpotlight::~llumSpotlight(){
@@ -25,19 +31,19 @@ llumSpotlight::~llumSpotlight(){
 }
 
 vec3 llumSpotlight::getDiffuseIntensity(){
-    return this->difusa;
+    return Llum::getDiffuseIntensity();
 }
 
 vec4 llumSpotlight::getLightPosition(){
-    return this->coordenadas;
+    return Llum::getLightPosition();
 }
 
 void llumSpotlight::setDiffuseIntensity(vec3 i){
-    this->difusa = i;
+    Llum::setDiffuseIntensity(i);
 }
 
 void llumSpotlight::setLightPosition(vec4 v){
-    this->coordenadas = v;
+    Llum::setLightPosition(v);
 }
 
 void llumSpotlight::switchOnOff(){
@@ -45,22 +51,13 @@ void llumSpotlight::switchOnOff(){
 }
 
 int llumSpotlight::getType(){
-    return this->type;
+    return Llum::getType();
 }
 
 void llumSpotlight::ToGPU(QGLShaderProgram *program){
 //    cout << "Entrando a llumSpotlight::ToGPU " << endl;
 
-    // 1. Es declara un vector d'identificadors
-    struct gl_Light{
-        GLuint ambiental;
-        GLuint especular;
-        GLuint difusa;
-        GLuint coordenadas;
-        GLuint tipo;
-        GLuint angulo;
-    };
-    gl_Light gl_LightVector[3];
+
 
     int i = this->type;
 
