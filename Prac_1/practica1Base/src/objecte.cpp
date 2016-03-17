@@ -13,7 +13,11 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     colors = new point4[numPoints];
     mat = new Material;
     readObj(n);
+    normalesAcumulada.resize(vertexs.size());
     calculaNormal();
+//    for (int i=0;i<normalesAcumulada.size();i++){
+//        cout << "normalesAcumulada: " << normalesAcumulada[i] <<  endl;
+//    }
     make();
 }
 
@@ -28,6 +32,10 @@ void Objecte::calculaNormal(){
         cares[i].calculaNormal(vertexs);
         vec3 tmpNormal = cares[i].normal;
         normales.push_back(tmpNormal);
+        for (unsigned int j=0; j<cares[i].idxVertices.size();j++){
+//            cout << "cares["<<i<<"].idxVertices["<<j<<"]: " << cares[i].idxVertices[j] <<  endl;
+            normalesAcumulada[cares[i].idxVertices[j]] += tmpNormal;
+        }
     }
 }
 
@@ -59,7 +67,7 @@ void Objecte::draw(){
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index,  &points[0] );
 
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normalesAcumulada[0] );
 
     int vertexLocation = program->attributeLocation("vPosition");
 //    int colorLocation = program->attributeLocation("vColor");
