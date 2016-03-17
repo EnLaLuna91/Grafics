@@ -30,6 +30,8 @@ protected:
 
     int Index; // index de control del numero de vertexs a posar a la GPU
 
+    vector<vec3> normalesAcumulada;
+    vector<vec3> normales;
 
     Material *mat;
 
@@ -49,7 +51,7 @@ public:
 
 private:
     void construeix_cara ( char **words, int nwords);
-
+    void calculaNormal();
 };
 
 

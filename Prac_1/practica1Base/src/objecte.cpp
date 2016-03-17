@@ -13,6 +13,7 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     colors = new point4[numPoints];
     mat = new Material;
     readObj(n);
+    calculaNormal();
     make();
 }
 
@@ -20,6 +21,14 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
 Objecte::~Objecte(){
     delete points;
     delete colors;
+}
+
+void Objecte::calculaNormal(){
+    for (unsigned int i=0; i<cares.size(); i++){
+        cares[i].calculaNormal(vertexs);
+        vec3 tmpNormal = cares[i].normal;
+        normales.push_back(tmpNormal);
+    }
 }
 
 /**
@@ -49,16 +58,21 @@ void Objecte::draw(){
 
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index,  &points[0] );
 
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
+//    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
 
     int vertexLocation = program->attributeLocation("vPosition");
-    int colorLocation = program->attributeLocation("vColor");
+//    int colorLocation = program->attributeLocation("vColor");
+    int normalLocation = program->attributeLocation("vNormal");
 
     program->enableAttributeArray(vertexLocation);
     program->setAttributeBuffer("vPosition", GL_FLOAT, 0, 4);
 
-    program->enableAttributeArray(colorLocation);
-    program->setAttributeBuffer("vColor", GL_FLOAT, sizeof(point4)*Index, 4);
+//    program->enableAttributeArray(colorLocation);
+//    program->setAttributeBuffer("vColor", GL_FLOAT, sizeof(point4)*Index, 4);
+
+    program->enableAttributeArray(normalLocation);
+    program->setAttributeBuffer("vNormal", GL_FLOAT, sizeof(point4)*Index, 3);
 
     mat->toGPU(program);
 

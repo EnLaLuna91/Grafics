@@ -95,6 +95,8 @@ void GLWidget::updateLightIntensity(int intens) {
     intensitat[2] = intens/200.0; // el 200 es l'escala del scrollbar
 
      mon->getLlumActual()->setDiffuseIntensity(intensitat);
+     mon->llumsToGPU(program);
+     updateGL();
 
 }
 
