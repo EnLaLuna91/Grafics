@@ -14,9 +14,9 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     mat = new Material;
     readObj(n);
     calculaNormal();
-//    for (int i=0;i<normalesAcumulada.size();i++){
-//        cout << "normalesAcumulada: " << normalesAcumulada[i] <<  endl;
-//    }
+    for (int i=0;i<normalesAcumulada.size();i++){
+        cout << "normalesAcumulada: " << normalesAcumulada[i] <<  endl;
+    }
     make();
 }
 
@@ -28,7 +28,7 @@ Objecte::~Objecte(){
 
 void Objecte::calculaNormal(){
     normalesAcumulada.resize(vertexs.size());
-    for (unsigned int i=0; i<vertexs.size();i++)
+    for (unsigned int i=0; i<normalesAcumulada.size();i++)
         normalesAcumulada[i] = vec3(0.0, 0.0, 0.0);
 
     for (unsigned int i=0; i<cares.size(); i++){
@@ -40,6 +40,11 @@ void Objecte::calculaNormal(){
             normalesAcumulada[cares[i].idxVertices[j]] += tmpNormal;
         }
     }
+
+    for (unsigned int i=0; i<normalesAcumulada.size();i++)
+        normalesAcumulada[i] = normalize(normalesAcumulada[i]);
+
+
 }
 
 /**
@@ -51,7 +56,7 @@ void Objecte::toGPU(QGLShaderProgram *pr) {
     glGenBuffers( 1, &buffer );
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
-    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(point4)*Index, NULL, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, NULL, GL_STATIC_DRAW );
     glEnable( GL_DEPTH_TEST );
 //    glEnable( GL_TEXTURE_2D );
 
