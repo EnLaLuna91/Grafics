@@ -66,11 +66,15 @@ void Objecte::toGPU(QGLShaderProgram *pr) {
  * @brief Objecte::draw
  */
 void Objecte::draw(){
+    //GL_ARRAY_BUFFER -> Nombre del buffer donde vas a passar la info
+
 
     // Aqui es torna a repetir el pas de dades a la GPU per si hi ha més d'un objecte
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index,  &points[0] );
+    //glBufferSubData (Que buffer guardas los datos, que posicion, tamaño informacion a pasar, donde empieza esa infor)
+
 
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normalesAcumulada[0] );
@@ -81,6 +85,7 @@ void Objecte::draw(){
 
     program->enableAttributeArray(vertexLocation);
     program->setAttributeBuffer("vPosition", GL_FLOAT, 0, 4);
+    //program->setAttributeBuffer (que programa se carga, tipo del dato que pasa como "in", donde empieza, dimension)
 
 //    program->enableAttributeArray(colorLocation);
 //    program->setAttributeBuffer("vColor", GL_FLOAT, sizeof(point4)*Index, 4);
