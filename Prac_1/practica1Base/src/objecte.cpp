@@ -3,16 +3,17 @@
 
 Objecte::Objecte(int npoints, QObject *parent) : numPoints(npoints) ,QObject(parent){
     points = new point4[numPoints];
-    colors = new point4[numPoints];
+//    colors = new point4[numPoints];
     mat = new Material;
 
 }
 
 Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     points = new point4[numPoints];
-    colors = new point4[numPoints];
+//    colors = new point4[numPoints];
     mat = new Material;
     readObj(n);
+    normales = new vec3[numPoints];
     calculaNormal();
 //    for (int i=0;i<normalesAcumulada.size();i++){
 //        cout << "normalesAcumulada["<<i<<"]: " << normalesAcumulada[i] <<  endl;
@@ -23,7 +24,8 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
 
 Objecte::~Objecte(){
     delete points;
-    delete colors;
+//    delete colors;
+    delete normales;
 }
 
 void Objecte::calculaNormal(){
@@ -34,7 +36,6 @@ void Objecte::calculaNormal(){
     for (unsigned int i=0; i<cares.size(); i++){
         cares[i].calculaNormal(vertexs);
         vec3 tmpNormal = cares[i].normal;
-        normales.push_back(tmpNormal);
         for (unsigned int j=0; j<cares[i].idxVertices.size();j++){
 //            cout << "cares["<<i<<"].idxVertices["<<j<<"]: " << cares[i].idxVertices[j] <<  endl;
             normalesAcumulada[cares[i].idxVertices[j]] += tmpNormal;
@@ -76,7 +77,7 @@ void Objecte::draw(){
     //glBufferSubData (Que buffer guardas los datos, que posicion, tamaño informacion a pasar, donde empieza esa infor)
 
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normalesAcumulada[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
 
     int vertexLocation = program->attributeLocation("vPosition");
 //    int colorLocation = program->attributeLocation("vColor");
@@ -111,7 +112,8 @@ void Objecte::make(){
     for(unsigned int i=0; i<cares.size(); i++){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
-            colors[Index] = vec4(base_colors[j%4], 1.0);
+//            colors[Index] = vec4(base_colors[j%4], 1.0);
+            normales[Index] =  normalesAcumulada[cares[i].idxVertices[j]];
             Index++;
         }
     }

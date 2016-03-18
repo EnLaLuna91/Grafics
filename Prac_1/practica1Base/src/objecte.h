@@ -26,12 +26,13 @@ protected:
 
     int     numPoints;
     point4 *points;
-    point4 *colors;
+//    point4 *colors;
+    vec3 *normales;
 
     int Index; // index de control del numero de vertexs a posar a la GPU
 
     vector<vec3> normalesAcumulada;
-    vector<vec3> normales;
+//    vector<vec3> normales;
 
     Material *mat;
 
