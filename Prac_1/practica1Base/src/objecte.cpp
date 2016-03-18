@@ -14,9 +14,9 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     mat = new Material;
     readObj(n);
     calculaNormal();
-    for (int i=0;i<normalesAcumulada.size();i++){
-        cout << "normalesAcumulada: " << normalesAcumulada[i] <<  endl;
-    }
+//    for (int i=0;i<normalesAcumulada.size();i++){
+//        cout << "normalesAcumulada["<<i<<"]: " << normalesAcumulada[i] <<  endl;
+//    }
     make();
 }
 
@@ -43,8 +43,6 @@ void Objecte::calculaNormal(){
 
     for (unsigned int i=0; i<normalesAcumulada.size();i++)
         normalesAcumulada[i] = normalize(normalesAcumulada[i]);
-
-
 }
 
 /**
