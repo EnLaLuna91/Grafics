@@ -75,7 +75,6 @@ void Objecte::draw(){
     glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index,  &points[0] );
     //glBufferSubData (Que buffer guardas los datos, que posicion, tamaño informacion a pasar, donde empieza esa infor)
 
-
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normalesAcumulada[0] );
 
