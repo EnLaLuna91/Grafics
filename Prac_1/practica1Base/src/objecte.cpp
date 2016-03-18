@@ -13,7 +13,6 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     colors = new point4[numPoints];
     mat = new Material;
     readObj(n);
-    normalesAcumulada.resize(vertexs.size());
     calculaNormal();
 //    for (int i=0;i<normalesAcumulada.size();i++){
 //        cout << "normalesAcumulada: " << normalesAcumulada[i] <<  endl;
@@ -28,6 +27,10 @@ Objecte::~Objecte(){
 }
 
 void Objecte::calculaNormal(){
+    normalesAcumulada.resize(vertexs.size());
+    for (unsigned int i=0; i<vertexs.size();i++)
+        normalesAcumulada[i] = vec3(0.0, 0.0, 0.0);
+
     for (unsigned int i=0; i<cares.size(); i++){
         cares[i].calculaNormal(vertexs);
         vec3 tmpNormal = cares[i].normal;
@@ -87,8 +90,6 @@ void Objecte::draw(){
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays( GL_TRIANGLES, 0, Index );
-
-
 }
 
 void Objecte::make(){
