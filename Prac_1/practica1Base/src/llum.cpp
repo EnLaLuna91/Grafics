@@ -1,42 +1,9 @@
 #include "llum.h"
 
 Llum::Llum(Lights t) {
-//    this->ambiental = {1.0, 1.0, 1.0};
-//    this->especular = {1.0, 1.0, 1.0};
-//    this->spotLight = {1.0, 1.0, 1.0};
 
 
     this->luces = t;
-
-//    if (t == Puntual){
-//        this->luces.Puntual = t;
-//        cout << "Luz Puntual: " << t << endl;
-//    }else if (t == Direccional){
-//        this->luces.Direccional = t;
-//        cout << "Luz Direccional: " << t << endl;
-//    }else if (t == SpotLight){
-//        this->luces.SpotLight = t;
-//        cout << "Luz SpotLight: " << t << endl;
-//    }
-
-//    this->ambiental[0] = 1.0;
-//    this->ambiental[1] = 0.0;
-//    this->ambiental[2] = 1.0;
-
-//    this->especular[0] = 1.0;
-//    this->especular[1] = 1.0;
-//    this->especular[2] = 0.0;
-
-//    this->difusa[0] = 0.0;
-//    this->difusa[1] = 0.0;
-//    this->difusa[2] = 1.0;
-
-//    this->coordenadas[0] = 1.0;
-//    this->coordenadas[1] = 1.0;
-//    this->coordenadas[2] = 1.0;
-//    this->coordenadas[3] = 1.0;
-
-//    cout << "Lights: " << this->luces <<  endl;
 
 }
 
@@ -77,6 +44,14 @@ void Llum::setLightPosition(vec4 v) {
 void Llum::switchOnOff() {
     // Si esta en on la posa a off i a l'inreves
 
+}
+
+void Llum::setLightDirecction(vec4 v){
+    this->direccion = v;
+}
+
+vec4 Llum::getLightDirecction(){
+    return this->direccion;
 }
 
 

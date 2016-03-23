@@ -1,7 +1,10 @@
 #include "mon.h"
 
 Mon::Mon() {    
-     cout << "Entrando en MON " << endl;
+//     cout << "Entrando en MON " << endl;
+    AmbientLight[0] = 0.3;
+    AmbientLight[1] = 0.3;
+    AmbientLight[2] = 0.3;
 }
 
 Mon::~Mon() {
@@ -63,6 +66,6 @@ void Mon::addLlum(Llum *l) {
 
 }
 void Mon::setAmbientToGPU(QGLShaderProgram *program){
-    cout << "Void de moment " << endl;
-
+    GLuint LuzAmbient = program->uniformLocation("vLuzAmbiente");
+    glUniform3fv(LuzAmbient, 1, AmbientLight);
 }

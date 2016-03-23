@@ -30,6 +30,7 @@ private:
     llumPuntual *LuzPunt;
     llumDireccional *LuzDirec;
     llumSpotlight *LuzSpot;
+    vec3 AmbientLight;
 
 public:
     Mon();

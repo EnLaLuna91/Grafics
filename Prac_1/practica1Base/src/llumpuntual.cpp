@@ -5,7 +5,7 @@ llumPuntual::llumPuntual():Llum(Puntual)
 
     this->type = Puntual;
 
-    this->ambiental[0] = 1.0;
+    this->ambiental[0] = 0.0;
     this->ambiental[1] = 1.0;
     this->ambiental[2] = 0.0;
 
@@ -13,14 +13,19 @@ llumPuntual::llumPuntual():Llum(Puntual)
     this->especular[1] = 1.0;
     this->especular[2] = 0.0;
 
-    this->difusa[0] = 1.0;
-    this->difusa[1] = 0.0;
-    this->difusa[2] = 1.0;
+    this->difusa[0] = 0.0;
+    this->difusa[1] = 1.0;
+    this->difusa[2] = 0.0;
 
     coordenadas[0] = 1.0;
     coordenadas[1] = 1.0;
     coordenadas[2] = 1.0;
     coordenadas[3] = 1.0;
+
+    direccion[0] = 0.0;
+    direccion[1] = 0.0;
+    direccion[2] = 0.0;
+    direccion[3] = 0.0;
 
 }
 
@@ -52,6 +57,14 @@ int llumPuntual::getType(){
     return Llum::getType();
 }
 
+void llumPuntual::setLightDirecction(vec4 v){
+    Llum::setLightDirecction(v);
+}
+
+vec4 llumPuntual::getLightDirecction(){
+    return Llum::getLightDirecction();
+}
+
 void llumPuntual::ToGPU(QGLShaderProgram *program){
 
 //    cout << "Entrando a llumPuntual::ToGPU " << endl;
@@ -68,6 +81,7 @@ void llumPuntual::ToGPU(QGLShaderProgram *program){
     gl_LightVector[ i ].especular = program->uniformLocation(QString("luz[%1].especular").arg( i ));
     gl_LightVector[ i ].difusa = program->uniformLocation(QString("luz[%1].difusa").arg( i ));
     gl_LightVector[ i ].coordenadas = program->uniformLocation(QString("luz[%1].coordenadas").arg( i ));
+    gl_LightVector[ i ].direccion = program->uniformLocation(QString("luz[%1].direccion").arg( i ));
     gl_LightVector[ i ].tipo = program->uniformLocation(QString("luz[%1].tipo").arg( i ));
     gl_LightVector[ i ].angulo = program->uniformLocation(QString("luz[%1].angulo").arg( i ));
 
@@ -80,6 +94,7 @@ void llumPuntual::ToGPU(QGLShaderProgram *program){
     glUniform3fv(gl_LightVector[ i ].especular, 1, this->especular);
     glUniform3fv(gl_LightVector[ i ].difusa, 1, this->difusa);
     glUniform3fv(gl_LightVector[ i ].coordenadas, 1, this->coordenadas);
+    glUniform3fv(gl_LightVector[ i ].direccion, 1, this->direccion);
     glUniform1f(gl_LightVector[ i ].tipo, i);
     glUniform1f(gl_LightVector[ i ].angulo, 0.0);
 

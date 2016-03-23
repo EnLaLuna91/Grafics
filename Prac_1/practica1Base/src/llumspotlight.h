@@ -21,6 +21,8 @@ public:
     void setDiffuseIntensity(vec3 i);
     void setLightPosition(vec4 v);
     void switchOnOff();
+    void setLightDirecction(vec4 v);
+    vec4 getLightDirecction();
 
     int getType();
     void ToGPU(QGLShaderProgram *program);

@@ -25,6 +25,9 @@ class Llum {
         /* Coordenadas de la luz */
         vec4 coordenadas;
 
+        /* Direccion luz */
+        vec4 direccion;
+
         int type;
 
         // 1. Es declara un vector d'identificadors
@@ -33,6 +36,7 @@ class Llum {
             GLuint especular;
             GLuint difusa;
             GLuint coordenadas;
+            GLuint direccion;
             GLuint tipo;
             GLuint angulo;
         };
@@ -48,6 +52,8 @@ class Llum {
         virtual void setDiffuseIntensity(vec3 i);
         virtual void setLightPosition(vec4 v);
         virtual void switchOnOff();
+        virtual void setLightDirecction(vec4 v);
+        virtual vec4 getLightDirecction();
 
         /* Getterts & Setters extras */
 
