@@ -46,12 +46,27 @@ void Llum::switchOnOff() {
 
 }
 
+int Llum::getSwitchOnOff(){
+}
+
 void Llum::setLightDirecction(vec4 v){
     this->direccion = v;
 }
 
 vec4 Llum::getLightDirecction(){
     return this->direccion;
+}
+
+float Llum::getA(){
+    return this->a;
+}
+
+float Llum::getB(){
+    return this->b;
+}
+
+float Llum::getC(){
+    return this->c;
 }
 
 

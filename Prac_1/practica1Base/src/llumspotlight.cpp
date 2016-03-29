@@ -5,30 +5,31 @@ llumSpotlight::llumSpotlight():Llum(SpotLight)
 
     this->type = SpotLight;
 
-    this->ambiental[0] = 0.0;
-    this->ambiental[1] = 0.0;
-    this->ambiental[2] = 1.0;
+    this->ambiental = vec3(0.2f);
 
-    this->especular[0] = 0.0;
-    this->especular[1] = 0.0;
-    this->especular[2] = 1.0;
+    this->especular = vec3(0.2f);
 
-    this->difusa[0] = 0.0;
-    this->difusa[1] = 0.0;
-    this->difusa[2] = 1.0;
+    this->difusa[0] = 0.9f;
+    this->difusa[1] = 0.9f;
+    this->difusa[2] = 0.9f;
 
-    this->angulo = 5.0;
+    this->angulo = 0.45f;
 
-    coordenadas[0] = 1.0;
-    coordenadas[1] = 1.0;
-    coordenadas[2] = 1.0;
-    coordenadas[3] = 1.0;
+    coordenadas[0] = -1.0f;
+    coordenadas[1] = 1.0f;
+    coordenadas[2] = -1.0f;
+    coordenadas[3] = 0.0f;
 
-    direccion[0] = 0.0;
-    direccion[1] = 0.0;
-    direccion[2] = 5.0;
-    direccion[3] = 0.0;
+    direccion[0] = -1.0f;
+    direccion[1] = 1.0f;
+    direccion[2] = -1.0f;
+    direccion[3] = 0.0f;
 
+    a = 0.0f;
+    b = 0.0f;
+    c = 1.0f;
+
+    on = 0;
 }
 
 llumSpotlight::~llumSpotlight(){
@@ -52,7 +53,14 @@ void llumSpotlight::setLightPosition(vec4 v){
 }
 
 void llumSpotlight::switchOnOff(){
+    if (on == 0)
+        on = 1;
+    else
+        on = 0;
+}
 
+int llumSpotlight::getSwitchOnOff(){
+    return on;
 }
 
 int llumSpotlight::getType(){
@@ -65,6 +73,18 @@ void llumSpotlight::setLightDirecction(vec4 v){
 
 vec4 llumSpotlight::getLightDirecction(){
     return Llum::getLightDirecction();
+}
+
+float llumSpotlight::getA(){
+    return Llum::getA();
+}
+
+float llumSpotlight::getB(){
+    return Llum::getB();
+}
+
+float llumSpotlight::getC(){
+    return Llum::getC();
 }
 
 void llumSpotlight::ToGPU(QGLShaderProgram *program){
@@ -85,6 +105,9 @@ void llumSpotlight::ToGPU(QGLShaderProgram *program){
     gl_LightVector[ i ].direccion = program->uniformLocation(QString("luz[%1].direccion").arg( i ));
     gl_LightVector[ i ].tipo = program->uniformLocation(QString("luz[%1].tipo").arg( i ));
     gl_LightVector[ i ].angulo = program->uniformLocation(QString("luz[%1].angulo").arg( i ));
+    gl_LightVector[ i ].a = program->uniformLocation(QString("luz[%1].a").arg( i ));
+    gl_LightVector[ i ].b = program->uniformLocation(QString("luz[%1].b").arg( i ));
+    gl_LightVector[ i ].c = program->uniformLocation(QString("luz[%1].c").arg( i ));
 
 
 
@@ -97,7 +120,10 @@ void llumSpotlight::ToGPU(QGLShaderProgram *program){
     glUniform3fv(gl_LightVector[ i ].coordenadas, 1, this->coordenadas);
     glUniform3fv(gl_LightVector[ i ].direccion, 1, this->direccion);
     glUniform1f(gl_LightVector[ i ].tipo, i);
-    glUniform1f(gl_LightVector[ i ].angulo, 0.0);
+    glUniform1f(gl_LightVector[ i ].angulo, angulo);
+    glUniform1f(gl_LightVector[ i ].a, a);
+    glUniform1f(gl_LightVector[ i ].b, b);
+    glUniform1f(gl_LightVector[ i ].c, c);
 
 
 //    cout << "Saliendo de llumsToGPU " << endl;

@@ -38,11 +38,38 @@ struct Light
     vec4 direccion;
     int tipo;
     float angulo;    
+    float a;
+    float b;
+    float c;
 };
 uniform Light luz[3];
 
 uniform vec3 vLuzAmbiente;
 
+float calculateAtenuation(int i){
+
+    if (luz[i].tipo == 1){
+        return 1.0;
+    }
+
+    float a = luz[i].a;
+    float b = luz[i].b;
+    float c = luz[i].c;
+    float d = length(luz[i].coordenadas.xyz - vPosition.xyz);
+
+    return (1.0)/( (a * pow(d,2.0)) + b*d + c );
+}
+
+vec3 calculatePhong(int i){
+    vec3 V = normalize(vec3(0.0,0.0,10.0) - vPosition.xyz);      // Posicion Camara
+    vec3 N = vNormal;                       // Normal de vertice
+    vec3 L = normalize(luz[i].coordenadas.xyz - vPosition.xyz);  // Posicion luz
+    vec3 H = (V + L)/abs(V + L);            // Vector medio normalizado
+    float LN = dot(L,N);                    // Vector resultante de multiplicar L * N
+    float NH = dot(N,H);                    // Vector resultante de multiplicar N * H
+
+    return (IMaterial.kd * luz[i].difusa * max(LN,0)) + (IMaterial.ka * luz[i].ambiental) + (IMaterial.ks * luz[i].especular * pow(max(NH,0),IMaterial.shininess));
+}
 
 void main()
 {
@@ -51,29 +78,11 @@ void main()
 //  color = vec4(luz[0].difusa[0], luz[0].difusa[1], luz[0].difusa[2], 1.0);
 //  color = vec4(abs(vNormal.x), abs(vNormal.y), abs(vNormal.z), 1.0);
 
+  vec3 phong1 = calculateAtenuation(0) * calculatePhong(0);
+  vec3 phong2 = calculateAtenuation(1) * calculatePhong(1);
+  vec3 phong3 = calculateAtenuation(2) * calculatePhong(2);
 
-
-  vec3 V = normalize(vec3(0.0,0.0,10.0) - vPosition.xyz);      // Posicion Camara
-  vec3 N = vNormal;                 // Normal de vertice
-  vec3 L = normalize(luz[2].coordenadas.xyz - vPosition.xyz);  // Posicion luz
-  vec3 H = (V + L)/abs(V + L);      // Vector medio normalizado
-  vec3 LN = L*N;                    // Vector resultante de multiplicar L * N
-  vec3 NH = N*H;                    // Vector resultante de multiplicar N * H
-//  vec3 NH_2 = dot(N*H, IMaterial.shininess);    // Vector resultante de multiplicar (N * H)^shininess
-
-  float Ir = 0.0;
-  float Ib = 0.0;
-  float Ig = 0.0;
-
-  vec3 phong1 = (IMaterial.kd * luz[0].difusa * LN) + (IMaterial.ka * luz[0].ambiental) + (IMaterial.ks * luz[0].especular * NH);
-  vec3 phong2 = (IMaterial.kd * luz[1].difusa * LN) + (IMaterial.ka * luz[1].ambiental) + (IMaterial.ks * luz[1].especular * NH);
-  vec3 phong3 = (IMaterial.kd * luz[2].difusa * LN) + (IMaterial.ka * luz[2].ambiental) + (IMaterial.ks * luz[2].especular * NH);
-
-  vec3 ITotal = vLuzAmbiente + phong1 + phong2 + phong3;
-
-//  Ir = (IMaterial.kd[0] * luz[0].difusa[0] * LN) + (IMaterial.ka[0] * luz[0].ambiental[0]) + (IMaterial.ks[0] * luz[0].especular[0] * NH);
-//  Ig = (IMaterial.kd[1] * luz[0].difusa[1] * LN) + (IMaterial.ka[1] * luz[0].ambiental[1]) + (IMaterial.ks[1] * luz[0].especular[1] * NH^IMaterial.shininess);
-//  Ib = (IMaterial.kd[2] * luz[0].difusa[2] * LN) + (IMaterial.ka[2] * luz[0].ambiental[2]) + (IMaterial.ks[2] * luz[0].especular[2] * NH^IMaterial.shininess);
+  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 + phong2 + phong3;
 
   color = vec4(ITotal, 1.0);
 }

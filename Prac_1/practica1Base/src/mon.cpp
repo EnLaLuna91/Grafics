@@ -31,25 +31,15 @@ void Mon::llumsToGPU(QGLShaderProgram *program){
 
     int type = getLlumActual()->getType();
 
-    //    if (type == Puntual){
-    //        cout << "LuzPuntual: " << getLlumActual() << endl;
-    //        LuzPunt->setType(Puntual);
-    //        LuzDirec->setType(-1);
-    //        LuzSpot->setType(-1);
+//        if (LuzPunt->getSwitchOnOff() == 1 ){
             LuzPunt->ToGPU(program);
-    //    }else if (type == Direccional){
-    //        cout << "LuzDireccional: " << getLlumActual() << endl;
-    //        LuzPunt->setType(-1);
-    //        LuzDirec->setType(Direccional);
-    //        LuzSpot->setType(-1);
+//        }
+//        if (LuzDirec->getSwitchOnOff() == 1 ){
             LuzDirec->ToGPU(program);
-    //    }else if (type == SpotLight){
-    //        cout << "LuzSpotLight: " << getLlumActual() << endl;
-    //        LuzPunt->setType(-1);
-    //        LuzDirec->setType(-1);
-    //        LuzSpot->setType(SpotLight);
+//        }
+//        if (LuzSpot->getSwitchOnOff() == 1 ){
             LuzSpot->ToGPU(program);
-    //    }
+//        }
 
 
 }

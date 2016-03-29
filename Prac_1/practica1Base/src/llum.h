@@ -30,6 +30,10 @@ class Llum {
 
         int type;
 
+        float a, b, c;
+
+
+
         // 1. Es declara un vector d'identificadors
         struct gl_Light{
             GLuint ambiental;
@@ -39,6 +43,9 @@ class Llum {
             GLuint direccion;
             GLuint tipo;
             GLuint angulo;
+            GLuint a;
+            GLuint b;
+            GLuint c;
         };
         gl_Light gl_LightVector[3];
 
@@ -54,6 +61,10 @@ class Llum {
         virtual void switchOnOff();
         virtual void setLightDirecction(vec4 v);
         virtual vec4 getLightDirecction();
+        virtual float getA();
+        virtual float getB();
+        virtual float getC();
+        virtual int getSwitchOnOff();
 
         /* Getterts & Setters extras */
 

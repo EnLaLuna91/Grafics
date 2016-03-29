@@ -9,6 +9,8 @@
 
 class llumDireccional: public Llum
 {
+protected:
+    int on;
 public:
     llumDireccional();
     ~llumDireccional();
@@ -19,6 +21,10 @@ public:
     void switchOnOff();
     void setLightDirecction(vec4 v);
     vec4 getLightDirecction();
+    float getA();
+    float getB();
+    float getC();
+    int getSwitchOnOff();
 
     int getType();
     void ToGPU(QGLShaderProgram *program);

@@ -9,6 +9,8 @@
 
 class llumSpotlight: public Llum
 {
+protected:
+    int on;
 private:
 
     /* Angulo para el SpotLight */
@@ -23,6 +25,10 @@ public:
     void switchOnOff();
     void setLightDirecction(vec4 v);
     vec4 getLightDirecction();
+    float getA();
+    float getB();
+    float getC();
+    int getSwitchOnOff();
 
     int getType();
     void ToGPU(QGLShaderProgram *program);
