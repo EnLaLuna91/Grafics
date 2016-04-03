@@ -14,25 +14,12 @@ Material::Material() {
 //    this->shininess = 0.4;
 
     /* Red Color*/
-//    kd = {0.8, 0.0, 0.0};
-    kd[0] = 0.8f;
-    kd[1] = 0.0f;
-    kd[2] = 0.0f;
 
-//    ks = {1.0, 1.0, 1.0};
+    this->ka = vec3(0.2f, 0.2f, 0.2f);
+    this->kd = vec3(0.8f, 0.0f, 0.0f);
+    this->ks = vec3(1.0f, 1.0f, 1.0f);
+    this->shininess = 20.0f;
 
-    ks[0] = 1.0f;
-    ks[1] = 1.0f;
-    ks[2] = 1.0f;
-
-
-//    ka = {0.2, 0.2, 0.2};
-
-    ka[0] = 0.2f;
-    ka[1] = 0.2f;
-    ka[2] = 0.2f;
-
-    shininess = 20.0;
 
 
     /* Silver Material  */

@@ -32,8 +32,6 @@ class Llum {
 
         float a, b, c;
 
-
-
         // 1. Es declara un vector d'identificadors
         struct gl_Light{
             GLuint ambiental;
