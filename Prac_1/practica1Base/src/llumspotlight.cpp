@@ -114,11 +114,11 @@ void llumSpotlight::ToGPU(QGLShaderProgram *program){
     // 3. Bind de les zones de memoria que corresponen
     // glUniform4fv(gl_IdVect[ i ].ex1, 1, vectorProva);   // vectorProva és una variable de tipus vec4
 
-    glUniform3fv(gl_LightVector[ i ].ambiental, 1, this->ambiental);
-    glUniform3fv(gl_LightVector[ i ].especular, 1, this->especular);
-    glUniform3fv(gl_LightVector[ i ].difusa, 1, this->difusa);
-    glUniform3fv(gl_LightVector[ i ].coordenadas, 1, this->coordenadas);
-    glUniform3fv(gl_LightVector[ i ].direccion, 1, this->direccion);
+    glUniform3fv(gl_LightVector[ i ].ambiental, 1, ambiental);
+    glUniform3fv(gl_LightVector[ i ].especular, 1, especular);
+    glUniform3fv(gl_LightVector[ i ].difusa, 1, difusa);
+    glUniform3fv(gl_LightVector[ i ].coordenadas, 1, coordenadas);
+    glUniform3fv(gl_LightVector[ i ].direccion, 1, direccion);
     glUniform1f(gl_LightVector[ i ].tipo, i);
     glUniform1f(gl_LightVector[ i ].angulo, angulo);
     glUniform1f(gl_LightVector[ i ].a, a);

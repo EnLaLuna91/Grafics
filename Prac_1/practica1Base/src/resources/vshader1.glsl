@@ -64,16 +64,16 @@ float calculateAtenuation(int i){
 
 vec3 calculatePhong(int i){
     vec3 V = normalize(vec3(0.0f,0.0f,10.0f) - vPosition.xyz);      // Posicion Camara
-    vec3 N = vNormal;                       // Normal de vertice
+    vec3 N = -vNormal;                       // Normal de vertice
     vec3 L = normalize(luz[i].coordenadas.xyz - vPosition.xyz);  // Posicion luz
-    vec3 H = (V + L)/abs(V + L);            // Vector medio normalizado
+    vec3 H = (L + V)/length(L + V);            // Vector medio normalizado
     float LN = dot(L,N);                    // Vector resultante de multiplicar L * N
     float NH = dot(N,H);                    // Vector resultante de multiplicar N * H
 
     float maxNH = max(NH,0);
     float powMax_Shininess = pow(maxNH, IMaterial.shininess);
 
-    vec3 d = IMaterial.kd * luz[i].difusa * max(LN,0);
+    vec3 d = cross(luz[i].difusa,IMaterial.kd) * max(LN,0);
     vec3 s = IMaterial.ks * luz[i].especular * powMax_Shininess;
     vec3 a = IMaterial.ka * luz[i].ambiental;
 
@@ -84,10 +84,11 @@ void main()
 {
   gl_Position = vPosition;
 //  color = vec4(IMaterial.kd[0], IMaterial.kd[1], IMaterial.kd[2], 1.0);
-//  color = vec4(luz[0].especular[0], luz[0].especular[1], luz[0].especular[2], 1.0);
+//  color = vec4(luz[0].difusa[0], luz[0].difusa[1], luz[0].difusa[2], 1.0);
 //  color = vec4(abs(vNormal.x), abs(vNormal.y), abs(vNormal.z), 1.0);
-  vec3 L = normalize(luz[0].coordenadas.xyz - vPosition.xyz);
-  color = vec4(abs(L.x), abs(L.y), abs(L.z), 1.0);
+//  vec3 L = normalize(luz[0].coordenadas.xyz - vPosition.xyz);
+//  color = vec4(abs(L.x), abs(L.y), abs(L.z), 1.0);
+
 
   vec3 phong1 = calculateAtenuation(0) * calculatePhong(0);
 //  vec3 phong2 = calculateAtenuation(1) * calculatePhong(1);
@@ -96,5 +97,6 @@ void main()
   vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
 //  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 + phong2 + phong3;
 
-  color = vec4(ITotal, 1.0f);
+//  color = vec4(ITotal, 1.0f);
+  color = vec4(phong1, 1.0f);
 }

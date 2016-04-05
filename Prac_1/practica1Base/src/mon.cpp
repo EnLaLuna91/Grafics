@@ -2,9 +2,9 @@
 
 Mon::Mon() {    
 //     cout << "Entrando en MON " << endl;
-    AmbientLight[0] = 0.3;
-    AmbientLight[1] = 0.3;
-    AmbientLight[2] = 0.3;
+    AmbientLight[0] = 0.01;
+    AmbientLight[1] = 0.01;
+    AmbientLight[2] = 0.01;
 }
 
 Mon::~Mon() {
@@ -31,14 +31,16 @@ void Mon::llumsToGPU(QGLShaderProgram *program){
 
     int type = getLlumActual()->getType();
 
+    getLlumActual()->ToGPU(program);
+
 //        if (LuzPunt->getSwitchOnOff() == 1 ){
-            LuzPunt->ToGPU(program);
+//            LuzPunt->ToGPU(program);
 //        }
 //        if (LuzDirec->getSwitchOnOff() == 1 ){
-            LuzDirec->ToGPU(program);
+//            LuzDirec->ToGPU(program);
 //        }
 //        if (LuzSpot->getSwitchOnOff() == 1 ){
-            LuzSpot->ToGPU(program);
+//            LuzSpot->ToGPU(program);
 //        }
 
 
@@ -46,14 +48,6 @@ void Mon::llumsToGPU(QGLShaderProgram *program){
 
 void Mon::addLlum(Llum *l) {
     llums.push_back(l);
-
-    int type = getLlumActual()->getType();
-
-
-    LuzPunt = new llumPuntual;
-    LuzDirec = new llumDireccional;
-    LuzSpot = new llumSpotlight;
-
 }
 void Mon::setAmbientToGPU(QGLShaderProgram *program){
     GLuint LuzAmbient = program->uniformLocation("vLuzAmbiente");
