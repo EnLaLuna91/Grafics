@@ -77,7 +77,7 @@ vec3 calculatePhong(int i){
     vec3 s = IMaterial.ks * luz[i].especular * powMax_Shininess;
     vec3 a = IMaterial.ka * luz[i].ambiental;
 
-    return d + + s + a;
+    return d;
 }
 
 void main()
@@ -86,6 +86,8 @@ void main()
 //  color = vec4(IMaterial.kd[0], IMaterial.kd[1], IMaterial.kd[2], 1.0);
 //  color = vec4(luz[0].especular[0], luz[0].especular[1], luz[0].especular[2], 1.0);
 //  color = vec4(abs(vNormal.x), abs(vNormal.y), abs(vNormal.z), 1.0);
+  vec3 L = normalize(luz[0].coordenadas.xyz - vPosition.xyz);
+  color = vec4(abs(L.x), abs(L.y), abs(L.z), 1.0);
 
   vec3 phong1 = calculateAtenuation(0) * calculatePhong(0);
 //  vec3 phong2 = calculateAtenuation(1) * calculatePhong(1);
