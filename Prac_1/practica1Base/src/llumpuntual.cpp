@@ -3,15 +3,15 @@
 llumPuntual::llumPuntual():Llum(Puntual)
 {
 
-    this->type = Puntual;
+    type = Puntual;
 
-    this->ambiental = vec3(0.2f, 0.2f, 0.2f);
+    ambiental = vec3(0.2f, 0.2f, 0.2f);
 
-    this->especular = vec3(1.0f, 1.0f, 1.0f);
+    especular = vec3(1.0f, 0.0f, 0.0f);
 
-    this->difusa = vec3(0.8f, 0.8f, 0.8f);
+    difusa = vec3(0.8f, 0.8f, 0.8f);
 
-    this->coordenadas = vec4(2.0f, 2.0f, 2.0f, 1.0f);
+    coordenadas = vec4(2.0f, 2.0f, 2.0f, 1.0f);
 
     direccion[0] = 0.0;
     direccion[1] = 0.0;

@@ -67,7 +67,7 @@ vec3 calculatePhong(int i){
     vec3 V = normalize(vObs - vPosition.xyz);  // Posicion Camara
     vec3 N = vNormal;                   // Normal de vertice
 //    vec3 N = vec3(-abs(vNormal.x), -abs(vNormal.y), -abs(vNormal.z));
-    vec3 L = luz[i].coordenadas.xyz - vPosition.xyz; // Posicion luz
+    vec3 L = normalize(luz[i].coordenadas.xyz - vPosition.xyz); // Posicion luz
 //    L.x = abs(L.x);
 //    L.y = abs(L.y);
 //    L.z = abs(L.z);
@@ -82,7 +82,7 @@ vec3 calculatePhong(int i){
     vec3 s = cross(luz[i].especular, IMaterial.ks) * powMax_Shininess;
     vec3 a = cross(luz[i].ambiental, IMaterial.ka);
 
-    return (d + s + a);
+    return d + s + a;
 }
 
 void main()
@@ -94,23 +94,23 @@ void main()
 //  vec3 L = normalize(luz[0].coordenadas.xyz - vPosition.xyz);
 //  color = vec4(abs(L.x), abs(L.y), abs(L.z), 1.0);
 
-  vec3 phong1 = calculateAtenuation(0) * calculatePhong(0);
+  vec3 phong1 = calculatePhong(0);
 //  vec3 phong2 = calculateAtenuation(1) * calculatePhong(1);
 //  vec3 phong3 = calculateAtenuation(2) * calculatePhong(2);
 
-  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
+//  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
 //  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 + phong2 + phong3;
 
-  if (ITotal.x > 1.0){
-      ITotal.x = 1.0;
-  }
-  if (ITotal.y > 1.0){
-      ITotal.y = 1.0;
-  }
-  if (ITotal.z > 1.0){
-      ITotal.y = 1.0;
-  }
+//  if (ITotal.x > 1.0){
+//      ITotal.x = 1.0;
+//  }
+//  if (ITotal.y > 1.0){
+//      ITotal.y = 1.0;
+//  }
+//  if (ITotal.z > 1.0){
+//      ITotal.y = 1.0;
+//  }
 
-  color = vec4(ITotal, 1.0f);
-//  color = vec4(phong1, 1.0f);
+//  color = vec4(ITotal, 1.0f);
+  color = vec4(phong1, 1.0f);
 }

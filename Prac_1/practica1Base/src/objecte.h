@@ -37,6 +37,8 @@ protected:
     Material *mat;
 
     QGLShaderProgram *program;
+
+    QOpenGLTexture *texture;
 public:
 
     Objecte(const int npoints, QObject *parent = 0);
@@ -53,6 +55,7 @@ public:
 private:
     void construeix_cara ( char **words, int nwords);
     void calculaNormal();
+    void initTextura();
 };
 
 

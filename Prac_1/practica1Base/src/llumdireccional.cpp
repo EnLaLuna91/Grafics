@@ -3,13 +3,13 @@
 llumDireccional::llumDireccional():Llum(Direccional)
 {
 
-    this->type = Direccional;
+    type = Direccional;
 
-    this->ambiental = vec3(0.2f, 0.2f, 0.2f);
+    ambiental = vec3(0.2f, 0.2f, 0.2f);
 
-    this->especular = vec3(1.0f, 1.0f, 1.0f);
+    especular = vec3(1.0f, 1.0f, 1.0f);
 
-    this->difusa = vec3(0.8f, 0.0f, 0.0f);
+    difusa = vec3(0.8f, 0.0f, 0.0f);
 
     coordenadas[0] = 0.0;
     coordenadas[1] = 0.0;

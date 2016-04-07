@@ -19,6 +19,7 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
 //        cout << "normalesAcumulada["<<i<<"]: " << normalesAcumulada[i] <<  endl;
 //    }
     make();
+//    initTextura();
 }
 
 
@@ -28,6 +29,10 @@ Objecte::~Objecte(){
     delete normales;
 }
 
+/**
+ * Calcula la normal para vertices
+ * @brief Objecte::calculaNormal
+ */
 void Objecte::calculaNormal(){
     normalesAcumulada.resize(vertexs.size());
     for (unsigned int i=0; i<normalesAcumulada.size();i++)
@@ -45,6 +50,25 @@ void Objecte::calculaNormal(){
     for (unsigned int i=0; i<normalesAcumulada.size();i++)
         normalesAcumulada[i] = normalize(normalesAcumulada[i]);
 }
+
+/**
+ * Carga la textura
+ * @brief Objecte::initTextura
+ */
+void Objecte::initTextura()
+ {
+     qDebug() << "Initializing textures...";
+
+
+     // Carregar la textura
+     glActiveTexture(GL_TEXTURE0);
+     texture = new QOpenGLTexture(QImage("://resources/mosaic.png"));
+     texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
+     texture->setMagnificationFilter(QOpenGLTexture::Linear);
+
+     texture->bind(0);
+
+ }
 
 /**
  * @brief Objecte::toGPU

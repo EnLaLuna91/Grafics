@@ -3,17 +3,17 @@
 llumSpotlight::llumSpotlight():Llum(SpotLight)
 {
 
-    this->type = SpotLight;
+    type = SpotLight;
 
-    this->ambiental = vec3(0.2f);
+    ambiental = vec3(0.2f);
 
-    this->especular = vec3(0.2f);
+    especular = vec3(0.2f);
 
-    this->difusa[0] = 0.9f;
-    this->difusa[1] = 0.9f;
-    this->difusa[2] = 0.9f;
+    difusa[0] = 0.9f;
+    difusa[1] = 0.9f;
+    difusa[2] = 0.9f;
 
-    this->angulo = 0.45f;
+    angulo = 0.45f;
 
     coordenadas[0] = -1.0f;
     coordenadas[1] = 1.0f;
