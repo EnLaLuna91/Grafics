@@ -153,9 +153,11 @@ void GLWidget::initializeGL() {
 
     // Creacio d'una llum per apoder modificar el seus valors amb la interficie
     Llum *l = new llumPuntual;
-//    l->setTipusLlum(Direccional);
-//    l->setTipusLlum(SpotLight);
     mon->addLlum(l);
+//    l = new llumDireccional;
+//    mon->addLlum(l);
+//    l = new llumSpotlight;
+//    mon->addLlum(l);
     mon->llumsToGPU(program);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

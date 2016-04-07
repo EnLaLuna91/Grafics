@@ -32,16 +32,10 @@ void Mon::llumsToGPU(QGLShaderProgram *program){
     int type = getLlumActual()->getType();
 
     getLlumActual()->ToGPU(program);
+//    llums[0]->ToGPU(program);
+//    llums[1]->ToGPU(program);
+//    llums[2]->ToGPU(program);
 
-//        if (LuzPunt->getSwitchOnOff() == 1 ){
-//            LuzPunt->ToGPU(program);
-//        }
-//        if (LuzDirec->getSwitchOnOff() == 1 ){
-//            LuzDirec->ToGPU(program);
-//        }
-//        if (LuzSpot->getSwitchOnOff() == 1 ){
-//            LuzSpot->ToGPU(program);
-//        }
 
 
 }
