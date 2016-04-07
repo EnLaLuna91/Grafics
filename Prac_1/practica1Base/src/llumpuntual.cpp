@@ -7,7 +7,7 @@ llumPuntual::llumPuntual():Llum(Puntual)
 
     ambiental = vec3(0.2f, 0.2f, 0.2f);
 
-    especular = vec3(1.0f, 0.0f, 0.0f);
+    especular = vec3(1.0f, 1.0f, 1.0f);
 
     difusa = vec3(0.8f, 0.8f, 0.8f);
 

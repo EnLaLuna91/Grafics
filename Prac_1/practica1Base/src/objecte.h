@@ -39,6 +39,8 @@ protected:
     QGLShaderProgram *program;
 
     QOpenGLTexture *texture;
+
+    vec2 *vertexsTextura;
 public:
 
     Objecte(const int npoints, QObject *parent = 0);

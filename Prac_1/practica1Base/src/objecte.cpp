@@ -14,6 +14,7 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     mat = new Material;
     readObj(n);
     normales = new vec3[numPoints];
+    vertexsTextura = new vec2[numPoints];
     calculaNormal();
 //    for (int i=0;i<normalesAcumulada.size();i++){
 //        cout << "normalesAcumulada["<<i<<"]: " << normalesAcumulada[i] <<  endl;
@@ -62,7 +63,7 @@ void Objecte::initTextura()
 
      // Carregar la textura
      glActiveTexture(GL_TEXTURE0);
-     texture = new QOpenGLTexture(QImage("://resources/mosaic.png"));
+     texture = new QOpenGLTexture(QImage("://resources/textures/earth1.png"));
      texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
      texture->setMagnificationFilter(QOpenGLTexture::Linear);
 
@@ -102,6 +103,7 @@ void Objecte::draw(){
 
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, sizeof(vec3)*Index, &normales[0] );
 
     int vertexLocation = program->attributeLocation("vPosition");
 //    int colorLocation = program->attributeLocation("vColor");
