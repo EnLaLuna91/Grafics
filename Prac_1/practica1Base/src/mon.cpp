@@ -2,9 +2,9 @@
 
 Mon::Mon() {    
 //     cout << "Entrando en MON " << endl;
-    AmbientLight[0] = 0.01;
-    AmbientLight[1] = 0.01;
-    AmbientLight[2] = 0.01;
+    AmbientLight[0] = 0.3;
+    AmbientLight[1] = 0.3;
+    AmbientLight[2] = 0.3;
 }
 
 Mon::~Mon() {

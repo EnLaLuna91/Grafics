@@ -25,7 +25,7 @@ llumDireccional::llumDireccional():Llum(Direccional)
     b = 0.0f;
     c = 1.0f;
 
-    on = 0;
+    on = 1;
 
 }
 

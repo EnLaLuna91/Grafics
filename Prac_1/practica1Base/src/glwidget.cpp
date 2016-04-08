@@ -82,6 +82,9 @@ void GLWidget::updateXPositionLight(int xposition) {
     vec4 v = mon->getLlumActual()->getLightPosition();
     v[0] = (float)xposition;
     mon->getLlumActual()->setLightPosition(v);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
+    updateGL();
+
 }
 
 void GLWidget::updateYPositionLight(int yposition) {
@@ -89,6 +92,8 @@ void GLWidget::updateYPositionLight(int yposition) {
     vec4 v = mon->getLlumActual()->getLightPosition();
     v[1] = (float)yposition;
     mon->getLlumActual()->setLightPosition(v);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
+    updateGL();
 }
 
 void GLWidget::updateZPositionLight(int zposition) {
@@ -96,6 +101,8 @@ void GLWidget::updateZPositionLight(int zposition) {
     vec4 v = mon->getLlumActual()->getLightPosition();
     v[2] = (float)zposition;
     mon->getLlumActual()->setLightPosition(v);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
+    updateGL();
 }
 
 void GLWidget::updateLightIntensity(int intens) {
@@ -107,13 +114,19 @@ void GLWidget::updateLightIntensity(int intens) {
     intensitat[2] = intens/200.0; // el 200 es l'escala del scrollbar
 
      mon->getLlumActual()->setDiffuseIntensity(intensitat);
+
      mon->llumsToGPU(program[ultimoProgramCargado]);
      updateGL();
+
 
 }
 
 void GLWidget::activateLight(){
+
     mon->getLlumActual()->switchOnOff();
+    mon->llumsToGPU(program[ultimoProgramCargado]);
+    updateGL();
+
 }
 
 void GLWidget::activaBumpMapping() {
@@ -180,12 +193,13 @@ void GLWidget::initializeGL() {
     mon->setAmbientToGPU(program[ultimoProgramCargado]);
 
     // Creacio d'una llum per apoder modificar el seus valors amb la interficie
-    Llum *l = new llumPuntual;
-    mon->addLlum(l);
-//    l = new llumDireccional;
-//    mon->addLlum(l);
-//    l = new llumSpotlight;
-//    mon->addLlum(l);
+    Llum *l1 = new llumPuntual;
+    Llum *l2 = new llumDireccional;
+    Llum *l3 = new llumSpotlight;
+    mon->addLlum(l2);
+    mon->addLlum(l3);
+    mon->addLlum(l1);
+
     mon->llumsToGPU(program[ultimoProgramCargado]);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -44,6 +44,7 @@ void Llum::setLightPosition(vec4 v) {
 void Llum::switchOnOff() {
     // Si esta en on la posa a off i a l'inreves
 
+
 }
 
 int Llum::getSwitchOnOff(){

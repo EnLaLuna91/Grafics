@@ -105,7 +105,7 @@ void main()
 
 //  vec3 ITotal = calculateAmbient(0) + phong1;
 //  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 + phong2 + phong3;
-  vec3 ITotal = calculateAmbient(0) + phong1 ;
+  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 ;
 //  if (ITotal.x > 1.0){
 //      ITotal.x = 1.0;
 //  }
