@@ -18,14 +18,26 @@ GLWidget::~GLWidget() {
 
 void GLWidget::activaToonShader() {
     //A implementar a la practica 1
+    ultimoProgramCargado = Toon;
+    initShadersGPU();
+    updateGL();
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
 void GLWidget::activaPhongShader() {
     //A implementar a la practica 1
+    ultimoProgramCargado = Phong;
+    initShadersGPU();
+    updateGL();
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
 void GLWidget::activaGouraudShader() {
     //A implementar a la practica 1
+    ultimoProgramCargado = Gouraud;
+    initShadersGPU();
+    updateGL();
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
 void GLWidget::activaPhongTex() {
@@ -50,19 +62,19 @@ void GLWidget::ensenyaMenuLlum0() {
 void GLWidget::changePositionLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
     mon->getLlumActual()->setTipusLlum(Puntual);
-    mon->llumsToGPU(program);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 
 }
 void GLWidget::changeDirectionalLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
    mon->getLlumActual()->setTipusLlum(Direccional);
-   mon->llumsToGPU(program);
+   mon->llumsToGPU(program[ultimoProgramCargado]);
 
 }
 void GLWidget::changeSpotLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
     mon->getLlumActual()->setTipusLlum(SpotLight);
-    mon->llumsToGPU(program);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 
 }
 void GLWidget::updateXPositionLight(int xposition) {
@@ -95,7 +107,7 @@ void GLWidget::updateLightIntensity(int intens) {
     intensitat[2] = intens/200.0; // el 200 es l'escala del scrollbar
 
      mon->getLlumActual()->setDiffuseIntensity(intensitat);
-     mon->llumsToGPU(program);
+     mon->llumsToGPU(program[ultimoProgramCargado]);
      updateGL();
 
 }
@@ -119,18 +131,33 @@ void GLWidget::InitShader(const char* vShaderFile, const char* fShaderFile){
     vshader->compileSourceFile(vShaderFile);
     fshader->compileSourceFile(fShaderFile);
 
-    program = new QGLShaderProgram(this);
-    program->addShader(vshader);
-    program->addShader(fshader);
-    program->link();
-    program->bind();
+
+    program[ultimoProgramCargado] = new QGLShaderProgram(this);
+    program[ultimoProgramCargado]->addShader(vshader);
+    program[ultimoProgramCargado]->addShader(fshader);
+    program[ultimoProgramCargado]->link();
+    program[ultimoProgramCargado]->bind();
+
+
+//    program = new QGLShaderProgram(this);
+//    program->addShader(vshader);
+//    program->addShader(fshader);
+//    program->link();
+//    program->bind();
 }
 
 /**
  * @brief GLWidget::initShadersGPU
  */
 void GLWidget::initShadersGPU(){
-    InitShader("://resources/vshader1.glsl", "://resources/fshader1.glsl");
+//    InitShader("://resources/vshader1.glsl", "://resources/fshader1.glsl");
+
+    if (ultimoProgramCargado == Gouraud)
+        InitShader("://resources/vshaderGouraud.glsl", "://resources/fshaderGouraud.glsl");
+    else if (ultimoProgramCargado == Phong)
+        InitShader("://resources/vshaderPhong.glsl", "://resources/fshaderPhong.glsl");
+    else if (ultimoProgramCargado == Toon)
+        InitShader("://resources/vshaderToon.glsl", "://resources/fshaderToon.glsl");
 }
 
 QSize GLWidget::minimumSizeHint() const {
@@ -147,9 +174,10 @@ void GLWidget::initializeGL() {
     glEnable(GL_RGBA);
     glEnable(GL_DOUBLE);
 
+    ultimoProgramCargado = Gouraud;
     initShadersGPU();
 
-    mon->setAmbientToGPU(program);
+    mon->setAmbientToGPU(program[ultimoProgramCargado]);
 
     // Creacio d'una llum per apoder modificar el seus valors amb la interficie
     Llum *l = new llumPuntual;
@@ -158,7 +186,7 @@ void GLWidget::initializeGL() {
 //    mon->addLlum(l);
 //    l = new llumSpotlight;
 //    mon->addLlum(l);
-    mon->llumsToGPU(program);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -189,7 +217,7 @@ void GLWidget::resizeGL(int width, int height) {
 void GLWidget::newObj(QString fichero){
     qDebug() << fichero;
     Objecte * obj = new Objecte(100000, fichero);
-    obj->toGPU(program);
+    obj->toGPU(program[ultimoProgramCargado]);
     mon->addObjecte(obj);
 
     updateGL();

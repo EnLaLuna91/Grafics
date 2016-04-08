@@ -10,6 +10,8 @@
 #define PROGRAM_VERTEX_ATTRIBUTE 0
 #define PROGRAM_COLOR_ATTRIBUTE 1
 
+enum Programs {Gouraud, Phong, Toon};
+
 class QGLShaderProgram;
 
 class GLWidget : public QGLWidget
@@ -58,9 +60,12 @@ private:
     // Clase en la q se va llenando de objetos para generar la esfera
     Mon *mon;
 
-    QGLShaderProgram *program;
+//    QGLShaderProgram *program;
+    QGLShaderProgram *program[3];
 
-    void InitShader( const char* vertexShaderFile, const char* fragmentShaderFile );
+    Programs ultimoProgramCargado;
+
+    void InitShader( const char* vertexShaderFile, const char* fragmentShaderFile);
     void initShadersGPU();
 };
 
