@@ -36,7 +36,7 @@ struct Light
     float a;
     float b;
     float c;
-    int on;
+    bool on;
 };
 uniform Light luz[3];
 
@@ -68,13 +68,12 @@ vec3 calculatePhong(int i, vec3 L){
     vec3 vObs = vec3(0.0f,0.0f,10.0f);
     vec3 V = normalize(vObs - Position.xyz);  // Posicion Camara
     vec3 N = Normal;            // Normal de vertice
-    vec3 H = normalize(V+L);    // Vector medio normalizado
-    float LN = dot(L,N);        // Producto escalar resultante de multiplicar L * N
-    float NH = dot(N,H);        // Producto escalar resultante de multiplicar N * H
+    vec3 H = normalize(L+V);    // Vector medio normalizado
 
-    vec3 d = (luz[i].difusa * IMaterial.kd) * max(LN,0.0);
-    vec3 s = (luz[i].especular * IMaterial.ks) * pow(max(NH,0.0), IMaterial.shininess);
+    vec3 d = (luz[i].difusa * IMaterial.kd) * max(dot(L,N),0.0);
+    vec3 s = (luz[i].especular * IMaterial.ks) * pow(max(dot(N,H),0.0), IMaterial.shininess);
     vec3 a = (luz[i].ambiental * IMaterial.ka);
+
 
     return d+s+a;
 }
@@ -104,20 +103,20 @@ void main()
     vec3 phong3 = vec3(0.0, 0.0, 0.0);
 
     // Luz Puntual
-    if (luz[0].on == 1){
-        vec3 L = (luz[0].coordenadas.xyz - Position.xyz); // de la luz respecto al objeto
+    if (luz[0].on == true){
+        vec3 L = normalize(luz[0].coordenadas.xyz - Position.xyz); // de la luz respecto al objeto
         phong1 = calculateAtenuation(0) * calculatePhong(0, L);
     }
 
     // Luz Direccional
-    if (luz[1].on == 1){
-        vec3 L = (luz[1].direccion.xyz - Position.xyz); // de la luz respecto al objeto
+    if (luz[1].on == true){
+        vec3 L = normalize(luz[1].direccion.xyz - Position.xyz); // de la luz respecto al objeto
         phong2 = 1.0f * calculatePhong(1, L);
     }
 
     // Luz SpotLight
-    if (luz[2].on == 1){
-        vec3 L = (luz[2].direccion.xyz - Position.xyz); // de la luz respecto al objeto
+    if (luz[2].on == true){
+        vec3 L = normalize(luz[2].direccion.xyz - Position.xyz); // de la luz respecto al objeto
         /* Se calcula con la dirección + anchura */
 
         if (colorSpotLaight(2))

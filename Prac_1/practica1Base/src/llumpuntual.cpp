@@ -22,7 +22,7 @@ llumPuntual::llumPuntual():Llum(Puntual)
     b = 0.0f;
     c = 1.0f;
 
-    on = 1;
+    on = true;
 }
 
 llumPuntual::~llumPuntual(){
@@ -46,10 +46,10 @@ void llumPuntual::setLightPosition(vec4 v){
 }
 
 void llumPuntual::switchOnOff(){
-    if (on == 0)
-        on = 1;
+    if (on == false)
+        on = true;
     else
-        on = 0;
+        on = false;
 }
 
 int llumPuntual::getSwitchOnOff(){
@@ -120,7 +120,7 @@ void llumPuntual::ToGPU(QGLShaderProgram *program){
     glUniform1f(gl_LightVector[ i ].a, a);
     glUniform1f(gl_LightVector[ i ].b, b);
     glUniform1f(gl_LightVector[ i ].c, c);
-    glUniform1f(gl_LightVector[ i ].on, on);
+    glUniform1i(gl_LightVector[ i ].on, on);
 
 
 //    cout << "Saliendo de llumsToGPU " << endl;

@@ -9,8 +9,6 @@
 
 class llumDireccional: public Llum
 {
-protected:
-    int on;
 public:
     llumDireccional();
     ~llumDireccional();

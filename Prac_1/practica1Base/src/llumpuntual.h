@@ -9,8 +9,6 @@
 
 class llumPuntual: public Llum
 {
-protected:
-    int on;
 public:
     llumPuntual();
     ~llumPuntual();

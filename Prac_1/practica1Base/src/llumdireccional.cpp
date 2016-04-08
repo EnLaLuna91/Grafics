@@ -25,7 +25,7 @@ llumDireccional::llumDireccional():Llum(Direccional)
     b = 0.0f;
     c = 1.0f;
 
-    on = 1;
+    on = false;
 
 }
 
@@ -50,10 +50,10 @@ void llumDireccional::setLightPosition(vec4 v){
 }
 
 void llumDireccional::switchOnOff(){
-    if (on == 0)
-        on = 1;
+    if (on == false)
+        on = true;
     else
-        on = 0;
+        on = false;
 }
 
 int llumDireccional::getSwitchOnOff(){
@@ -123,7 +123,7 @@ void llumDireccional::ToGPU(QGLShaderProgram *program){
     glUniform1f(gl_LightVector[ i ].a, a);
     glUniform1f(gl_LightVector[ i ].b, b);
     glUniform1f(gl_LightVector[ i ].c, c);
-    glUniform1f(gl_LightVector[ i ].on, on);
+    glUniform1i(gl_LightVector[ i ].on, on);
 
 
 //    cout << "Saliendo de llumsToGPU " << endl;

@@ -9,8 +9,6 @@
 
 class llumSpotlight: public Llum
 {
-protected:
-    int on;
 private:
 
     /* Angulo para el SpotLight */
