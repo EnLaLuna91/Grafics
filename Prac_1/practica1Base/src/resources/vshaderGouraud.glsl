@@ -1,15 +1,17 @@
 #if __VERSION__<130
-#define IN varying
+#define IN attribute
 #define OUT varying
 #else
 #define IN in
 #define OUT out
 #endif
 
-//IN vec4 color;
-IN vec4 Position;
-IN vec3 Normal;
 
+IN vec4 vPosition;
+//IN vec4 vColor;
+IN vec3 vNormal;
+
+OUT vec4 color;
 
 
 /*
@@ -35,7 +37,7 @@ struct Light
     vec4 coordenadas;
     vec4 direccion;
     int tipo;
-    float angulo;
+    float angulo;    
     float a;
     float b;
     float c;
@@ -45,7 +47,7 @@ uniform Light luz[3];
 
 uniform vec3 vLuzAmbiente;
 
-float calculateAtenuation(int i, float d){
+float calculateAtenuation(int i){
 
     if (luz[i].tipo == 1){
         return 1.0f;
@@ -54,17 +56,18 @@ float calculateAtenuation(int i, float d){
     float a = luz[i].a;
     float b = luz[i].b;
     float c = luz[i].c;
-
+    float d = length(luz[i].coordenadas.xyz - vPosition.xyz);
     float powD = pow(d, 2.0f);
     float dividendo = (a * powD) + (b * d) + c;
 
     return 1.0f/dividendo;
 }
 
-vec3 calculatePhong(int i, vec3 L){
+vec3 calculatePhong(int i){
     vec3 vObs = vec3(0.0f,0.0f,10.0f);
-    vec3 V = normalize(vObs - Position.xyz);  // Posicion Camara
-    vec3 N = Normal;                   // Normal de vertice    
+    vec3 V = normalize(vObs - vPosition.xyz);  // Posicion Camara
+    vec3 N = vNormal;                   // Normal de vertice
+    vec3 L = (luz[i].coordenadas.xyz - vPosition.xyz); // Posicion luz
 
 //    vec3 H = (L+V/length(L+V));                // Vector medio normalizado
     vec3 H = normalize(V+L);
@@ -88,28 +91,14 @@ vec3 calculateAmbient(int i){
 
 void main()
 {
+  gl_Position = vPosition;
 //  color = vec4(IMaterial.kd[0], IMaterial.kd[1], IMaterial.kd[2], 1.0);
 //  color = vec4(luz[0].difusa[0], luz[0].difusa[1], luz[0].difusa[2], 1.0);
-//  color = vec4(abs(Normal.x), abs(Normal.y), abs(Normal.z), 1.0);
-//  vec3 L = normalize(luz[0].coordenadas.xyz - Position.xyz);
+//  color = vec4(abs(vNormal.x), abs(vNormal.y), abs(vNormal.z), 1.0);
+//  vec3 L = normalize(luz[0].coordenadas.xyz - vPosition.xyz);
 //  color = vec4(abs(L.x), abs(L.y), abs(L.z), 1.0);
 
 //  vec3 phong1 = calculatePhong(0);
-
-    vec3 ITotal = vec3(0.0, 0.0, 0.0);
-
-    for (int i=0; i < 3; i++){
-        if (luz[i].tipo == 0){
-            vec3 L = (luz[i].coordenadas.xyz - Position.xyz); // Posicion luz
-            float d = length(luz[i].coordenadas.xyz - Position.xyz);
-
-            ITotal += calculateAtenuation(i, d) * calculatePhong(i, L)
-        } else if (luz[i].tipo == 1){
-
-        }
-    }
-
-
   vec3 phong1 = calculateAtenuation(0) * calculatePhong(0);
 //  vec3 phong2 = calculateAtenuation(1) * calculatePhong(1);
 //  vec3 phong3 = calculateAtenuation(2) * calculatePhong(2);
@@ -127,7 +116,6 @@ void main()
 //      ITotal.y = 1.0;
 //  }
 
-  vec4 color = vec4(ITotal, 1.0f);
+  color = vec4(ITotal, 1.0f);
 //  color = vec4(phong1, 1.0f);
-  gl_FragColor = color;
 }
