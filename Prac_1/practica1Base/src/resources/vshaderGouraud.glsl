@@ -116,6 +116,7 @@ void main()
 //      ITotal.y = 1.0;
 //  }
 
-  color = vec4(ITotal, 1.0f);
+//    color = vec4(0.0,0.0,0.0,1.0);
+    color = vec4(ITotal, 1.0f);
 //  color = vec4(phong1, 1.0f);
 }

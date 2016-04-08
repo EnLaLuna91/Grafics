@@ -72,9 +72,6 @@ vec3 calculatePhong(int i, vec3 L){
     float LN = dot(L,N);        // Producto escalar resultante de multiplicar L * N
     float NH = dot(N,H);        // Producto escalar resultante de multiplicar N * H
 
-    float maxNH = max(NH,0.0);
-    float powMax_Shininess = pow(maxNH, IMaterial.shininess);
-
     vec3 d = (luz[i].difusa * IMaterial.kd) * max(LN,0.0);
     vec3 s = (luz[i].especular * IMaterial.ks) * pow(max(NH,0.0), IMaterial.shininess);
     vec3 a = (luz[i].ambiental * IMaterial.ka);
@@ -83,44 +80,58 @@ vec3 calculatePhong(int i, vec3 L){
 }
 
 
-vec3 comprobarAngulo(int i, vec3 L){
-    return vec3(0,0,0);
+/*
+ * Calcula si la posición esta dentro del angulo de la luz
+ */
+bool colorSpotLaight(int i){
+
+    vec3 direcc = normalize(luz[i].coordenadas.xyz - Position.xyz);
+
+    float angulo = dot(luz[i].direccion.xyz, direcc);
+
+    if (angulo > luz[i].angulo)
+        return true;
+
+    return false;
 }
 
 
 void main()
 {
-    vec3 phong = vec3(0.0, 0.0, 0.0);
 
-    for (int i=0; i < 3; i++){
+    vec3 phong1 = vec3(0.0, 0.0, 0.0);
+    vec3 phong2 = vec3(0.0, 0.0, 0.0);
+    vec3 phong3 = vec3(0.0, 0.0, 0.0);
 
-        // Luz Puntual
-        if (luz[i].tipo == 0 && luz[i].on == 1){
-            vec3 L = (luz[i].coordenadas.xyz - Position.xyz); // de la luz respecto al objeto
-            phong += calculateAtenuation(i) * calculatePhong(i, L);
-        }
-
-        // Luz Direccional
-        else if (luz[i].tipo == 1 && luz[i].on == 1){
-            vec3 L = (luz[i].direccion.xyz - Position.xyz); // de la luz respecto al objeto
-            phong += 1.0f * calculatePhong(i, L);
-        }
-
-        // Luz SpotLight
-        else if (luz[i].tipo == 2 && luz[i].on == 1){
-            vec3 L = (luz[i].direccion.xyz - Position.xyz); // de la luz respecto al objeto
-            /* Se calcula con la dirección + anchura */
-
-//            if (luz[i].angulo )
-            phong += calculateAtenuation(i) * calculatePhong(i, L);
-        }
+    // Luz Puntual
+    if (luz[0].on == 1){
+        vec3 L = (luz[0].coordenadas.xyz - Position.xyz); // de la luz respecto al objeto
+        phong1 = calculateAtenuation(0) * calculatePhong(0, L);
     }
+
+    // Luz Direccional
+    if (luz[1].on == 1){
+        vec3 L = (luz[1].direccion.xyz - Position.xyz); // de la luz respecto al objeto
+        phong2 = 1.0f * calculatePhong(1, L);
+    }
+
+    // Luz SpotLight
+    if (luz[2].on == 1){
+        vec3 L = (luz[2].direccion.xyz - Position.xyz); // de la luz respecto al objeto
+        /* Se calcula con la dirección + anchura */
+
+        if (colorSpotLaight(2))
+            phong3 = calculateAtenuation(2) * calculatePhong(2, L);
+        else
+            phong3 = vLuzAmbiente * IMaterial.ka;
+    }
+
 
 //    vec3 L = (luz[0].coordenadas.xyz - Position.xyz); // Posicion luz
 //    vec3 phong1 = calculateAtenuation(0) * calculatePhong(0, L);
 //    vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
 
-    vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong;
+    vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + (phong1 + phong2 + phong3);
 
     if (ITotal.x > 1.0){
         ITotal.x = 1.0;
