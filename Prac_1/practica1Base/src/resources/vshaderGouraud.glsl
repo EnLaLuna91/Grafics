@@ -68,23 +68,19 @@ vec3 calculatePhong(int i){
     vec3 N = vNormal;                   // Normal de vertice
     vec3 L = (luz[i].coordenadas.xyz - vPosition.xyz); // Posicion luz
 
-//    vec3 H = (L+V/length(L+V));                // Vector medio normalizado
-    vec3 H = normalize(V+L);
-    float LN = dot(L,N);                    // Vector resultante de multiplicar L * N
-    float NH = dot(N,H);                    // Vector resultante de multiplicar N * H
+    vec3 H = normalize(L+V/abs(L+V));                // Vector medio normalizado
+//    vec3 H = normalize(V+L);
 
-    float maxNH = max(NH,0.0);
-    float powMax_Shininess = pow(maxNH, IMaterial.shininess);
 
-    vec3 d = (luz[i].difusa * IMaterial.kd) * max(LN,0.0);
-    vec3 s = (luz[i].especular * IMaterial.ks) * pow(max(NH,0.0), IMaterial.shininess);
+    vec3 d = (luz[i].difusa * IMaterial.kd) * max(dot(N,H),0.0);
+    vec3 s = (luz[i].especular * IMaterial.ks) * pow(max(dot(N,H),0.0), IMaterial.shininess);
     vec3 a = (luz[i].ambiental * IMaterial.ka);
 
     return d+s+a;
 }
 
-vec3 calculateAmbient(int i){
-    vec3 a = (luz[i].ambiental * IMaterial.ka);
+vec3 calculateAmbient(){
+    vec3 a = ( vLuzAmbiente * IMaterial.ka);
     return a;
 }
 
@@ -104,7 +100,7 @@ void main()
 
 //  vec3 ITotal = calculateAmbient(0) + phong1;
 //  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 + phong2 + phong3;
-  vec3 ITotal = calculateAmbient(0) + phong1 ;
+  vec3 ITotal = calculateAmbient() + phong1 ;
 //  if (ITotal.x > 1.0){
 //      ITotal.x = 1.0;
 //  }
