@@ -66,13 +66,13 @@ vec3 calculatePhong(int i){
     vec3 vObs = vec3(0.0f,0.0f,10.0f);
     vec3 V = normalize(vObs - vPosition.xyz);  // Posicion Camara
     vec3 N = vNormal;                   // Normal de vertice
-    vec3 L = (luz[i].coordenadas.xyz - vPosition.xyz); // Posicion luz
+    vec3 L = normalize(luz[i].coordenadas.xyz - vPosition.xyz); // Posicion luz
 
-    vec3 H = normalize(L+V/abs(L+V));                // Vector medio normalizado
-//    vec3 H = normalize(V+L);
+//    vec3 H = ((L+V)/length((L+V)));                // Vector medio normalizado
+    vec3 H = normalize(L+V);
 
 
-    vec3 d = (luz[i].difusa * IMaterial.kd) * max(dot(N,H),0.0);
+    vec3 d = (luz[i].difusa * IMaterial.kd) * max(dot(L,N),0.0);
     vec3 s = (luz[i].especular * IMaterial.ks) * pow(max(dot(N,H),0.0), IMaterial.shininess);
     vec3 a = (luz[i].ambiental * IMaterial.ka);
 
