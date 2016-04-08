@@ -83,6 +83,11 @@ vec3 calculatePhong(int i){
     return d+s+a;
 }
 
+vec3 calculateAmbient(int i){
+    vec3 a = (luz[i].ambiental * IMaterial.ka);
+    return a;
+}
+
 void main()
 {
   gl_Position = vPosition;
@@ -97,9 +102,9 @@ void main()
 //  vec3 phong2 = calculateAtenuation(1) * calculatePhong(1);
 //  vec3 phong3 = calculateAtenuation(2) * calculatePhong(2);
 
-  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
+//  vec3 ITotal = calculateAmbient(0) + phong1;
 //  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 + phong2 + phong3;
-
+  vec3 ITotal = calculateAmbient(0) + phong1 ;
 //  if (ITotal.x > 1.0){
 //      ITotal.x = 1.0;
 //  }
