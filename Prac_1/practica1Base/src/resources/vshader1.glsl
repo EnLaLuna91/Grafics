@@ -64,16 +64,13 @@ float calculateAtenuation(int i){
 
 vec3 calculatePhong(int i){
     vec3 vObs = vec3(0.0f,0.0f,10.0f);
-    vec3 V = vObs - vPosition.xyz;  // Posicion Camara
-    vec3 N = normalize(vNormal);                   // Normal de vertice
-//    vec3 N = vec3(-abs(vNormal.x), -abs(vNormal.y), -abs(vNormal.z));
+    vec3 V = normalize(vObs - vPosition.xyz);  // Posicion Camara
+    vec3 N = vNormal;                   // Normal de vertice
     vec3 L = (luz[i].coordenadas.xyz - vPosition.xyz); // Posicion luz
-    vec3 L2 = normalize(L);
-//    L.x = abs(L.x);
-//    L.y = abs(L.y);
-//    L.z = abs(L.z);
-    vec3 H = (L+V/length(L+V));                // Vector medio normalizado
-    float LN = dot(L2,N);                    // Vector resultante de multiplicar L * N
+
+//    vec3 H = (L+V/length(L+V));                // Vector medio normalizado
+    vec3 H = normalize(V+L);
+    float LN = dot(L,N);                    // Vector resultante de multiplicar L * N
     float NH = dot(N,H);                    // Vector resultante de multiplicar N * H
 
     float maxNH = max(NH,0.0);
@@ -95,12 +92,12 @@ void main()
 //  vec3 L = normalize(luz[0].coordenadas.xyz - vPosition.xyz);
 //  color = vec4(abs(L.x), abs(L.y), abs(L.z), 1.0);
 
-  vec3 phong1 = calculatePhong(0);
-//  vec3 phong1 = calculateAtenuation(0) * calculatePhong(0);
+//  vec3 phong1 = calculatePhong(0);
+  vec3 phong1 = calculateAtenuation(0) * calculatePhong(0);
 //  vec3 phong2 = calculateAtenuation(1) * calculatePhong(1);
 //  vec3 phong3 = calculateAtenuation(2) * calculatePhong(2);
 
-//  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
+  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
 //  vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1 + phong2 + phong3;
 
 //  if (ITotal.x > 1.0){
@@ -113,6 +110,6 @@ void main()
 //      ITotal.y = 1.0;
 //  }
 
-//  color = vec4(ITotal, 1.0f);
-  color = vec4(phong1, 1.0f);
+  color = vec4(ITotal, 1.0f);
+//  color = vec4(phong1, 1.0f);
 }

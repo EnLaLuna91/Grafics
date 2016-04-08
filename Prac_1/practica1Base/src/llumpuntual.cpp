@@ -112,8 +112,8 @@ void llumPuntual::ToGPU(QGLShaderProgram *program){
     glUniform3fv(gl_LightVector[ i ].ambiental, 1, ambiental);
     glUniform3fv(gl_LightVector[ i ].especular, 1, especular);
     glUniform3fv(gl_LightVector[ i ].difusa, 1, difusa);
-    glUniform3fv(gl_LightVector[ i ].coordenadas, 1, coordenadas);
-    glUniform3fv(gl_LightVector[ i ].direccion, 1, direccion);
+    glUniform4fv(gl_LightVector[ i ].coordenadas, 1, coordenadas);
+    glUniform4fv(gl_LightVector[ i ].direccion, 1, direccion);
     glUniform1f(gl_LightVector[ i ].tipo, i);
     glUniform1f(gl_LightVector[ i ].angulo, 0.0);
     glUniform1f(gl_LightVector[ i ].a, a);
