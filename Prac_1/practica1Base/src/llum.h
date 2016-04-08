@@ -44,6 +44,7 @@ class Llum {
             GLuint a;
             GLuint b;
             GLuint c;
+            GLuint on;
         };
         gl_Light gl_LightVector[3];
 

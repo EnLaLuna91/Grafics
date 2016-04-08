@@ -41,6 +41,7 @@ struct Light
     float a;
     float b;
     float c;
+    int on;
 };
 uniform Light luz[3];
 

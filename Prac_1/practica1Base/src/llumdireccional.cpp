@@ -106,6 +106,7 @@ void llumDireccional::ToGPU(QGLShaderProgram *program){
     gl_LightVector[ i ].a = program->uniformLocation(QString("luz[%1].a").arg( i ));
     gl_LightVector[ i ].b = program->uniformLocation(QString("luz[%1].b").arg( i ));
     gl_LightVector[ i ].c = program->uniformLocation(QString("luz[%1].c").arg( i ));
+    gl_LightVector[ i ].on = program->uniformLocation(QString("luz[%1].on").arg( i ));
 
 
 
@@ -122,6 +123,7 @@ void llumDireccional::ToGPU(QGLShaderProgram *program){
     glUniform1f(gl_LightVector[ i ].a, a);
     glUniform1f(gl_LightVector[ i ].b, b);
     glUniform1f(gl_LightVector[ i ].c, c);
+    glUniform1f(gl_LightVector[ i ].on, on);
 
 
 //    cout << "Saliendo de llumsToGPU " << endl;
