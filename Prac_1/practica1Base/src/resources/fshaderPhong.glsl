@@ -55,7 +55,7 @@ float calculateAtenuation(int i){
     float b = luz[i].b;
     float c = luz[i].c;
     float d = length(luz[i].coordenadas.xyz - Position.xyz); // Distancia de la luz respecto al objeto
-    float powD = pow(d, 2.0f);
+    float powD = pow(d, 2.0);
     float dividendo = (a * powD) + (b * d) + c;
 
     return 1.0f/dividendo;
@@ -65,7 +65,7 @@ float calculateAtenuation(int i){
  * Función para calcular la parte de phong para cada luz
  */
 vec3 calculatePhong(int i, vec3 L){
-    vec3 vObs = vec3(0.0f,0.0f,10.0f);
+    vec3 vObs = vec3(0.0,0.0,10.0);
     vec3 V = normalize(vObs - Position.xyz);  // Posicion Camara
     vec3 N = Normal;            // Normal de vertice
     vec3 H = normalize(L+V);    // Vector medio normalizado
