@@ -144,7 +144,7 @@ void Objecte::draw(){
 
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index ,sizeof(vec2)*Index, &vertexsTextura[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index ,sizeof(vec2)*Index, vertexsTextura);
     int vertexLocation = program->attributeLocation("vPosition");
 //    int colorLocation = program->attributeLocation("vColor");
     int normalLocation = program->attributeLocation("vNormal");
@@ -281,20 +281,21 @@ void Objecte::readObj(QString filename){
 void Objecte::textures()
 {
     float u , v;
-        for(unsigned int i=0; i<sizeof(normales); i++){
-            u = 0.5f + (atan2(normales[i].z, normales[i].x) / (2.0f *M_PI));
-            v = 0.5f - ((asin(normales[i].y) / M_PI));
-            if(u > 1.0) u = (float)1.0; else if(u < 0.0) u = (float)0.0;
-            if(v > 1.0) v = (float)1.0; else if(v < 0.0) v = (float)0.0;
-            vertexsTextura[i] = vec2(u,v);
-    }
-
-//    for(unsigned int i = 0; i < sizeof(normalesAcumulada); ++i){
-//        u = 0.5 + atan2(normalesAcumulada.z,normalesAcumulada.x)/ 2*M_PI;
-//        v = (0.5 - (asin(normalesAcumulada.y)/ M_PI);
-
-//        vertexsTextura[i] = vec2(u,v);
+//        for(int i=0; i<sizeof(normales); i++){
+//            u = 0.5f + (atan2(normales[i].z, normales[i].x) / (2.0f *3.14));
+//            v = 0.5f - ((asin(normales[i].y) / 3.14));
+//            if(u > 1.0) u = (float)1.0; else if(u < 0.0) u = (float)0.0;
+//            if(v > 1.0) v = (float)1.0; else if(v < 0.0) v = (float)0.0;
+//            vertexsTextura[i] = vec2(u,v);
 //    }
+
+
+    for(unsigned int i = 0; i < Index; ++i){
+        u = 0.5 + (atan2(normales[i].z,normales[i].x)/ (2.0*M_PI));
+        v = (0.5 - ((asin(normales[i].y))/ M_PI));
+
+        vertexsTextura[i] = vec2(u,v);
+    }
 }
 
 
