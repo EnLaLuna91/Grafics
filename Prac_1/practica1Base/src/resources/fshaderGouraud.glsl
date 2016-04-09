@@ -10,6 +10,18 @@ IN vec4 color;
 IN vec2 v_texcoord;
 
 /*
+ * Structura para pasar los matereiales
+ */
+struct Intensity
+{
+    vec3 kd;
+    vec3 ks;
+    vec3 ka;
+    float shininess;
+};
+uniform Intensity IMaterial;
+
+/*
  * Uniform para la imagen
  */
 uniform sampler2D texMap;
@@ -19,18 +31,15 @@ uniform sampler2D texMap;
  */
 uniform bool vGouraudTex;
 
+/*
+ * Devuelve la texura si hay
+ */
+vec4 returnTextures(){
+    return (vGouraudTex == true ? (0.25*color + 0.75*texture2D(texMap, v_texcoord)): color);
+}
+
 void main()
 {
-//    gl_FragColor = color;
-
-    vec4 texturas = vec4(0.0, 0.0, 0.0, 0.0);
-
-    if (vGouraudTex)
-        texturas = 0.25*color + 0.75*texture2D(texMap, v_texcoord);
-    else
-        texturas = color;
-
-
-    gl_FragColor = texturas;
+    gl_FragColor = returnTextures();
 }
 

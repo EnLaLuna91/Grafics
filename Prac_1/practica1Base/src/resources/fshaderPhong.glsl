@@ -107,6 +107,13 @@ bool colorSpotLaight(int i){
 }
 
 
+/*
+ * Devuelve la texura si hay
+ */
+vec4 returnTextures(vec4 ITotal){
+    return (vPhongTex == true ? (0.25*ITotal + 0.75*texture2D(texMap, v_texcoord)): ITotal);
+}
+
 void main()
 {
 
@@ -138,26 +145,17 @@ void main()
             phong3 = vLuzAmbiente * IMaterial.ka;
     }
 
-    vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + (phong1 + phong2 + phong3);
+    vec4 ITotal = vec4((vLuzAmbiente * IMaterial.ka) + (phong1 + phong2 + phong3),1.0);
 
-    if (ITotal.x > 1.0){
-        ITotal.x = 1.0;
-    }
-    if (ITotal.y > 1.0){
-        ITotal.y = 1.0;
-    }
-    if (ITotal.z > 1.0){
-        ITotal.y = 1.0;
-    }
+//    if (ITotal.x > 1.0){
+//        ITotal.x = 1.0;
+//    }
+//    if (ITotal.y > 1.0){
+//        ITotal.y = 1.0;
+//    }
+//    if (ITotal.z > 1.0){
+//        ITotal.z = 1.0;
+//    }
 
-    vec4 texturas =  vec4(0.0, 0.0, 0.0, 0.0);
-
-    if (vPhongTex == true)
-        texturas = vec4((0.25*ITotal + 0.75*texture2D(texMap, v_texcoord)), 1.0);
-
-    else
-        texturas = vec4(ITotal, 1.0);
-
-//    gl_FragColor = vec4(ITotal, 1.0f);
-    gl_FragColor = texturas;
+    gl_FragColor = returnTextures(ITotal);
 }
