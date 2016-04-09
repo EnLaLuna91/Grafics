@@ -15,7 +15,7 @@ OUT vec4 color;
 
 
 /*
- * Strucrura para pasar los matereiales
+ * Structura para pasar los matereiales
  */
 struct Intensity
 {

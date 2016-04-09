@@ -11,7 +11,7 @@ IN vec3 Normal;
 
 
 /*
- * Strucrura para pasar los matereiales
+ * Structura para pasar los matereiales
  */
 struct Intensity
 {
