@@ -70,6 +70,18 @@ void Objecte::initTextura()
 
  }
 
+void Objecte::aplicaTG(mat4 m){
+    point4  transformed_points[Index];
+
+    for ( int i = 0; i < Index; ++i ) {
+        transformed_points[i] = m * points[i];
+    }
+
+    // Actualitzacio del vertex array per a preparar per pintar
+    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(transformed_points),
+                     transformed_points );
+}
+
 
 /**
  * @brief Objecte::toGPU
@@ -233,21 +245,6 @@ void Objecte::readObj(QString filename){
             }
         }
     }
-
-}
-
-
-void ::aplicaTG(mat4 m)
-{
-    point4  transformed_points[NumVertices];
-
-    for ( int i = 0; i < NumVertices; i++ ) {
-        transformed_points[i] = m * points[i];
-    }
-
-    // Actualitzacio del vertex array per a preparar per pintar
-    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(transformed_points),
-                     transformed_points );
 
 }
 

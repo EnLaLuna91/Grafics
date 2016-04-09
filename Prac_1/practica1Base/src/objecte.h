@@ -53,12 +53,13 @@ public:
     virtual void toGPU(QGLShaderProgram *p);
     virtual void draw();
 
+    void aplicaTG(mat4 m);
+
 private:
     void textures();
     void construeix_cara ( char **words, int nwords);
     void calculaNormal();
     void initTextura();
-    void aplicaTG(mat4 m);
 };
 
 

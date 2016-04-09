@@ -7,11 +7,21 @@
 GLWidget::GLWidget(QWidget *parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), parent) {
     setFocusPolicy( Qt::StrongFocus );
     mon = new Mon();
+    xRot = 0;
+    yRot = 0;
+    zRot = 0;
 }
 
 GLWidget::~GLWidget() {
     makeCurrent();
     delete mon;
+}
+
+static void qNormalizeAngle(int &angle){
+    while (angle < 0)
+        angle += 360 * 16;
+    while (angle > 360 * 16)
+        angle -= 360 * 16;
 }
 
 /**
@@ -22,28 +32,28 @@ GLWidget::~GLWidget() {
 void GLWidget::keyPressEvent(QKeyEvent *event){
     switch (event->key()) {
         case Qt::Key_Up:
-            calcalateNewPositionY(1.0);
+            calcalateNewPositionY(1);
             break;
         case Qt::Key_Down:
-            calcalateNewPositionY(-1.0);
+            calcalateNewPositionY(-1);
             break;
         case Qt::Key_Left:
-            calcalateNewPositionX(-1.0);
+            calcalateNewPositionX(-1);
             break;
         case Qt::Key_Right:
-            calcalateNewPositionX(1.0);
+            calcalateNewPositionX(1);
             break;
         case Qt::Key_W:
-            calcalateNewPositionY(1.0);
+            calcalateNewPositionY(1);
             break;
         case Qt::Key_S:
-            calcalateNewPositionY(-1.0);
+            calcalateNewPositionY(-1);
             break;
         case Qt::Key_A:
-            calcalateNewPositionX(-1.0);
+            calcalateNewPositionX(-1);
             break;
         case Qt::Key_D:
-            calcalateNewPositionX(1.0);
+            calcalateNewPositionX(1);
             break;
     }
 }
@@ -53,9 +63,10 @@ void GLWidget::keyPressEvent(QKeyEvent *event){
  * @brief GLWidget::calcalateNewPositionHorizontal
  * @param num
  */
-void GLWidget::calcalateNewPositionX(float num){
-    mat4 newPos = RotateX(num);
-
+void GLWidget::calcalateNewPositionX(int num){
+    setXRotation(xRot + 8 * num);
+    updateGL();
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
 /**
@@ -63,8 +74,38 @@ void GLWidget::calcalateNewPositionX(float num){
  * @brief GLWidget::calcalateNewPositionVertical
  * @param num
  */
-void GLWidget::calcalateNewPositionY(float num){
-    mat4 newPos = RotateY(num);
+void GLWidget::calcalateNewPositionY(int num){
+    setYRotation(yRot + 8 * num);
+    updateGL();
+    mon->llumsToGPU(program[ultimoProgramCargado]);
+}
+
+void GLWidget::setXRotation(int angle){
+    qNormalizeAngle(angle);
+    if (angle != xRot) {
+        xRot = angle;
+        emit xRotationChanged(angle);
+        updateGL();
+    }
+}
+
+
+void GLWidget::setYRotation(int angle){
+    qNormalizeAngle(angle);
+    if (angle != yRot) {
+        yRot = angle;
+        emit yRotationChanged(angle);
+        updateGL();
+    }
+}
+
+void GLWidget::setZRotation(int angle){
+    qNormalizeAngle(angle);
+    if (angle != zRot) {
+        zRot = angle;
+        emit zRotationChanged(angle);
+        updateGL();
+    }
 }
 
 
@@ -263,11 +304,18 @@ void GLWidget::initializeGL() {
 
 void GLWidget::paintGL() {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+    mat4  transform = ( RotateX( xRot / 16.0 ) *
+                        RotateY( yRot / 16.0 ) *
+                        RotateZ( zRot / 16.0 ) );
+
+    mon->elements.at(0)->aplicaTG(transform);
+
     mon->draw();
 //    mon->llumsToGPU(program);
 
-
 }
+
 
 void GLWidget::resizeGL(int width, int height) {
     int side = qMin(width, height);
