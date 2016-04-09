@@ -54,13 +54,13 @@ vec3 returnColor(float intensity){
     vec3 color = vec3(0.0, 0.0, 0.0);
 
     if (intensity > 0.95)
-        color = vec3(1.0, 0.5, 0.5);
+        color = vec3(IMaterial.kd * 1.0);
     else if (intensity > 0.5)
-        color = vec3(0.6, 0.3, 0.3);
+        color = vec3(IMaterial.kd * 0.6);
     else if (intensity > 0.25)
-        color = vec3(0.4, 0.2, 0.2);
+        color = vec3(IMaterial.kd * 0.4);
     else
-        color = vec3(0.2, 0.1, 0.1);
+        color = vec3(IMaterial.kd * 0.2);
 
     return color;
 }
