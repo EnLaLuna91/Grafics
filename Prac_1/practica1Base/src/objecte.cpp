@@ -241,7 +241,7 @@ void ::aplicaTG(mat4 m)
 {
     point4  transformed_points[NumVertices];
 
-    for ( int i = 0; i < NumVertices; ++i ) {
+    for ( int i = 0; i < NumVertices; i++ ) {
         transformed_points[i] = m * points[i];
     }
 
@@ -254,9 +254,9 @@ void ::aplicaTG(mat4 m)
 void Objecte::textures()
 {
     float u , v;
-    for(int i = 0; i < sizeof(normalesAcumulada); ++i){
-        u = 0.5 + arctan2(normalesAcumulada -> z,normalesAcumulada ->x )/ 2*PI;
-        v = (0.5 - arcsin( normalesAcumulada -> y)/ PI);
+    for(unsigned int i = 0; i < sizeof(normalesAcumulada); ++i){
+        u = 0.5 + arctan2(normalesAcumulada -> z,normalesAcumulada ->x )/ 2*M_PI;
+        v = (0.5 - arcsin( normalesAcumulada -> y)/ M_PI);
 
         vertexsTextura[i] = vec2(u,v);
     }
