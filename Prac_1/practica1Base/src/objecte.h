@@ -54,6 +54,7 @@ public:
     virtual void draw();
 
     void aplicaTG(mat4 m);
+    void aplicaTGNormales(mat4 m);
 
 private:
     void textures();
