@@ -251,12 +251,12 @@ void ::aplicaTG(mat4 m)
 
 }
 
-void Objecte::textures( int a, int b, int c)
+void Objecte::textures()
 {
-    float u,v;
-    for(int i = 0; i < sizeof(vertexs); ++i){
-        u = 0.5 + arctan2(vertexs -> z,vertexs ->x )/ 2*PI;
-        v = 0.5 – arcsin( vertexs -> y)/ PI;
+    float u , v;
+    for(int i = 0; i < sizeof(normalesAcumulada); ++i){
+        u = 0.5 + arctan2(normalesAcumulada -> z,normalesAcumulada ->x )/ 2*PI;
+        v = (0.5 - arcsin( normalesAcumulada -> y)/ PI);
 
         vertexsTextura[i] = vec2(u,v);
     }
