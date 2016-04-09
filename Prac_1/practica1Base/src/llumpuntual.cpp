@@ -13,10 +13,7 @@ llumPuntual::llumPuntual():Llum(Puntual)
 
     coordenadas = vec4(2.0f, 2.0f, 2.0f, 1.0f);
 
-    direccion[0] = 0.0;
-    direccion[1] = 0.0;
-    direccion[2] = 0.0;
-    direccion[3] = 0.0;
+    direccion = vec4(0.0, 0.0, 0.0, 0.0);
 
     a = 0.0f;
     b = 0.0f;

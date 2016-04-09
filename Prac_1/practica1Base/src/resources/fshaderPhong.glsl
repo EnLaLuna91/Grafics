@@ -116,7 +116,8 @@ void main()
 
     // Luz SpotLight
     if (luz[2].on == true){
-        vec3 L = normalize(luz[2].direccion.xyz - Position.xyz); // de la luz respecto al objeto
+//        vec3 L = normalize(luz[2].direccion.xyz - Position.xyz); // de la luz respecto al objeto
+        vec3 L = normalize(luz[2].coordenadas.xyz - Position.xyz);
         /* Se calcula con la dirección + anchura */
 
         if (colorSpotLaight(2))

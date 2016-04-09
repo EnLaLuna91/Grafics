@@ -5,29 +5,21 @@ llumSpotlight::llumSpotlight():Llum(SpotLight)
 
     type = SpotLight;
 
-    ambiental = vec3(0.2f);
+    ambiental = vec3(0.2f, 0.2f, 0.2f);
 
-    especular = vec3(0.2f);
+    especular = vec3(1.0f, 1.0f, 1.0f);
 
-    difusa[0] = 0.9f;
-    difusa[1] = 0.9f;
-    difusa[2] = 0.9f;
+    difusa = vec3(0.8f, 0.8f, 0.8f);
 
-    angulo = 0.45f;
+    coordenadas = vec4(2.0f, 2.0f, 2.0f, 1.0f);
 
-    coordenadas[0] = -1.0f;
-    coordenadas[1] = 1.0f;
-    coordenadas[2] = -1.0f;
-    coordenadas[3] = 0.0f;
-
-    direccion[0] = -1.0f;
-    direccion[1] = 1.0f;
-    direccion[2] = -1.0f;
-    direccion[3] = 0.0f;
+    direccion = vec4(2.0f, 2.0f, 2.0f, 1.0f);
 
     a = 0.0f;
     b = 0.0f;
     c = 1.0f;
+
+    angulo = 0.45f;
 
     on = false;
 }

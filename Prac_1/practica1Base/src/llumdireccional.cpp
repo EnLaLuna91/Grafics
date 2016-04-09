@@ -9,17 +9,11 @@ llumDireccional::llumDireccional():Llum(Direccional)
 
     especular = vec3(1.0f, 1.0f, 1.0f);
 
-    difusa = vec3(0.8f, 0.0f, 0.0f);
+    difusa = vec3(0.8f, 0.8f, 0.8f);
 
-    coordenadas[0] = 0.0;
-    coordenadas[1] = 0.0;
-    coordenadas[2] = 0.0;
-    coordenadas[3] = 0.0;
+    direccion = vec4(2.0f, 2.0f, 2.0f, 1.0f);
 
-    direccion[0] = 5.0f;
-    direccion[1] = 10.0f;
-    direccion[2] = -1.0f;
-    direccion[3] = 1.0f;
+    coordenadas = vec4(0.0, 0.0, 0.0, 0.0);
 
     a = 0.0f;
     b = 0.0f;

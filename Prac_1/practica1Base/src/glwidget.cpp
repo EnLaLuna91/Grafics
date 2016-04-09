@@ -61,20 +61,26 @@ void GLWidget::ensenyaMenuLlum0() {
 // Per a les extensions OPCIONALS
 void GLWidget::changePositionLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
-    mon->getLlumActual()->setTipusLlum(Puntual);
+    Llum *l = new llumPuntual;
+    mon->addLlum(l);
     mon->llumsToGPU(program[ultimoProgramCargado]);
+    updateGL();
 
 }
 void GLWidget::changeDirectionalLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
-   mon->getLlumActual()->setTipusLlum(Direccional);
-   mon->llumsToGPU(program[ultimoProgramCargado]);
+    Llum *l = new llumDireccional;
+    mon->addLlum(l);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
+    updateGL();
 
 }
 void GLWidget::changeSpotLight() {
     // tipus rep el tipus de llum que es vol afegir. Des d'aqui s'afegeix la llum al mon.
-    mon->getLlumActual()->setTipusLlum(SpotLight);
+    Llum *l = new llumSpotlight;
+    mon->addLlum(l);
     mon->llumsToGPU(program[ultimoProgramCargado]);
+    updateGL();
 
 }
 void GLWidget::updateXPositionLight(int xposition) {
@@ -193,12 +199,8 @@ void GLWidget::initializeGL() {
     mon->setAmbientToGPU(program[ultimoProgramCargado]);
 
     // Creacio d'una llum per apoder modificar el seus valors amb la interficie
-    Llum *l1 = new llumPuntual;
-    Llum *l2 = new llumDireccional;
-    Llum *l3 = new llumSpotlight;
-    mon->addLlum(l2);
-    mon->addLlum(l3);
-    mon->addLlum(l1);
+    Llum *l = new llumPuntual;
+    mon->addLlum(l);
 
     mon->llumsToGPU(program[ultimoProgramCargado]);
 
