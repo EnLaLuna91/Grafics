@@ -54,9 +54,11 @@ public:
     virtual void draw();
 
 private:
+    void textures( int a, int b, int c, int d );
     void construeix_cara ( char **words, int nwords);
     void calculaNormal();
     void initTextura();
+    void aplicaTG(mat4 m);
 };
 
 
