@@ -10,9 +10,11 @@
 IN vec4 vPosition;
 //IN vec4 vColor;
 IN vec3 vNormal;
+IN vec2 vCoordTexture;
 
-OUT vec4 Position;
-OUT vec3 Normal;
+OUT vec4 color;
+OUT vec2 v_texcoord;
+
 
 
 void main()
@@ -21,4 +23,5 @@ void main()
 
   Position = vPosition;
   Normal = vNormal;
+  v_texcoord = vCoordTexture;
 }
