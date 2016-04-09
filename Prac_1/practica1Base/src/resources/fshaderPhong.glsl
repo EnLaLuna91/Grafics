@@ -126,11 +126,6 @@ void main()
             phong3 = vLuzAmbiente * IMaterial.ka;
     }
 
-
-//    vec3 L = (luz[0].coordenadas.xyz - Position.xyz); // Posicion luz
-//    vec3 phong1 = calculateAtenuation(0) * calculatePhong(0, L);
-//    vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + phong1;
-
     vec3 ITotal = (vLuzAmbiente * IMaterial.ka) + (phong1 + phong2 + phong3);
 
     if (ITotal.x > 1.0){
