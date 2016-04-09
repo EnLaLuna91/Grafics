@@ -54,6 +54,9 @@ protected:
     void paintGL();
     void resizeGL(int width, int height);
 
+    // keyPressEvent
+    void keyPressEvent(QKeyEvent *event);
+
 private:
     QWidget* auxWidget; // window for parameters
 
@@ -67,6 +70,11 @@ private:
 
     void InitShader( const char* vertexShaderFile, const char* fragmentShaderFile);
     void initShadersGPU();
+
+    // Función de soporte para el keyPressEvent
+    void calcalateNewPositionX(float num);
+    void calcalateNewPositionY(float num);
+
 };
 
 #endif // GLWIDGET_H

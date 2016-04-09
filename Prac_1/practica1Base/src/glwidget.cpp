@@ -14,6 +14,60 @@ GLWidget::~GLWidget() {
     delete mon;
 }
 
+/**
+ * Evento para el keyPress de las flechas
+ * @brief GLWidget::keyPressEvent
+ * @param event
+ */
+void GLWidget::keyPressEvent(QKeyEvent *event){
+    switch (event->key()) {
+        case Qt::Key_Up:
+            calcalateNewPositionY(1.0);
+            break;
+        case Qt::Key_Down:
+            calcalateNewPositionY(-1.0);
+            break;
+        case Qt::Key_Left:
+            calcalateNewPositionX(-1.0);
+            break;
+        case Qt::Key_Right:
+            calcalateNewPositionX(1.0);
+            break;
+        case Qt::Key_W:
+            calcalateNewPositionY(1.0);
+            break;
+        case Qt::Key_S:
+            calcalateNewPositionY(-1.0);
+            break;
+        case Qt::Key_A:
+            calcalateNewPositionX(-1.0);
+            break;
+        case Qt::Key_D:
+            calcalateNewPositionX(1.0);
+            break;
+    }
+}
+
+/**
+ * Función para calcular la nueva rotación horizontal y llamar a las funciones para actualizar la esfera
+ * @brief GLWidget::calcalateNewPositionHorizontal
+ * @param num
+ */
+void GLWidget::calcalateNewPositionX(float num){
+    mat4 newPos = RotateX(num);
+
+}
+
+/**
+ * Función para calcular la nueva rotación vertical y llamar a las funciones para actualizar la esfera
+ * @brief GLWidget::calcalateNewPositionVertical
+ * @param num
+ */
+void GLWidget::calcalateNewPositionY(float num){
+    mat4 newPos = RotateY(num);
+}
+
+
 // Metodes que es criden des dels menús
 
 void GLWidget::activaToonShader() {
