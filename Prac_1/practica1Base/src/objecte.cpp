@@ -60,15 +60,12 @@ void Objecte::calculaNormal(){
 void Objecte::initTextura()
  {
      qDebug() << "Initializing textures...";
-
      // Carregar la textura
      glActiveTexture(GL_TEXTURE0);
      texture = new QOpenGLTexture(QImage("://resources/textures/earth1.png"));
      texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
      texture->setMagnificationFilter(QOpenGLTexture::Linear);
-
      texture->bind(0);
-
  }
 
 void Objecte::aplicaTG(mat4 m){
@@ -122,7 +119,7 @@ void Objecte::toGPU(QGLShaderProgram *pr) {
     glGenBuffers( 1, &buffer );
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
-    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index + sizeof(vertexsTextura), NULL, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index + sizeof(vec2) * Index, NULL, GL_STATIC_DRAW );
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_TEXTURE_2D );
 
