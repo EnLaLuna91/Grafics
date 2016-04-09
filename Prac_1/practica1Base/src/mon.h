@@ -32,6 +32,9 @@ private:
     llumSpotlight *LuzSpot;
     vec3 AmbientLight;
 
+    bool PhongTex;
+    bool GouraudTex;
+
 public:
     Mon();
     ~Mon();
@@ -49,7 +52,13 @@ public:
     void setAmbientToGPU(QGLShaderProgram *program);
 
     vector <Objecte*> elements;
-    vector<Llum*> llums;    
+    vector<Llum*> llums;
+
+    void phongTexOnOff();
+    void phongTexToGPU(QGLShaderProgram *program);
+
+    void gouraudTexOnOff();
+    void gouraudTexToGPU(QGLShaderProgram *program);
 
 };
 

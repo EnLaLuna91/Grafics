@@ -10,7 +10,7 @@ IN vec4 Position;
 IN vec3 Normal;
 IN vec2 v_texcoord;
 
-uniform sampler2D texMap;
+
 /*
  * Structura para pasar los matereiales
  */
@@ -46,6 +46,16 @@ uniform Light luz[3];
  * Uniform para la luz ambiente (Global)
  */
 uniform vec3 vLuzAmbiente;
+
+/*
+ * Uniform para la imagen
+ */
+uniform sampler2D texMap;
+
+/*
+ * uniform para activar o desactivar el PhongTextures
+ */
+uniform bool vPhongTex;
 
 
 /*
@@ -140,6 +150,14 @@ void main()
         ITotal.y = 1.0;
     }
 
+    vec4 texturas =  vec4(0.0, 0.0, 0.0, 0.0);
+
+    if (vPhongTex == true)
+        texturas = vec4((0.25*ITotal + 0.75*texture2D(texMap, v_texcoord)), 1.0);
+
+    else
+        texturas = vec4(ITotal, 1.0);
+
 //    gl_FragColor = vec4(ITotal, 1.0f);
-    gl_FragColor = vec4((0.25*ITotalor + 0.75*texture2D(texMap, v_texcoord)),1.0);
+    gl_FragColor = texturas;
 }

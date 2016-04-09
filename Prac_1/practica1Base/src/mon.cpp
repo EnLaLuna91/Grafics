@@ -5,6 +5,8 @@ Mon::Mon() {
     AmbientLight[0] = 0.3;
     AmbientLight[1] = 0.3;
     AmbientLight[2] = 0.3;
+    PhongTex = false;
+    GouraudTex = false;
 }
 
 Mon::~Mon() {
@@ -43,7 +45,32 @@ void Mon::llumsToGPU(QGLShaderProgram *program){
 void Mon::addLlum(Llum *l) {
     llums.push_back(l);
 }
+
 void Mon::setAmbientToGPU(QGLShaderProgram *program){
     GLuint LuzAmbient = program->uniformLocation("vLuzAmbiente");
     glUniform3fv(LuzAmbient, 1, AmbientLight);
+}
+
+void Mon::phongTexOnOff(){
+    if (PhongTex == false)
+        PhongTex = true;
+    else
+        PhongTex = false;
+}
+
+void Mon::gouraudTexOnOff(){
+    if (GouraudTex == false)
+        GouraudTex = true;
+    else
+        GouraudTex = false;
+}
+
+void Mon::phongTexToGPU(QGLShaderProgram *program){
+    GLuint phongTexture = program->uniformLocation("vPhongTex");
+    glUniform1i(phongTexture, PhongTex);
+}
+
+void Mon::gouraudTexToGPU(QGLShaderProgram *program){
+    GLuint gouraudTexture = program->uniformLocation("vGouraudTex");
+    glUniform1i(gouraudTexture, GouraudTex);
 }

@@ -90,6 +90,7 @@ void GLWidget::activaPhongShader() {
     ultimoProgramCargado = Phong;
     initShadersGPU();
     updateGL();
+    mon->phongTexToGPU(program[ultimoProgramCargado]);
     mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
@@ -98,17 +99,28 @@ void GLWidget::activaGouraudShader() {
     ultimoProgramCargado = Gouraud;
     initShadersGPU();
     updateGL();
+    mon->gouraudTexToGPU(program[ultimoProgramCargado]);
     mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
 void GLWidget::activaPhongTex() {
     //A implementar a la practica 1
+    mon->phongTexOnOff();
+    ultimoProgramCargado = Phong;
+    initShadersGPU();
+    updateGL();
+    mon->phongTexToGPU(program[ultimoProgramCargado]);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
 void GLWidget::activaGouraudTex() {
     //A implementar a la practica 1
-    cout<<"Estic a Gouraud Tex"<<endl;
-
+    mon->gouraudTexOnOff();
+    ultimoProgramCargado = Gouraud;
+    initShadersGPU();
+    updateGL();
+    mon->gouraudTexToGPU(program[ultimoProgramCargado]);
+    mon->llumsToGPU(program[ultimoProgramCargado]);
 }
 
 void GLWidget::ensenyaMenuLlum0() {
@@ -259,11 +271,13 @@ void GLWidget::initializeGL() {
 
     mon->setAmbientToGPU(program[ultimoProgramCargado]);
 
+
     // Creacio d'una llum per apoder modificar el seus valors amb la interficie
     Llum *l = new llumPuntual;
     mon->addLlum(l);
 
     mon->llumsToGPU(program[ultimoProgramCargado]);
+    mon->gouraudTexToGPU(program[ultimoProgramCargado]);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
