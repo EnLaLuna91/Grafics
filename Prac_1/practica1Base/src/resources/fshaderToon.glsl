@@ -8,9 +8,9 @@
 
 IN vec4 Position;
 IN vec3 Normal;
-IN vec2 v_texcoord;
+//IN vec2 v_texcoord;
 
-uniform sampler2D texMap;
+//uniform sampler2D texMap;
 
 /*
  * Structura para pasar los matereiales
@@ -119,7 +119,7 @@ void main()
 
     vec3 color = toon1 + toon2 + toon3;
 
-//    gl_FragColor = vec4(color, 1.0);
-    gl_FragColor = vec4((0.25*color + 0.75*texture2D(texMap, v_texcoord)),1.0);
+    gl_FragColor = vec4(color, 1.0);
+//    gl_FragColor = vec4((0.25*color + 0.75*texture2D(texMap, v_texcoord)),1.0);
 }
 
