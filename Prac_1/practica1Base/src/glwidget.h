@@ -49,9 +49,6 @@ public slots:
     void updateLightIntensity(int intensity);
     void showAuxWindowPuntualLight(Llum *light);
 
-    void setXRotation(int angle);
-    void setYRotation(int angle);
-    void setZRotation(int angle);
 
 protected:
     void initializeGL();
@@ -76,16 +73,9 @@ private:
     void initShadersGPU();
 
     // Función de soporte para el keyPressEvent
-    void calcalateNewPositionX(int num);
-    void calcalateNewPositionY(int num);
-    int xRot;
-    int yRot;
-    int zRot;
+    void calcalateNewPositionX(float num);
+    void calcalateNewPositionY(float num);
 
-signals:
-    void xRotationChanged(int angle);
-    void yRotationChanged(int angle);
-    void zRotationChanged(int angle);
 
 
 };

@@ -72,15 +72,41 @@ void Objecte::initTextura()
  }
 
 void Objecte::aplicaTG(mat4 m){
-    point4  transformed_points[Index];
+    point4  *transformed_points = new point4[Index];
 
     for ( int i = 0; i < Index; ++i ) {
         transformed_points[i] = m * points[i];
     }
 
+    transformed_points = &transformed_points[0];
+
+    for (int i = 0; i < Index; ++i){
+        points[i] = transformed_points[i];
+    }
+
     // Actualitzacio del vertex array per a preparar per pintar
-    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(transformed_points),
-                     transformed_points );
+    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4) * Index,
+                     &points[0] );
+
+    delete transformed_points;
+}
+
+void Objecte::aplicaTGNormales(mat4 m){
+    point4 *transformed_points = new point4[Index];
+
+    for (int i=0; i<Index; ++i)
+        transformed_points[i] = m * points[i];
+
+    transformed_points = &transformed_points[0];
+
+    for (int i=0; i<Index; ++i){
+        normales[i].x = transformed_points[i].x;
+        normales[i].y = transformed_points[i].y;
+        normales[i].z = transformed_points[i].z;
+    }
+
+    delete transformed_points;
+
 }
 
 
