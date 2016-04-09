@@ -20,7 +20,7 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
 //        cout << "normalesAcumulada["<<i<<"]: " << normalesAcumulada[i] <<  endl;
 //    }
     make();
-//    initTextura();
+    initTextura();
 }
 
 
@@ -60,7 +60,6 @@ void Objecte::initTextura()
  {
      qDebug() << "Initializing textures...";
 
-
      // Carregar la textura
      glActiveTexture(GL_TEXTURE0);
      texture = new QOpenGLTexture(QImage("://resources/textures/earth1.png"));
@@ -71,6 +70,7 @@ void Objecte::initTextura()
 
  }
 
+
 /**
  * @brief Objecte::toGPU
  * @param pr
@@ -80,9 +80,9 @@ void Objecte::toGPU(QGLShaderProgram *pr) {
     glGenBuffers( 1, &buffer );
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
-    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, NULL, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index + sizeof(vertexsTextura), NULL, GL_STATIC_DRAW );
     glEnable( GL_DEPTH_TEST );
-//    glEnable( GL_TEXTURE_2D );
+    glEnable( GL_TEXTURE_2D );
 
 }
 
@@ -104,10 +104,11 @@ void Objecte::draw(){
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, sizeof(vec3)*Index, &normales[0] );
-
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec2)*Index, sizeof(vertexsTextura), &vertexsTextura[0] );
     int vertexLocation = program->attributeLocation("vPosition");
 //    int colorLocation = program->attributeLocation("vColor");
     int normalLocation = program->attributeLocation("vNormal");
+    int coordTextureLocation = program->attributeLocation("vCoordTexture");
 
     program->enableAttributeArray(vertexLocation);
     program->setAttributeBuffer("vPosition", GL_FLOAT, 0, 4);
@@ -118,6 +119,10 @@ void Objecte::draw(){
 
     program->enableAttributeArray(normalLocation);
     program->setAttributeBuffer("vNormal", GL_FLOAT, sizeof(point4)*Index, 3);
+
+    program->enableAttributeArray(coordTextureLocation);
+    program->setAttributeBuffer("vCoordTexture", GL_FLOAT, sizeof(points)+sizeof(colors), 2);
+
 
     mat->toGPU(program);
 

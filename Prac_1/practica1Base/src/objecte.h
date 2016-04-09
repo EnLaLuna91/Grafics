@@ -51,7 +51,6 @@ public:
 
     virtual void make();
     virtual void toGPU(QGLShaderProgram *p);
-
     virtual void draw();
 
 private:
