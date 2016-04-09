@@ -1,6 +1,7 @@
 #include <objecte.h>
 #include <readfile.h>
 
+
 Objecte::Objecte(int npoints, QObject *parent) : numPoints(npoints) ,QObject(parent){
     points = new point4[numPoints];
 //    colors = new point4[numPoints];
@@ -91,7 +92,7 @@ void Objecte::toGPU(QGLShaderProgram *pr) {
     program = pr;
     glGenBuffers( 1, &buffer );
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
-
+    program->setUniformValue("texMap", 0);
     glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index + sizeof(vertexsTextura), NULL, GL_STATIC_DRAW );
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_TEXTURE_2D );
@@ -115,8 +116,7 @@ void Objecte::draw(){
 
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, sizeof(vec3)*Index, &normales[0] );
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, sizeof(vec3)*Index, sizeof(vertexsTextura), &vertexsTextura[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index ,sizeof(vec2)*Index, &vertexsTextura[0] );
     int vertexLocation = program->attributeLocation("vPosition");
 //    int colorLocation = program->attributeLocation("vColor");
     int normalLocation = program->attributeLocation("vNormal");
@@ -133,7 +133,7 @@ void Objecte::draw(){
     program->setAttributeBuffer("vNormal", GL_FLOAT, sizeof(point4)*Index, 3);
 
     program->enableAttributeArray(coordTextureLocation);
-    program->setAttributeBuffer("vCoordTexture", GL_FLOAT, sizeof(points)+sizeof(colors), 2);
+    program->setAttributeBuffer("vCoordTexture", GL_FLOAT, sizeof(point4)*Index + sizeof(vec3)*Index, 2);
 
 
     mat->toGPU(program);
@@ -251,12 +251,22 @@ void Objecte::readObj(QString filename){
 void Objecte::textures()
 {
     float u , v;
-    for(unsigned int i = 0; i < sizeof(normalesAcumulada); ++i){
-        u = 0.5 + arctan2(normalesAcumulada -> z,normalesAcumulada ->x )/ 2*M_PI;
-        v = (0.5 - arcsin( normalesAcumulada -> y)/ M_PI);
 
-        vertexsTextura[i] = vec2(u,v);
+    for(unsigned int i=0; i<cares.size(); i++){
+        for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
+            u = 0.5 + atan2(normalesAcumulada[cares[i].idxVertices[j]].z, normalesAcumulada[cares[i].idxVertices[j]].x) / 2*M_PI;
+            v = 0.5 - (asin(normalesAcumulada[cares[i].idxVertices[j]].y) / M_PI);
+
+            vertexsTextura[i] = vec2(u,v);
+        }
     }
+
+//    for(unsigned int i = 0; i < sizeof(normalesAcumulada); ++i){
+//        u = 0.5 + atan2(normalesAcumulada.z,normalesAcumulada.x)/ 2*M_PI;
+//        v = (0.5 - (asin(normalesAcumulada.y)/ M_PI);
+
+//        vertexsTextura[i] = vec2(u,v);
+//    }
 }
 
 

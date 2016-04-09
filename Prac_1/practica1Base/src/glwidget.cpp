@@ -309,7 +309,7 @@ void GLWidget::paintGL() {
                         RotateY( yRot / 16.0 ) *
                         RotateZ( zRot / 16.0 ) );
 
-    mon->elements.at(0)->aplicaTG(transform);
+//    mon->elements.at(0)->aplicaTG(transform);
 
     mon->draw();
 //    mon->llumsToGPU(program);
