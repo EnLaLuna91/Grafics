@@ -10,9 +10,10 @@
 IN vec4 vPosition;
 //IN vec4 vColor;
 IN vec3 vNormal;
+IN vec2 vCoordTexture;
 
 OUT vec4 color;
-
+OUT vec2 v_texcoord;
 
 /*
  * Strucrura para pasar los matereiales
@@ -115,7 +116,7 @@ void main()
 //  if (ITotal.z > 1.0){
 //      ITotal.y = 1.0;
 //  }
-
+  v_texcoord = vCoordTexture;
   color = vec4(ITotal, 1.0f);
 //  color = vec4(phong1, 1.0f);
 }
