@@ -89,10 +89,13 @@ void Objecte::aplicaTG(mat4 m){
  * @param pr
  */
 void Objecte::toGPU(QGLShaderProgram *pr) {
+
     program = pr;
+    program->setUniformValue("texMap", 0);
+    texture->bind(0);
     glGenBuffers( 1, &buffer );
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
-    program->setUniformValue("texMap", 0);
+
     glBufferData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index + sizeof(vertexsTextura), NULL, GL_STATIC_DRAW );
     glEnable( GL_DEPTH_TEST );
     glEnable( GL_TEXTURE_2D );
@@ -105,6 +108,8 @@ void Objecte::toGPU(QGLShaderProgram *pr) {
  * @brief Objecte::draw
  */
 void Objecte::draw(){
+
+    texture->bind(0);
     //GL_ARRAY_BUFFER -> Nombre del buffer donde vas a passar la info
 
 
@@ -157,9 +162,11 @@ void Objecte::make(){
             points[Index] = vertexs[cares[i].idxVertices[j]];
 //            colors[Index] = vec4(base_colors[j%4], 1.0);
             normales[Index] =  normalesAcumulada[cares[i].idxVertices[j]];
+
             Index++;
         }
     }
+    textures();
 }
 
 // Llegeix un fitxer .obj
@@ -251,14 +258,12 @@ void Objecte::readObj(QString filename){
 void Objecte::textures()
 {
     float u , v;
-
-    for(unsigned int i=0; i<cares.size(); i++){
-        for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
-            u = 0.5 + atan2(normalesAcumulada[cares[i].idxVertices[j]].z, normalesAcumulada[cares[i].idxVertices[j]].x) / 2*M_PI;
-            v = 0.5 - (asin(normalesAcumulada[cares[i].idxVertices[j]].y) / M_PI);
-
+        for(unsigned int i=0; i<sizeof(normales); i++){
+            u = 0.5f + (atan2(normales[i].z, normales[i].x) / (2.0f *M_PI));
+            v = 0.5f - ((asin(normales[i].y) / M_PI));
+            if(u > 1.0) u = (float)1.0; else if(u < 0.0) u = (float)0.0;
+            if(v > 1.0) v = (float)1.0; else if(v < 0.0) v = (float)0.0;
             vertexsTextura[i] = vec2(u,v);
-        }
     }
 
 //    for(unsigned int i = 0; i < sizeof(normalesAcumulada); ++i){
