@@ -104,7 +104,7 @@ void Objecte::draw(){
 //    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, sizeof(vec3)*Index, &normales[0] );
-    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec2)*Index, sizeof(vertexsTextura), &vertexsTextura[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index, sizeof(vec3)*Index, sizeof(vertexsTextura), &vertexsTextura[0] );
     int vertexLocation = program->attributeLocation("vPosition");
 //    int colorLocation = program->attributeLocation("vColor");
     int normalLocation = program->attributeLocation("vNormal");
@@ -236,6 +236,34 @@ void Objecte::readObj(QString filename){
 
 }
 
+
+void ::aplicaTG(mat4 m)
+{
+    point4  transformed_points[NumVertices];
+
+    for ( int i = 0; i < NumVertices; ++i ) {
+        transformed_points[i] = m * points[i];
+    }
+
+    // Actualitzacio del vertex array per a preparar per pintar
+    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(transformed_points),
+                     transformed_points );
+
+}
+
+void Objecte::textures( int a, int b, int c)
+{
+    float u,v;
+    for(int i = 0; i < sizeof(vertexs); ++i){
+        u = 0.5 + arctan2(vertexs -> z,vertexs ->x )/ 2*PI;
+        v = 0.5 – arcsin( vertexs -> y)/ PI;
+
+        vertexsTextura[i] = vec2(u,v);
+    }
+}
+
+
+
 void Objecte::construeix_cara ( char **words, int nwords) {
     Cara face;
 
@@ -266,3 +294,6 @@ void Objecte::construeix_cara ( char **words, int nwords) {
     face.color = vec4(1.0, 0.0, 0.0, 1.0);
     this->cares.push_back(face);
 }
+
+
+

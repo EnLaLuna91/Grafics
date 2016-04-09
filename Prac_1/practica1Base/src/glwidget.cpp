@@ -266,8 +266,8 @@ void GLWidget::paintGL() {
     mon->draw();
 //    mon->llumsToGPU(program);
 
-}
 
+}
 
 void GLWidget::resizeGL(int width, int height) {
     int side = qMin(width, height);
