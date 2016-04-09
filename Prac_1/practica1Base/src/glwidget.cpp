@@ -23,28 +23,28 @@ GLWidget::~GLWidget() {
 void GLWidget::keyPressEvent(QKeyEvent *event){
     switch (event->key()) {
         case Qt::Key_Up:
-            calcalateNewPositionY(1.0);
+            calcalateNewPositionX(1.0);
             break;
         case Qt::Key_Down:
-            calcalateNewPositionY(-1.0);
+            calcalateNewPositionX(-1.0);
             break;
         case Qt::Key_Left:
-            calcalateNewPositionX(-1.0);
-            break;
-        case Qt::Key_Right:
-            calcalateNewPositionX(1.0);
-            break;
-        case Qt::Key_W:
-            calcalateNewPositionY(1.0);
-            break;
-        case Qt::Key_S:
             calcalateNewPositionY(-1.0);
             break;
-        case Qt::Key_A:
+        case Qt::Key_Right:
+            calcalateNewPositionY(1.0);
+            break;
+        case Qt::Key_W:
+            calcalateNewPositionX(1.0);
+            break;
+        case Qt::Key_S:
             calcalateNewPositionX(-1.0);
             break;
+        case Qt::Key_A:
+            calcalateNewPositionY(-1.0);
+            break;
         case Qt::Key_D:
-            calcalateNewPositionX(1.0);
+            calcalateNewPositionY(1.0);
             break;
     }
 }

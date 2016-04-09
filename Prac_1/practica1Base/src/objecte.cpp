@@ -291,7 +291,7 @@ void Objecte::textures()
 
 
     for(unsigned int i = 0; i < Index; ++i){
-        u = 0.5 + (atan2(normales[i].z,normales[i].x)/ (2.0*M_PI));
+        u = 0.5 + (atan2(normales[i].x,normales[i].z)/ (2.0*M_PI));
         v = (0.5 - ((asin(normales[i].y))/ M_PI));
 
         vertexsTextura[i] = vec2(u,v);
