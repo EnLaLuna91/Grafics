@@ -99,7 +99,7 @@ void main()
 
     // Luz Direccional
     if (luz[1].on == true){
-        vec3 dir = normalize(luz[1].direccion.xyz - Position.xyz);
+        vec3 dir = normalize(luz[1].direccion.xyz/* - Position.xyz*/);
         float intensity = dot(dir, normalize(Normal));
 
         toon2 = returnColor(intensity);
@@ -108,7 +108,7 @@ void main()
     // Luz SpotLight
     if (luz[2].on == true){
 //        vec3 dir = normalize(luz[2].coordenadas.xyz - Position.xyz);
-        vec3 dir = normalize(luz[2].direccion.xyz - Position.xyz);
+        vec3 dir = normalize(luz[2].direccion.xyz/* - Position.xyz*/);
         float intensity = dot(dir, normalize(Normal));
 
         if (colorSpotLaight(2))

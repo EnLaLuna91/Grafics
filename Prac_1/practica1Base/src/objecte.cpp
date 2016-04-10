@@ -192,6 +192,27 @@ void Objecte::make(){
     textures();
 }
 
+void Objecte::textures()
+{
+    float u , v;
+//        for(int i=0; i<sizeof(normales); i++){
+//            u = 0.5f + (atan2(normales[i].z, normales[i].x) / (2.0f *3.14));
+//            v = 0.5f - ((asin(normales[i].y) / 3.14));
+//            if(u > 1.0) u = (float)1.0; else if(u < 0.0) u = (float)0.0;
+//            if(v > 1.0) v = (float)1.0; else if(v < 0.0) v = (float)0.0;
+//            vertexsTextura[i] = vec2(u,v);
+//    }
+
+
+    for(unsigned int i = 0; i < Index; ++i){
+        u = 0.5 + (atan2(normales[i].x,normales[i].z)/ (2.0*M_PI));
+        v = (0.5 - ((asin(normales[i].y))/ M_PI));
+
+        vertexsTextura[i] = vec2(u,v);
+    }
+}
+
+
 // Llegeix un fitxer .obj
 //  Si el fitxer referencia fitxers de materials (.mtl), encara no es llegeixen
 //  Tots els elements del fitxer es llegeixen com a un unic objecte.
@@ -277,27 +298,6 @@ void Objecte::readObj(QString filename){
     }
 
 }
-
-void Objecte::textures()
-{
-    float u , v;
-//        for(int i=0; i<sizeof(normales); i++){
-//            u = 0.5f + (atan2(normales[i].z, normales[i].x) / (2.0f *3.14));
-//            v = 0.5f - ((asin(normales[i].y) / 3.14));
-//            if(u > 1.0) u = (float)1.0; else if(u < 0.0) u = (float)0.0;
-//            if(v > 1.0) v = (float)1.0; else if(v < 0.0) v = (float)0.0;
-//            vertexsTextura[i] = vec2(u,v);
-//    }
-
-
-    for(unsigned int i = 0; i < Index; ++i){
-        u = 0.5 + (atan2(normales[i].x,normales[i].z)/ (2.0*M_PI));
-        v = (0.5 - ((asin(normales[i].y))/ M_PI));
-
-        vertexsTextura[i] = vec2(u,v);
-    }
-}
-
 
 
 void Objecte::construeix_cara ( char **words, int nwords) {
