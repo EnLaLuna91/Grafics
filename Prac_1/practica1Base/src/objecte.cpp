@@ -11,7 +11,6 @@ Objecte::Objecte(int npoints, QObject *parent) : numPoints(npoints) ,QObject(par
 
 Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
     points = new point4[numPoints];
-//    colors = new point4[numPoints];
     mat = new Material;
     readObj(n);
     normales = new vec3[numPoints];
@@ -27,7 +26,6 @@ Objecte::Objecte(int npoints, QString n) : numPoints(npoints){
 
 Objecte::~Objecte(){
     delete points;
-//    delete colors;
     delete normales;
 }
 
@@ -59,8 +57,6 @@ void Objecte::calculaNormal(){
  */
 void Objecte::initTextura()
  {
-     qDebug() << "Initializing textures...";
-     // Carregar la textura
      glActiveTexture(GL_TEXTURE0);
      texture = new QOpenGLTexture(QImage("://resources/textures/earth1.png"));
      texture->setMinificationFilter(QOpenGLTexture::LinearMipMapLinear);
@@ -68,6 +64,11 @@ void Objecte::initTextura()
      texture->bind(0);
  }
 
+/**
+ * Función que dado una matriz de translación la envia a la GPU, modificando la posición de los Puntos
+ * @brief Objecte::aplicaTG
+ * @param m
+ */
 void Objecte::aplicaTG(mat4 m){
     point4  *transformed_points = new point4[Index];
 
@@ -88,6 +89,11 @@ void Objecte::aplicaTG(mat4 m){
     delete transformed_points;
 }
 
+/**
+ * Función que dado una matriz de translación la envia a la GPU, modificando la posición de las Normales
+ * @brief Objecte::aplicaTGNormales
+ * @param m
+ */
 void Objecte::aplicaTGNormales(mat4 m){
     point4 *transformed_points = new point4[Index];
 
@@ -139,23 +145,19 @@ void Objecte::draw(){
     // Aqui es torna a repetir el pas de dades a la GPU per si hi ha més d'un objecte
     glBindBuffer( GL_ARRAY_BUFFER, buffer );
 
-    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index,  &points[0] );
     //glBufferSubData (Que buffer guardas los datos, que posicion, tamaño informacion a pasar, donde empieza esa infor)
-
-//    glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(point4)*Index, &colors[0] );
+    glBufferSubData( GL_ARRAY_BUFFER, 0, sizeof(point4)*Index,  &points[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index, sizeof(vec3)*Index, &normales[0] );
     glBufferSubData( GL_ARRAY_BUFFER, sizeof(point4)*Index + sizeof(vec3)*Index ,sizeof(vec2)*Index, vertexsTextura);
+
+
     int vertexLocation = program->attributeLocation("vPosition");
-//    int colorLocation = program->attributeLocation("vColor");
     int normalLocation = program->attributeLocation("vNormal");
     int coordTextureLocation = program->attributeLocation("vCoordTexture");
 
+    //program->setAttributeBuffer (que programa se carga, tipo del dato que pasa como "in", donde empieza, dimension)
     program->enableAttributeArray(vertexLocation);
     program->setAttributeBuffer("vPosition", GL_FLOAT, 0, 4);
-    //program->setAttributeBuffer (que programa se carga, tipo del dato que pasa como "in", donde empieza, dimension)
-
-//    program->enableAttributeArray(colorLocation);
-//    program->setAttributeBuffer("vColor", GL_FLOAT, sizeof(point4)*Index, 4);
 
     program->enableAttributeArray(normalLocation);
     program->setAttributeBuffer("vNormal", GL_FLOAT, sizeof(point4)*Index, 3);
@@ -163,9 +165,7 @@ void Objecte::draw(){
     program->enableAttributeArray(coordTextureLocation);
     program->setAttributeBuffer("vCoordTexture", GL_FLOAT, sizeof(point4)*Index + sizeof(vec3)*Index, 2);
 
-
     mat->toGPU(program);
-
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays( GL_TRIANGLES, 0, Index );
@@ -183,7 +183,6 @@ void Objecte::make(){
     for(unsigned int i=0; i<cares.size(); i++){
         for(unsigned int j=0; j<cares[i].idxVertices.size(); j++){
             points[Index] = vertexs[cares[i].idxVertices[j]];
-//            colors[Index] = vec4(base_colors[j%4], 1.0);
             normales[Index] =  normalesAcumulada[cares[i].idxVertices[j]];
 
             Index++;
@@ -192,17 +191,13 @@ void Objecte::make(){
     textures();
 }
 
+/**
+ * Función que obtiene los vectorres U y V de la textura y los aplica en los vectores X, Y y Z de la figura 3D
+ * @brief Objecte::textures
+ */
 void Objecte::textures()
 {
     float u , v;
-//        for(int i=0; i<sizeof(normales); i++){
-//            u = 0.5f + (atan2(normales[i].z, normales[i].x) / (2.0f *3.14));
-//            v = 0.5f - ((asin(normales[i].y) / 3.14));
-//            if(u > 1.0) u = (float)1.0; else if(u < 0.0) u = (float)0.0;
-//            if(v > 1.0) v = (float)1.0; else if(v < 0.0) v = (float)0.0;
-//            vertexsTextura[i] = vec2(u,v);
-//    }
-
 
     for(unsigned int i = 0; i < Index; ++i){
         u = 0.5 + (atan2(normales[i].x,normales[i].z)/ (2.0*M_PI));

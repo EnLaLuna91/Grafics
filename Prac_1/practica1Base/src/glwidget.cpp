@@ -80,7 +80,7 @@ void GLWidget::calcalateNewPositionY(float num){
 void GLWidget::activaToonShader() {
     //A implementar a la practica 1
     ultimoProgramCargado = Toon;
-    initShadersGPU();
+    updateShader();
     updateGL();
     mon->llumsToGPU(program[ultimoProgramCargado]);
 }
@@ -88,7 +88,7 @@ void GLWidget::activaToonShader() {
 void GLWidget::activaPhongShader() {
     //A implementar a la practica 1
     ultimoProgramCargado = Phong;
-    initShadersGPU();
+    updateShader();
     updateGL();
     mon->phongTexToGPU(program[ultimoProgramCargado]);
     mon->llumsToGPU(program[ultimoProgramCargado]);
@@ -97,7 +97,7 @@ void GLWidget::activaPhongShader() {
 void GLWidget::activaGouraudShader() {
     //A implementar a la practica 1
     ultimoProgramCargado = Gouraud;
-    initShadersGPU();
+    updateShader();
     updateGL();
     mon->gouraudTexToGPU(program[ultimoProgramCargado]);
     mon->llumsToGPU(program[ultimoProgramCargado]);
@@ -107,7 +107,7 @@ void GLWidget::activaPhongTex() {
     //A implementar a la practica 1
     mon->phongTexOnOff();
     ultimoProgramCargado = Phong;
-    initShadersGPU();
+    updateShader();
     updateGL();
     mon->phongTexToGPU(program[ultimoProgramCargado]);
     mon->llumsToGPU(program[ultimoProgramCargado]);
@@ -117,7 +117,7 @@ void GLWidget::activaGouraudTex() {
     //A implementar a la practica 1
     mon->gouraudTexOnOff();
     ultimoProgramCargado = Gouraud;
-    initShadersGPU();
+    updateShader();
     updateGL();
     mon->gouraudTexToGPU(program[ultimoProgramCargado]);
     mon->llumsToGPU(program[ultimoProgramCargado]);
@@ -216,7 +216,7 @@ void GLWidget::activaEnvMapping() {
     //OPICIONAL: a implementar a la practica 1
 }
 
-void GLWidget::InitShader(const char* vShaderFile, const char* fShaderFile){
+void GLWidget::InitShader(const char* vShaderFile, const char* fShaderFile, int pos){
     QGLShader *vshader = new QGLShader(QGLShader::Vertex, this);
     QGLShader *fshader = new QGLShader(QGLShader::Fragment, this);
 
@@ -224,32 +224,29 @@ void GLWidget::InitShader(const char* vShaderFile, const char* fShaderFile){
     fshader->compileSourceFile(fShaderFile);
 
 
-    program[ultimoProgramCargado] = new QGLShaderProgram(this);
-    program[ultimoProgramCargado]->addShader(vshader);
-    program[ultimoProgramCargado]->addShader(fshader);
+    program[pos] = new QGLShaderProgram(this);
+    program[pos]->addShader(vshader);
+    program[pos]->addShader(fshader);
+    program[pos]->link();
+    program[pos]->bind();
+}
+
+/**
+ * Función a la que llamamos cada vez que queremos cambiar de shader, lo que hace es actualizar el programa haciendo un link() y bind()
+ * @brief GLWidget::updateShader
+ */
+void GLWidget::updateShader(){
     program[ultimoProgramCargado]->link();
     program[ultimoProgramCargado]->bind();
-
-
-//    program = new QGLShaderProgram(this);
-//    program->addShader(vshader);
-//    program->addShader(fshader);
-//    program->link();
-//    program->bind();
 }
 
 /**
  * @brief GLWidget::initShadersGPU
  */
 void GLWidget::initShadersGPU(){
-//    InitShader("://resources/vshader1.glsl", "://resources/fshader1.glsl");
-
-    if (ultimoProgramCargado == Gouraud)
-        InitShader("://resources/vshaderGouraud.glsl", "://resources/fshaderGouraud.glsl");
-    else if (ultimoProgramCargado == Phong)
-        InitShader("://resources/vshaderPhong.glsl", "://resources/fshaderPhong.glsl");
-    else if (ultimoProgramCargado == Toon)
-        InitShader("://resources/vshaderToon.glsl", "://resources/fshaderToon.glsl");
+    InitShader("://resources/vshaderGouraud.glsl", "://resources/fshaderGouraud.glsl", Gouraud);
+    InitShader("://resources/vshaderPhong.glsl", "://resources/fshaderPhong.glsl", Phong);
+    InitShader("://resources/vshaderToon.glsl", "://resources/fshaderToon.glsl", Toon);
 }
 
 QSize GLWidget::minimumSizeHint() const {
@@ -268,6 +265,7 @@ void GLWidget::initializeGL() {
 
     ultimoProgramCargado = Gouraud;
     initShadersGPU();
+    updateShader();
 
     mon->setAmbientToGPU(program[ultimoProgramCargado]);
 

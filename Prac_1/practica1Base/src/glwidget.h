@@ -69,15 +69,13 @@ private:
 
     Programs ultimoProgramCargado;
 
-    void InitShader( const char* vertexShaderFile, const char* fragmentShaderFile);
+    void InitShader( const char* vertexShaderFile, const char* fragmentShaderFile, int pos);
     void initShadersGPU();
+    void updateShader(); // Actualiza el Sahder
 
     // Función de soporte para el keyPressEvent
     void calcalateNewPositionX(float num);
     void calcalateNewPositionY(float num);
-
-
-
 };
 
 #endif // GLWIDGET_H
