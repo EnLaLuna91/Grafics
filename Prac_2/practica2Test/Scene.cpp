@@ -32,6 +32,13 @@ Scene::~Scene()
 */
 
 bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
+
+    for (int i=0; i<objects.size(); i++){
+        if (objects[i]->Intersect(ray,info)){
+            return true;
+        }
+    }
+
     return true;
     // TODO: Heu de codificar la vostra solucio per aquest metode substituint el 'return true'
     // Una possible solucio es cridar Intersect per a tots els objectes i quedar-se amb la interseccio
@@ -69,7 +76,8 @@ float Scene::CastRay(Ray &ray, Payload &payload) {
            payload ha d'anar tenint el color actualitzat segons els rebots.
         */
 
-        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
+//        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
+        payload.color = glm::vec3(0,1,0) ;
 
         return info.time;
     }
