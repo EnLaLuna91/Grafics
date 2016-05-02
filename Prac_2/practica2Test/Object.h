@@ -6,8 +6,8 @@ class Material {
   public:
     Material();
     glm::vec3 ambient;
-    glm::vec3 diffuse;   
-    glm::vec3 specular;	
+    glm::vec3 diffuse;
+    glm::vec3 specular;
     float shininess;
 
 };
@@ -42,7 +42,9 @@ class Sphere : public Object {
 /* TODO: Implementar en el punt 2 de l'enunciat*/
 class Plane : public Object {
   public:
-    virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
+	Plane(glm::vec3 vX, glm::vec3 vY, glm::vec3 p);
+     virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
+	glm::vec3 vecX, vecY, point;
 };
 
 /* TODO: Implementar com a extensio*/
