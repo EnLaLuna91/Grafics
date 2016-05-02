@@ -28,7 +28,7 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
     float distPos = -dirOrigCenter + cuadratic;
     float distNeg = -dirOrigCenter - cuadratic;
 
-    bool ret;
+    bool ret = false;
 
     if (distPos < 0 || distNeg < 0){
         if (distPos > 0){
