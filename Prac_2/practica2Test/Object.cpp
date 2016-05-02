@@ -20,11 +20,14 @@ Sphere::Sphere(glm::vec3 coor, float rad){
 /* TODO: Implementar en el punt 2 */
 bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
 
-
     float dirOrigCenter = glm::dot( ray.direction, (ray.origin - centerSphere) );
     float module = glm::pow( glm::length(ray.origin - centerSphere) , 2.0f );
     float radCuadratic = glm::pow( radio, 2.0f );
-    float cuadratic = glm::sqrt( glm::pow( dirOrigCenter, 2.0f ) - module + radCuadratic );
+    float intCuadratic = glm::pow( dirOrigCenter, 2.0f ) - module + radCuadratic;
+
+    if (intCuadratic < 0) return false;
+
+    float cuadratic = glm::sqrt( intCuadratic );
     float distPos = -dirOrigCenter + cuadratic;
     float distNeg = -dirOrigCenter - cuadratic;
 
@@ -48,6 +51,10 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
             ret = true;
         }
     }
+
+    //    if (ret){
+    //        info.material = material;
+    //    }
 
     return ret;
 }
