@@ -87,7 +87,8 @@ bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
     else {return true;}*/
 
     glm::vec3 normal(a,b,c);
-    if(glm::dot(ray.direction,normal)==0){return false;}
+    float angulo = glm::dot(ray.direction,normal);
+    if(angulo==0.f){return false;}
     else{return true;}
 }
 
