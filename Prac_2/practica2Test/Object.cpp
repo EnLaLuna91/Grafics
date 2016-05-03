@@ -27,43 +27,40 @@ Sphere::Sphere(glm::vec3 coor, float rad){
 bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
 
     float dirOrigCenter = glm::dot( ray.direction, (ray.origin - centerSphere) );
-    float module = glm::pow( glm::length(ray.origin - centerSphere) , 2.0f );
-    float radCuadratic = glm::pow( radio, 2.0f );
-    float intCuadratic = glm::pow( dirOrigCenter, 2.0f ) - module + radCuadratic;
+    float module = pow( glm::length(ray.origin - centerSphere) , 2.0f );
+    float radCuadratic = pow( radio, 2.0f );
+    float intCuadratic = pow( dirOrigCenter, 2.0f ) - module + radCuadratic;
 
-    if (intCuadratic < 0) {return false;}
-    else{return true;}
+    if (intCuadratic < 0) return false;
 
     float cuadratic = glm::sqrt( intCuadratic );
     float distPos = -dirOrigCenter + cuadratic;
     float distNeg = -dirOrigCenter - cuadratic;
 
-//    bool ret = false;
+    bool ret = false;
 
-//    if (distPos < 0 || distNeg < 0){
-//        if (distPos > 0){
-//            info.time = distPos;
-//            ret =  true;
-//        } else if (distNeg > 0){
-//            info.time =  distNeg;
-//            ret = true;
-//        }
-//    } else {
-//        if (distPos < distNeg){
-//            info.time = distPos;
-//            ret = true;
-//        }
-//        else if (distNeg > distPos){
-//            info.time = distNeg;
-//            ret = true;
-//        }
-//    }
+//    cout << "distPos: " << distPos << "\tdistNeg: " << distNeg << endl;
 
-//    //    if (ret){
-//    //        info.material = material;
-//    //    }
+    if ((distPos && distNeg) > 0){
+        info.time = glm::min(distPos, distNeg);
+        ret = true;
+    } else {
+        if (distPos < 0){
+            info.time = distNeg;
+            ret = true;
+        } else if (distNeg < 0) {
+            info.time = distPos;
+            ret = true;
+        }
+    }
 
-//    return ret;
+    if (ret){
+        info.hitPoint = glm::vec3(ray.origin + (info.time * ray.direction));
+        info.normal = glm::vec3((info.hitPoint - centerSphere) / radio);
+    }
+
+
+    return true;
 }
 // Function glm::dot(x,y) will return the dot product of parameters. (It's the inner product of vectors)
 

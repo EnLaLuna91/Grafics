@@ -1,6 +1,10 @@
 #pragma once
 
+#include <iostream>
+#include <stdlib.h>
 #include "Ray.h"
+
+using namespace std;
 
 class Material {
   public:

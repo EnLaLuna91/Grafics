@@ -5,7 +5,7 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 0.5f));
+    objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 0.3f));
 
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
 
@@ -37,7 +37,7 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
         if (objects[i]->Intersect(ray,info)){
             return true;
         }
-        else{return false;}
+        else return false;
     }
 
     // TODO: Heu de codificar la vostra solucio per aquest metode substituint el 'return true'
