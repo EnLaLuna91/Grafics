@@ -25,13 +25,14 @@ void Render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Netejar la finestra OpenGL
 
     // TODO: Cridar a IniViewProjMatrices de la classe camera (punt 2 de l'enunciat)
-
+    scene->cam->IniViewProjMatrices();
 
     glBegin(GL_POINTS);	//S'activa el mode GL_POINTS. En aquest mode
                         // cada vertex especificat és un punt.
                         //	Reference https://en.wikibooks.org/wiki/OpenGL_Programming/GLStart/Tut3 si us interessa.
 
     std::cout<<"observador:"<<scene->cam->obs.x<<","<<scene->cam->obs.y<<","<<scene->cam->obs.z<<std::endl;
+
     // Recorregut de cada pixel de la imatge final
     for(int x = 0; x < scene->cam->viewportX; ++x)
         for(int y = 0; y < scene->cam->viewportY; ++y){

@@ -33,10 +33,11 @@ class Object {
 /* TODO: Implementar en el punt 2 de l'enunciat*/
 class Sphere : public Object {
   public:
-    Sphere(glm::vec3 coord, float rad);
-    virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;  //  To figure out if the Ray hit this object.
     glm::vec3 centerSphere;
     float radio;
+    Sphere(glm::vec3 coord, float rad);
+    bool Intersect(const Ray &ray, IntersectInfo &info) const;  //  To figure out if the Ray hit this object.
+
 };
 
 /* TODO: Implementar en el punt 2 de l'enunciat*/

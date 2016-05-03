@@ -31,38 +31,39 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
     float radCuadratic = glm::pow( radio, 2.0f );
     float intCuadratic = glm::pow( dirOrigCenter, 2.0f ) - module + radCuadratic;
 
-    if (intCuadratic < 0) return false;
+    if (intCuadratic < 0) {return false;}
+    else{return true;}
 
     float cuadratic = glm::sqrt( intCuadratic );
     float distPos = -dirOrigCenter + cuadratic;
     float distNeg = -dirOrigCenter - cuadratic;
 
-    bool ret = false;
+//    bool ret = false;
 
-    if (distPos < 0 || distNeg < 0){
-        if (distPos > 0){
-            info.time = distPos;
-            ret =  true;
-        } else if (distNeg > 0){
-            info.time =  distNeg;
-            ret = true;
-        }
-    } else {
-        if (distPos < distNeg){
-            info.time = distPos;
-            ret = true;
-        }
-        else if (distNeg > distPos){
-            info.time = distNeg;
-            ret = true;
-        }
-    }
+//    if (distPos < 0 || distNeg < 0){
+//        if (distPos > 0){
+//            info.time = distPos;
+//            ret =  true;
+//        } else if (distNeg > 0){
+//            info.time =  distNeg;
+//            ret = true;
+//        }
+//    } else {
+//        if (distPos < distNeg){
+//            info.time = distPos;
+//            ret = true;
+//        }
+//        else if (distNeg > distPos){
+//            info.time = distNeg;
+//            ret = true;
+//        }
+//    }
 
-    //    if (ret){
-    //        info.material = material;
-    //    }
+//    //    if (ret){
+//    //        info.material = material;
+//    //    }
 
-    return ret;
+//    return ret;
 }
 // Function glm::dot(x,y) will return the dot product of parameters. (It's the inner product of vectors)
 

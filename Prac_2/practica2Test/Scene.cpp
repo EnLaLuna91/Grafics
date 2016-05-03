@@ -5,7 +5,7 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    objects.push_back(new Sphere(glm::vec3(0,0,0), 1.5));
+    objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 1.0f));
 
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
 
@@ -37,9 +37,9 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
         if (objects[i]->Intersect(ray,info)){
             return true;
         }
+        else{return false;}
     }
 
-    return true;
     // TODO: Heu de codificar la vostra solucio per aquest metode substituint el 'return true'
     // Una possible solucio es cridar Intersect per a tots els objectes i quedar-se amb la interseccio
     // mes propera a l'observador, en el cas que n'hi hagi més d'una.
@@ -77,7 +77,7 @@ float Scene::CastRay(Ray &ray, Payload &payload) {
         */
 
 //        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
-        payload.color = glm::vec3(0,1,0) ;
+        payload.color = glm::vec3(0,1,0);
 
         return info.time;
     }
