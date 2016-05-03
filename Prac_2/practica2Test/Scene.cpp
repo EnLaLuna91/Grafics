@@ -5,7 +5,7 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 1.0f));
+    objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 0.5f));
 
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
 
