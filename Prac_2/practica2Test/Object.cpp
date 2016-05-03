@@ -71,16 +71,24 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
  * @param vY
  * @param p
  */
-Plane::Plane(glm::vec3 vX, glm::vec3 vY, glm::vec3 p){
-	vecX = vX;
-	vecY = vY;
-	point = p;
+Plane::Plane(float a0, float b0, float c0, float d0){
+   a=a0;
+   b=b0;
+   c=c0;
+   d=d0;
 }
 
 /* TODO: Implementar en el punt 2 */
 bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
+    /*float lambda = -(d + a*ray.origin.x+b*ray.origin.y+c*ray.origin.z)/(a*ray.direction.x+b*ray.direction.y+c*ray.direction.z);
+    cout << "lambda: " << lambda << endl;
+    if (lambda < 0){
+        return false;}
+    else {return true;}*/
 
-	return -1.0f;
+    glm::vec3 normal(a,b,c);
+    if(glm::dot(ray.direction,normal)==0){return false;}
+    else{return true;}
 }
 
 /* TODO: Implementar com a extensio */

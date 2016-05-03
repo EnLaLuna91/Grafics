@@ -47,9 +47,9 @@ class Sphere : public Object {
 /* TODO: Implementar en el punt 2 de l'enunciat*/
 class Plane : public Object {
   public:
-	Plane(glm::vec3 vX, glm::vec3 vY, glm::vec3 p);
-     virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
-	glm::vec3 vecX, vecY, point;
+    Plane(float a0, float b0, float c0, float d0);
+    virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
+    float a,b,c,d;
 };
 
 /* TODO: Implementar com a extensio*/
