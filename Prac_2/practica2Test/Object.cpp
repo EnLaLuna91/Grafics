@@ -60,7 +60,7 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
     }
 
 
-    return true;
+    return ret;
 }
 // Function glm::dot(x,y) will return the dot product of parameters. (It's the inner product of vectors)
 
