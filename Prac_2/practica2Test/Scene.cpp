@@ -44,8 +44,7 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 				lambda = info.time;
 				infoMin.hitPoint = info.hitPoint;
 				infoMin.normal = info.normal;
-				infoMin.time = info.time;
-				typeObject = objects[i]->objectType();
+                infoMin.time = info.time;
 				ret = true;
 			}
         }
