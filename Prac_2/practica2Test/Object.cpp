@@ -64,6 +64,8 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
 }
 // Function glm::dot(x,y) will return the dot product of parameters. (It's the inner product of vectors)
 
+int Sphere::objectType(){return 0;}
+
 /**
  * @brief Plane::Plane
  * Constructor Plane
@@ -96,7 +98,7 @@ bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
     if(abs(angulo) < 0.001f) return false;
 
     if (lambda < 0) return false; // Si el objeto esta por detras, aunque intersecte no nos interesa porque no lo vamos a ver
-    cout << "angulo: " << angulo << endl;
+    // cout << "angulo: " << angulo << endl;
 //    else return true;
     info.time = lambda;
     info.hitPoint = glm::vec3(ray.origin + (lambda * ray.direction));
@@ -104,10 +106,9 @@ bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
     return true;
 }
 
-
-
-
-
+int Plane::objectType() {return 1;}
 
 /* TODO: Implementar com a extensio */
 bool Triangle::Intersect(const Ray &ray, IntersectInfo &info) const { return -1.0f; }
+
+int Triangle::objectType() {return 2;}

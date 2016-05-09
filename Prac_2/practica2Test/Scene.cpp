@@ -5,8 +5,8 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    //objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 0.3f));
-    objects.push_back(new Plane(0.0f,0.0f,1.0f,0.0f));
+    objects.push_back(new Sphere(glm::vec3(0.0f, 0.0f, 0.0f), 0.3f));
+    objects.push_back(new Plane(0.0f, 0.0f, 1.0f, 0.0f));
     //objects.push_back(new Plane((glm::vec3(0.0f,0.0f,0.0f), vec3(0.0f,0.0f,0.0f) ,0.3f)))
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
 
@@ -36,11 +36,27 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
     //hay que recorrer todos los objetos de la escena
 
     bool ret = false;
-    for (int i=0; i<objects.size(); i++){        
+	IntersectInfo infoMin;
+	float lambda = std::numeric_limits<float>::infinity();
+    for (int i=0; i<objects.size(); i++){
         if (objects[i]->Intersect(ray,info)){
-            ret = true;
+			if (info.time < lambda) {
+				lambda = info.time;
+				infoMin.hitPoint = info.hitPoint;
+				infoMin.normal = info.normal;
+				infoMin.time = info.time;
+				typeObject = objects[i]->objectType();
+				ret = true;
+			}
         }
     }
+
+	if (ret){
+		info.hitPoint = infoMin.hitPoint;
+		info.normal = infoMin.normal;
+		info.time = infoMin.time;
+	}
+
     return ret;
 
     // TODO: Heu de codificar la vostra solucio per aquest metode substituint el 'return true'
@@ -80,7 +96,18 @@ float Scene::CastRay(Ray &ray, Payload &payload) {
         */
 
 //        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
-        payload.color = glm::vec3(0,1,0);
+        // payload.color = glm::vec3(0,1,0);
+		switch (typeObject){
+			case 0:
+				payload.color = glm::vec3(0,1,0);
+				break;
+			case 1:
+				payload.color = glm::vec3(0,0,1);
+				break;
+			case 2:
+				payload.color = glm::vec3(0.2,0.5,0.8);
+				break;
+		}
 
         return info.time;
     }
@@ -91,4 +118,3 @@ float Scene::CastRay(Ray &ray, Payload &payload) {
         return -1.0f;
     }
 }
-

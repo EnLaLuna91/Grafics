@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <limits>
 #include "Ray.h"
 
 using namespace std;
@@ -24,6 +25,7 @@ class Object {
     virtual bool Intersect(const Ray &ray, IntersectInfo &info) const { return true; }
     glm::vec3 Position() const { return glm::vec3(transform[3][0], transform[3][1], transform[3][2]); }
     const Material *MaterialPtr() const { return &material; }
+	virtual int objectType();
 
   protected:
     glm::mat4 transform;  // Matriu de transformacio de coordenades locals a globals
@@ -41,7 +43,7 @@ class Sphere : public Object {
     float radio;
     Sphere(glm::vec3 coord, float rad);
     bool Intersect(const Ray &ray, IntersectInfo &info) const;  //  To figure out if the Ray hit this object.
-
+    virtual int objectType();
 };
 
 /* TODO: Implementar en el punt 2 de l'enunciat*/
@@ -50,10 +52,12 @@ class Plane : public Object {
     Plane(float a0, float b0, float c0, float d0);
     virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
     float a,b,c,d;
+    virtual int objectType();
 };
 
 /* TODO: Implementar com a extensio*/
 class Triangle : public Object {
   public:
     virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
+    virtual int objectType();
 };

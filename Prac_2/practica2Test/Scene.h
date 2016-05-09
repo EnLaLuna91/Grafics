@@ -1,10 +1,12 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <typeinfo>
 #include "Camera.h"
 #include "Ray.h"
 #include "Object.h"
 #include <vector> //Notice that vector in C++ is different from Vector2, Vector3 or similar things in a graphic library.
+
 
 class Scene
 {
@@ -14,6 +16,8 @@ public:
 
     bool  CheckIntersection(const Ray &ray, IntersectInfo &info);
     float CastRay(Ray &ray, Payload &payload);
+
+	int typeObject = 0;
 
     /*
     ** std::vector d'objectes continguts a l'escena
