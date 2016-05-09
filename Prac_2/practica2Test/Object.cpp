@@ -80,6 +80,8 @@ Plane::Plane(float a0, float b0, float c0, float d0){
 
 /* TODO: Implementar en el punt 2 */
 bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
+
+
     /*float lambda = -(d + a*ray.origin.x+b*ray.origin.y+c*ray.origin.z)/(a*ray.direction.x+b*ray.direction.y+c*ray.direction.z);
     cout << "lambda: " << lambda << endl;
     if (lambda < 0){
@@ -87,11 +89,25 @@ bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
     else {return true;}*/
 
     glm::vec3 normal = glm::vec3(a,b,c);
-    float angulo = glm::dot(ray.direction, normal);
-	cout << "angulo: " << angulo << endl;
-    if(angulo != 0.f) return true;
-    else return false;
+
+    float lambda = -((d + glm::dot(normal,ray.origin))/glm::dot(normal,ray.direction));
+
+    float angulo = glm::dot( ray.direction,normal);
+    if(abs(angulo) < 0.001f) return false;
+
+    if (lambda < 0) return false; // Si el objeto esta por detras, aunque intersecte no nos interesa porque no lo vamos a ver
+    cout << "angulo: " << angulo << endl;
+//    else return true;
+    info.time = lambda;
+    info.hitPoint = glm::vec3(ray.origin + (lambda * ray.direction));
+    info.normal = normal;
+    return true;
 }
+
+
+
+
+
 
 /* TODO: Implementar com a extensio */
 bool Triangle::Intersect(const Ray &ray, IntersectInfo &info) const { return -1.0f; }

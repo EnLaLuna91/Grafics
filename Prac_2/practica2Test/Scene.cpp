@@ -5,8 +5,8 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 0.3f));
-    objects.push_back(new Plane(1.0f,0.0f,0.0f,0.0f));
+    //objects.push_back(new Sphere(glm::vec3(0.0f,0.0f,0.0f), 0.3f));
+    objects.push_back(new Plane(0.0f,0.0f,1.0f,0.0f));
     //objects.push_back(new Plane((glm::vec3(0.0f,0.0f,0.0f), vec3(0.0f,0.0f,0.0f) ,0.3f)))
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
 
@@ -33,6 +33,8 @@ Scene::~Scene()
 */
 
 bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
+    //hay que recorrer todos los objetos de la escena
+
     bool ret = false;
     for (int i=0; i<objects.size(); i++){        
         if (objects[i]->Intersect(ray,info)){
