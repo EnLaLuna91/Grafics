@@ -1,7 +1,6 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <typeinfo>
 #include "Camera.h"
 #include "Ray.h"
 #include "Object.h"
