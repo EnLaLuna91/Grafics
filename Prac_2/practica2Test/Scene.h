@@ -4,6 +4,12 @@
 #include "Camera.h"
 #include "Ray.h"
 #include "Object.h"
+
+#include <llum.h>
+#include <llumdireccional.h>
+#include <llumpuntual.h>
+#include <llumspotlight.h>
+
 #include <vector> //Notice that vector in C++ is different from Vector2, Vector3 or similar things in a graphic library.
 
 
@@ -30,6 +36,8 @@ public:
     /*
      * TODO: Cal afegir el conjunt de llums de l'escena
      */
+    // glm:::vector<Llum*> llums;
+	std::vector<Lum*> llums;
 
 };
 

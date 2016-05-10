@@ -1,10 +1,14 @@
 #include "Object.h"
 
 Material::Material():
-    ambient(1.0f),
-    diffuse(1.0f),
-    specular(1.0f),
-    shininess(10.0f)
+    // ambient(1.0f),
+    // diffuse(1.0f),
+    // specular(1.0f),
+    // shininess(10.0f)
+    ambient(0.2f, 0.2f, 0.2f),
+    diffuse(0.8f, 0.0f, 0.0f),
+    specular(1.0f, 1.0f, 1.0f),
+    shininess(20.0f)
   {}
 
 Object::Object(const glm::mat4 &transform, const Material &material):
@@ -107,4 +111,3 @@ bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
 
 /* TODO: Implementar com a extensio */
 bool Triangle::Intersect(const Ray &ray, IntersectInfo &info) const { return -1.0f; }
-
