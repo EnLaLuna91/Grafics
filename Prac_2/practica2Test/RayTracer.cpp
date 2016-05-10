@@ -39,6 +39,9 @@ void Render()
     // Recorregut de cada pixel de la imatge final
     for(int x = 0; x < scene->cam->viewportX; ++x)
         for(int y = 0; y < scene->cam->viewportY; ++y){
+			/*
+			 *De pixel (viewport) a window normalizado
+			 */
             float pixelX =  2*((x+0.5f)/scene->cam->viewportX)-1; //coords de camera a partir de viewport
             float pixelY = -2*((y+0.5f)/scene->cam->viewportY)+1;
 
@@ -55,12 +58,13 @@ void Render()
             // glm::vec3 direction = glm::normalize(glm::vec3(pixelPosWorld-scene->cam->obs));
 
 			/*
-			 * Obtenemos los pixeles para znear y zfar
+			 * Obtenemos los pixeles para znear y zfar			 *
 			 */
-			glm::vec4 pixelPosWorldZnear = glm::vec4(pixelX, pixelY, scene->cam->zNear, 1.0f);
-			glm::vec4 pixelPosWorldZfar = glm::vec4(pixelX, pixelY, scene->cam->zFar, 1.0f);
+			glm::vec4 pixelPosWorldZnear = glm::vec4(pixelX, pixelY, -1.0f, 1.0f);
+			glm::vec4 pixelPosWorldZfar = glm::vec4(pixelX, pixelY, 1.0f, 1.0f);
 
 			/*
+			 * De window a camara
 			 * Obtenemos las coordenadas de camara,
 			 * Matriz de proyeccion invertida * el pixel
 			 */
@@ -68,6 +72,7 @@ void Render()
 			glm::vec4 coordCameraZfar = projMatrixInverse * pixelPosWorldZfar;
 
 			/*
+			 * De camara a mundo
 			 * Obrenemos las corrdenadas de mundo,
 			 * Matriz de Model-View invertida * las coord de cmara
 			 */
@@ -76,9 +81,9 @@ void Render()
 
 			/*
 			 * Obtenemos la direccion coord de mundo en base zNear -
-			 * coord de munod en base zFar 
+			 * coord de munod en base zFar
 			 */
-			glm::vec4 direction = glm::normalize(glm::vec4(coordWorldZnear-coordWorldZfar));
+			glm::vec4 direction = glm::normalize(glm::vec4(coordWorldZfar-coordWorldZnear));
 
             Payload payload;
             // Creacio del raig
