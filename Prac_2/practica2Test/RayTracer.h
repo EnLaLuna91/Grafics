@@ -3,6 +3,8 @@
 #define RayTracer_h
 
 #define _USE_MATH_DEFINES
+#include <iostream>
+#include <stdlib.h>
 #include <cmath>
 #include <vector>
 #include <iostream>
@@ -13,9 +15,10 @@
 
 #include "Scene.h"
 
+using namespace std;
+
 Scene *scene;
 
 void Render();
 
 #endif
-
