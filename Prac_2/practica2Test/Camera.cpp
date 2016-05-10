@@ -6,7 +6,7 @@ Camera::Camera():
     vrp(glm::vec3(0.0f, 0.0f, 0.0f)),
     vup(glm::vec3(0.0f, 1.0f, 0.0f)),
     angleObertura(45.0f), zNear(1.0f), zFar(1000.0f),
-    viewportX(640), viewportY(480)
+    viewportX(640), viewportY(480), aspect(float(viewportX)/float(viewportY))
 {
 }
 
@@ -21,14 +21,20 @@ Camera::Camera(const glm::vec3 &_obs,
                int _viewportY):
     obs(_obs), vrp(_vrp), vup(_vup),
     angleObertura(_angleObertura), zNear(_zNear), zFar(_zFar),
-    viewportX(_viewportX), viewportY(_viewportY){
+    viewportX(_viewportX), viewportY(_viewportY), aspect(float(viewportX)/float(viewportY))
+{
 }
 
 void Camera::IniViewProjMatrices()
 {
 
-    // Inicialització de les matrius viewMatrix i projMatrix
-    //	Utilitzeu els metodes de lookAt i perspective
-    //  que teniu a  glm.h
+	// Inicialització de les matrius viewMatrix i projMatrix
+	//	Utilitzeu els metodes de lookAt i perspective
+	//  que teniu a  glm.h
+
+	// std::cout << "aspect: " << this->aspect << std::endl;
+
+	this->viewMatrix = glm::lookAt(this->obs, this->vrp, this->vup);
+	this->projMatrix = glm::perspective(this->angleObertura, this->aspect, this->zNear, this->zFar);
 
 }

@@ -1,7 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-
+#include <iostream>
+#include <stdlib.h>
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
@@ -52,6 +53,11 @@ float zFar;
 int viewportX;
 int viewportY;
 
+/*
+ * Aspect (viewportX / viewportY)
+ */
+float aspect;
+
 // Matrius de visualitzacio
 glm::mat4 viewMatrix;
 glm::mat4 projMatrix;
@@ -59,4 +65,3 @@ glm::mat4 projMatrix;
 };
 
 #endif // CAMERA_H
-

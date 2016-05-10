@@ -33,6 +33,9 @@ void Render()
 
     std::cout<<"observador:"<<scene->cam->obs.x<<","<<scene->cam->obs.y<<","<<scene->cam->obs.z<<std::endl;
 
+	glm::mat4 viewMatrixInverse = glm::inverse(scene->cam->viewMatrix);
+	glm::mat4 projMatrixInverse = glm::inverse(scene->cam->projMatrix);
+
     // Recorregut de cada pixel de la imatge final
     for(int x = 0; x < scene->cam->viewportX; ++x)
         for(int y = 0; y < scene->cam->viewportY; ++y){
@@ -48,17 +51,43 @@ void Render()
             // TODO: Cal canviar aquestes 2 linies per a fer la transformacio de pixel a coordenades de mon de forma correcta
             // en qualsevol transformacio perspectiva
 
-            glm::vec3 pixelPosWorld = glm::vec3(pixelX, pixelY, 0.0f);
-            glm::vec3 direction = glm::normalize(glm::vec3(pixelPosWorld-scene->cam->obs));
+            // glm::vec3 pixelPosWorld = glm::vec3(pixelX, pixelY, 0.0f);
+            // glm::vec3 direction = glm::normalize(glm::vec3(pixelPosWorld-scene->cam->obs));
+
+			/*
+			 * Obtenemos los pixeles para znear y zfar
+			 */
+			glm::vec4 pixelPosWorldZnear = glm::vec4(pixelX, pixelY, scene->cam->zNear, 1.0f);
+			glm::vec4 pixelPosWorldZfar = glm::vec4(pixelX, pixelY, scene->cam->zFar, 1.0f);
+
+			/*
+			 * Obtenemos las coordenadas de camara,
+			 * Matriz de proyeccion invertida * el pixel
+			 */
+			glm::vec4 coordCameraZnear = projMatrixInverse * pixelPosWorldZnear;
+			glm::vec4 coordCameraZfar = projMatrixInverse * pixelPosWorldZfar;
+
+			/*
+			 * Obrenemos las corrdenadas de mundo,
+			 * Matriz de Model-View invertida * las coord de cmara
+			 */
+			glm::vec4 coordWorldZnear = viewMatrixInverse * coordCameraZnear;
+			glm::vec4 coordWorldZfar = viewMatrixInverse * coordCameraZfar;
+
+			/*
+			 * Obtenemos la direccion coord de mundo en base zNear -
+			 * coord de munod en base zFar 
+			 */
+			glm::vec4 direction = glm::normalize(glm::vec4(coordWorldZnear-coordWorldZfar));
 
             Payload payload;
             // Creacio del raig
             // HELP: Ray(const glm::vec3 &origin, const glm::vec3 &direction)
-            Ray ray(scene->cam->obs, direction) ;
+            Ray ray(scene->cam->obs, glm::vec3(direction.x, direction.y, direction.z)) ;
 
             if(scene->CastRay(ray,payload) > 0.0f){
 				glColor3f(payload.color.x,payload.color.y,payload.color.z);
-			} 
+			}
 			else {
                 // TODO: A canviar per la Intensitat ambient global
                 glColor3f(1,0,0);
@@ -66,7 +95,7 @@ void Render()
 
 			glVertex3f(pixelX,pixelY,0.0f);
 		}
-  
+
 	glEnd();
 	glFlush();
 }
@@ -86,11 +115,11 @@ int main(int argc, char **argv) {
 
     //Creacio de la window per pintar amb GL
 	glutCreateWindow("RayTracer");
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);	
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 
     //Posa la funcio Render per a que la window GL cridi quan es refresca
     glutDisplayFunc(Render); // El equivalente al GLPaint()
-  
+
     //	TODO: Afegir els objectes a l'escena
     //  TODO: Afegir les llums a l'escena
 
