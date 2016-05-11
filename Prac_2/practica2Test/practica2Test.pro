@@ -13,10 +13,8 @@ SOURCES += \
     RayTracer.cpp \
     Camera.cpp \
     Scene.cpp \
-    llum.cpp \
-    llumdireccional.cpp \
-    llumpuntual.cpp \
-    llumspotlight.cpp 
+    Light.cpp \
+    BlinnPhong.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
@@ -149,7 +147,5 @@ HEADERS += \
     glm/glm.hpp \
     Camera.h \
     Scene.h \
-    llum.h \
-    llumspotlight.h \
-    llumdireccional.h \
-    llumpuntual.h
+    Light.h \
+    BlinnPhong.h

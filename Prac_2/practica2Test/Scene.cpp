@@ -5,10 +5,15 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    objects.push_back(new Sphere(glm::vec3(0.0f, 0.0f, 0.0f), 0.65f));
-    // objects.push_back(new Plane(0.0f, 0.0f, 1.0f, 0.0f));
-    //objects.push_back(new Plane((glm::vec3(0.0f,0.0f,0.0f), vec3(0.0f,0.0f,0.0f) ,0.3f)))
+    addObject(new Sphere(glm::vec3(0.0f, 0.0f, 0.0f), 0.65f));
+	// addObject(new Plane(0.0f, 0.0f, 1.0f, 0.0f));
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
+    addLight(new Light());
+	this->ambientLight = glm::vec3(0.3f, 0.3f, 0.3f);
+	phong = new BlinnPhong(cam->obs, getActualLight(), ambientLight);
+	
+	// cout << "Object_Material: " << getActualObject()->MaterialPtr()->ambient.x << ", " << getActualObject()->MaterialPtr()->ambient.y << ", " << getActualObject()->MaterialPtr()->ambient.z << endl;
+	// cout << "Light: " << getActualLight()->getAmbiental().x << ", " << getActualLight()->getAmbiental().y << ", " << getActualLight()->getAmbiental().z << endl;
 
 }
 
@@ -20,6 +25,10 @@ Scene::~Scene()
             delete objects[i];
         }
     }
+
+	for (int i = 0; i < luces.size(); ++i){
+		if(luces[i]) delete luces[i];
+	}
 }
 
 
@@ -33,7 +42,12 @@ Scene::~Scene()
 */
 
 bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
-    //hay que recorrer todos los objetos de la escena
+	// TODO: Heu de codificar la vostra solucio per aquest metode substituint el 'return true'
+    // Una possible solucio es cridar Intersect per a tots els objectes i quedar-se amb la interseccio
+    // mes propera a l'observador, en el cas que n'hi hagi més d'una.
+    // Cada vegada que s'intersecta un objecte s'ha d'actualitzar el PayLoad del raig,
+    // pero no en aquesta funcio. Per això es posa const en el paràmetre ray, per a
+    // que no es canvïi aqui.
 
     bool ret = false;
 	IntersectInfo infoMin;
@@ -45,6 +59,7 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 				infoMin.hitPoint = info.hitPoint;
 				infoMin.normal = info.normal;
                 infoMin.time = info.time;
+				infoMin.material = objects[i]->MaterialPtr();
 				ret = true;
 			}
         }
@@ -54,17 +69,10 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 		info.hitPoint = infoMin.hitPoint;
 		info.normal = infoMin.normal;
 		info.time = infoMin.time;
+		info.material = info.material;
 	}
 
     return ret;
-
-    // TODO: Heu de codificar la vostra solucio per aquest metode substituint el 'return true'
-    // Una possible solucio es cridar Intersect per a tots els objectes i quedar-se amb la interseccio
-    // mes propera a l'observador, en el cas que n'hi hagi més d'una.
-    // Cada vegada que s'intersecta un objecte s'ha d'actualitzar el PayLoad del raig,
-    // pero no en aquesta funcio. Per això es posa const en el paràmetre ray, per a
-    // que no es canvïi aqui.
-
 }
 
 /*

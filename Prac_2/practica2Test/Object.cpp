@@ -11,6 +11,13 @@ Material::Material():
     shininess(20.0f)
   {}
 
+Material::Material(glm::vec3 _ambient, glm::vec3 _diffuse, glm::vec3 _specular, float _shininess):
+	ambient(_ambient),
+	diffuse(_diffuse),
+	specular(_specular),
+	shininess(_shininess)
+	{}
+
 Object::Object(const glm::mat4 &transform, const Material &material):
     transform(transform),
     material(material)
@@ -22,10 +29,10 @@ Object::Object(const glm::mat4 &transform, const Material &material):
  * @param coor
  * @param rad
  */
-Sphere::Sphere(glm::vec3 coor, float rad){
-    centerSphere = coor;
-    radio = rad;
-}
+Sphere::Sphere(glm::vec3 coor, float rad):
+    centerSphere(coor),
+    radio(rad)
+	{}
 
 /* TODO: Implementar en el punt 2 */
 bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
@@ -76,12 +83,9 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
  * @param vY
  * @param p
  */
-Plane::Plane(float a0, float b0, float c0, float d0){
-   a=a0;
-   b=b0;
-   c=c0;
-   d=d0;
-}
+Plane::Plane(float a0, float b0, float c0, float d0):
+	a(a0),	b(b0),	c(c0),	d(d0)
+	{}
 
 /* TODO: Implementar en el punt 2 */
 bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {

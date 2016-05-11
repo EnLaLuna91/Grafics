@@ -4,14 +4,15 @@
 #include "Camera.h"
 #include "Ray.h"
 #include "Object.h"
+#include "Light.h"
+#include "BlinnPhong.h"
 
-#include <llum.h>
-#include <llumdireccional.h>
-#include <llumpuntual.h>
-#include <llumspotlight.h>
+#include <iostream>
+#include <stdlib.h>
 
 #include <vector> //Notice that vector in C++ is different from Vector2, Vector3 or similar things in a graphic library.
 
+using namespace std;
 
 class Scene
 {
@@ -28,16 +29,30 @@ public:
     ** std::vector d'objectes continguts a l'escena
     */
     std::vector<Object*> objects;
+	Object* getActualObject() { return (objects[objects.size()-1]); }
+	void addObject(Object* o) { objects.push_back(o); }
 
     /*
      * camera de l'escena
      */
     Camera *cam;
+
     /*
      * TODO: Cal afegir el conjunt de llums de l'escena
      */
-    // glm:::vector<Llum*> llums;
-	std::vector<Lum*> llums;
+	std::vector<Light*> luces;
+	Light* getActualLight() { return (luces[luces.size()-1]); }
+	void addLight(Light* l) { luces.push_back(l); }
+
+	/*
+	 * Ambiente Global
+	 */
+	glm::vec3 ambientLight;
+
+	/*
+	 * Clase para calcular el Blinn-Phong
+	 */
+	BlinnPhong *phong;
 
 };
 
