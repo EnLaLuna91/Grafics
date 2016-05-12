@@ -8,11 +8,17 @@
 
 BlinnPhong::BlinnPhong(){}
 
-glm::vec3 BlinnPhong::obtainBlinnPhong(IntersectInfo &_info){
+/**
+ * [BlinnPhong::obtainBlinnPhong description]
+ * Función que calcula el color en base Blinn-Phong, devuevle el color
+ * @param  _info [description]
+ * @return       [description]
+ */
+glm::vec3 BlinnPhong::obtainBlinnPhong(IntersectInfo &_info, glm::vec3 &light_coord, glm::vec3 &L){
 	this->info = _info;
 
-	vec3 light_coord = glm::vec3(light->getCoord().x, light->getCoord().y, light->getCoord().z);
-	vec3 L = glm::normalize(light_coord - info.hitPoint);
+	// vec3 light_coord = glm::vec3(light->getCoord().x, light->getCoord().y, light->getCoord().z);
+	// vec3 L = glm::normalize(light_coord - info.hitPoint);
 
     vec3 color = (ambient * info.material->ambient) + (calculateAtenuation(light_coord) * calculatePhong(L));
 
@@ -21,6 +27,12 @@ glm::vec3 BlinnPhong::obtainBlinnPhong(IntersectInfo &_info){
 	return color;
 }
 
+/**
+ * [BlinnPhong::calculatePhong description]
+ * Calcula las partes de blinn-phong de d, s y a
+ * @param  L [description]
+ * @return   [description]
+ */
 glm::vec3 BlinnPhong::calculatePhong(glm::vec3 L){
 	vec3 V = glm::normalize(obs - info.hitPoint);
 	vec3 H = glm::normalize(L+V);
@@ -32,6 +44,12 @@ glm::vec3 BlinnPhong::calculatePhong(glm::vec3 L){
 	return  d+s+a;
 }
 
+/**
+ * [BlinnPhong::calculateAtenuation description]
+ * Calcula la atenuación
+ * @param  coord [description]
+ * @return       [description]
+ */
 float BlinnPhong::calculateAtenuation(glm::vec3 coord){
 	float d = glm::length(coord - info.hitPoint);
 	float dividendo = (light->getA() * glm::pow(d, 2.0f)) + (light->getB() * d) + light->getC();

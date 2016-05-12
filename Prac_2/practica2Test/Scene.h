@@ -54,6 +54,8 @@ public:
 	 */
 	BlinnPhong *phong;
 
+private:
+	bool intesectLight;
 };
 
 #endif // SCENE_H
