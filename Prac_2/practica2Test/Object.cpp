@@ -5,10 +5,14 @@ Material::Material():
     // diffuse(1.0f),
     // specular(1.0f),
     // shininess(10.0f)
-    ambient(0.2f, 0.2f, 0.2f),
+    ambient(0.2f, 0.2f, 0.2f), // Rojo de la practica anterior
     diffuse(0.8f, 0.0f, 0.0f),
     specular(1.0f, 1.0f, 1.0f),
     shininess(20.0f)
+	// ambient(0.2f, 0.2f, 0.2f), // Verde
+    // diffuse(0.15f, 0.8f, 0.15f),
+    // specular(1.0f, 1.0f, 1.0f),
+    // shininess(20.0f)
   {}
 
 Material::Material(glm::vec3 _ambient, glm::vec3 _diffuse, glm::vec3 _specular, float _shininess):
@@ -67,7 +71,7 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
 
     if (ret){
         info.hitPoint = glm::vec3(ray.origin + (info.time * ray.direction));
-        info.normal = glm::vec3((info.hitPoint - centerSphere) / radio);
+        info.normal = glm::vec3((info.hitPoint - centerSphere) / float(radio));
     }
 
 

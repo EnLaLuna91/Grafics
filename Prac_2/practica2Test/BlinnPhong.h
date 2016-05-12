@@ -1,29 +1,37 @@
 #ifndef BLINNPHONG_H
 #define BLINNPHONG_H
 
-#include "Camera.h"
 #include "Object.h"
 #include "Light.h"
 #include "Ray.h"
 #include <vector>
 
+#include <iostream>
+#include <stdlib.h>
+
 typedef glm::vec3 vec3;
 typedef glm::vec4 vec4;
+
+using namespace std;
 
 class BlinnPhong{
 private:
 	float calculateAtenuation(glm::vec3 coord);
 	glm::vec3 calculatePhong(glm::vec3 L);
-	Ray ray;
+protected:
 	IntersectInfo info;
-	Light light;
+	Light *light;
 	vec3 obs;
-	glm::vec3 ambient;
+	vec3 ambient;
 public:
-    BlinnPhong(const glm::vec3 &_obs,
-		const Light &_light,
-		const glm::vec3 &_ambientLight);
-	glm::vec3 obtainBlinnPhong(const IntersectInfo &_info);
+	BlinnPhong();
+    // BlinnPhong(glm::vec3 &_obs,
+	// 	Light *_light,
+	// 	glm::vec3 &_ambientLight);
+	glm::vec3 obtainBlinnPhong(IntersectInfo &_info);
+	void setObs(glm::vec3 vObs) { obs = vObs; }
+	void setLight(Light* luz) { light = luz; }
+	void setAmbient(glm::vec3 ambientLight) { ambient = ambientLight; }
 };
 
 #endif // BLINNPHONG_H

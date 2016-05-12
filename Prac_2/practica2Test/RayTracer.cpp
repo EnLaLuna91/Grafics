@@ -107,7 +107,7 @@ void Render()
 			}
 			else {
                 // TODO: A canviar per la Intensitat ambient global
-                glColor3f(1,0,0);
+                glColor3f(0.2f,0.22f,0.25f);
 			}
 
 			glVertex3f(pixelX,pixelY,0.0f);

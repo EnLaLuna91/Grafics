@@ -5,14 +5,24 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    addObject(new Sphere(glm::vec3(0.0f, 0.0f, 0.0f), 0.65f));
+    addObject(new Sphere(glm::vec3(0.0f, 0.0f, 0.0f), 1.5f));
+    addObject(new Sphere(glm::vec3(3.0f, 3.0f, 3.0f), 0.5f));
+    addObject(new Sphere(glm::vec3(-3.0f, -3.0f, -3.0f), 0.5f));
+    addObject(new Sphere(glm::vec3(0.3f, 2.0f, 0.5f), 0.3f));
+    addObject(new Sphere(glm::vec3(3.0f, 3.0f, -3.0f), 0.7f));
+    addObject(new Sphere(glm::vec3(-3.0f, 3.0f, -3.0f), 0.7f));
+    addObject(new Sphere(glm::vec3(-3.0f, -1.0f, -2.0f), 0.7f));
 	// addObject(new Plane(0.0f, 0.0f, 1.0f, 0.0f));
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
     addLight(new Light());
 	this->ambientLight = glm::vec3(0.3f, 0.3f, 0.3f);
-	phong = new BlinnPhong(cam->obs, getActualLight(), ambientLight);
-	
-	// cout << "Object_Material: " << getActualObject()->MaterialPtr()->ambient.x << ", " << getActualObject()->MaterialPtr()->ambient.y << ", " << getActualObject()->MaterialPtr()->ambient.z << endl;
+	// phong = new BlinnPhong(cam->obs, getActualLight(), ambientLight);
+	phong = new BlinnPhong();
+	phong->setObs(cam->obs);
+	phong->setLight(getActualLight());
+	phong->setAmbient(ambientLight);
+
+	// cout << "Object_Material: " << getActualObject()->MaterialPtr()->diffuse.x << ", " << getActualObject()->MaterialPtr()->diffuse.y << ", " << getActualObject()->MaterialPtr()->diffuse.z << endl;
 	// cout << "Light: " << getActualLight()->getAmbiental().x << ", " << getActualLight()->getAmbiental().y << ", " << getActualLight()->getAmbiental().z << endl;
 
 }
@@ -29,6 +39,8 @@ Scene::~Scene()
 	for (int i = 0; i < luces.size(); ++i){
 		if(luces[i]) delete luces[i];
 	}
+
+	if (phong) delete phong;
 }
 
 
@@ -60,6 +72,7 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 				infoMin.normal = info.normal;
                 infoMin.time = info.time;
 				infoMin.material = objects[i]->MaterialPtr();
+				// cout << "Object_Material: " << infoMin.material->diffuse.x << ", " << infoMin.material->diffuse.y << ", " << infoMin.material->diffuse.z << endl;
 				ret = true;
 			}
         }
@@ -69,7 +82,9 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 		info.hitPoint = infoMin.hitPoint;
 		info.normal = infoMin.normal;
 		info.time = infoMin.time;
-		info.material = info.material;
+		info.material = infoMin.material;
+		// cout << "Object_Material: " << info.material->diffuse.x << ", " << info.material->diffuse.y << ", " << info.material->diffuse.z << endl;
+
 	}
 
     return ret;
@@ -105,9 +120,9 @@ float Scene::CastRay(Ray &ray, Payload &payload) {
 //        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
         // payload.color = glm::vec3(0,1,0);
 
-		glm::vec3 p = glm::vec3( glm::vec3(0.0f, 0.0f, cam->zNear) + (info.hitPoint * ray.direction));
-		payload.color = glm::vec3(0,1,0);
+		// glm::vec3 p = glm::vec3( glm::vec3(0.0f, 0.0f, cam->zNear) + (info.hitPoint * ray.direction));
 
+		payload.color = phong->obtainBlinnPhong(info);
 
         return info.time;
     }

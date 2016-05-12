@@ -31,7 +31,7 @@ class IntersectInfo {
       material(NULL)
     {}
 
-    
+
     /* El punt d'interseccio en coordenades 3D */
     glm::vec3 hitPoint;
     /* El vector normal a la superficie en el punt d'interseccio */
@@ -59,8 +59,7 @@ class Payload {
         color(0.0f),
         numBounces(0)
      {}
-    
+
     glm::vec3 color;//  A cada moment de la recursivitat, quan s'intersecta amb algun objecte, es canvia el color del PayLoad
     int numBounces; //  Per a controlar el fi de la recursivitat, amb el nombre de rebots.
 };
-
