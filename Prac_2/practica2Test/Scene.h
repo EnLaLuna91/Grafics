@@ -47,7 +47,7 @@ public:
 	/*
 	 * Ambiente Global
 	 */
-	glm::vec3 ambientLight;
+	glm::vec3 ambientLight = glm::vec3(0.3f, 0.3f, 0.3f);
 
 	/*
 	 * Clase para calcular el Blinn-Phong
@@ -55,7 +55,8 @@ public:
 	BlinnPhong *phong;
 
 private:
-	bool intesectLight;
+	bool intesectLight = false;
+	const float epsilon = 0.0001;
 };
 
 #endif // SCENE_H

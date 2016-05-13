@@ -40,6 +40,7 @@ Sphere::Sphere(glm::vec3 coor, float rad):
 
 /* TODO: Implementar en el punt 2 */
 bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
+	//https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
 
     float dirOrigCenter = glm::dot( ray.direction, (ray.origin - centerSphere) );
     float module = pow( glm::length(ray.origin - centerSphere) , 2.0f );

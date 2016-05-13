@@ -16,14 +16,11 @@ Scene::Scene()
 	// addObject(new Plane(0.0f, 0.0f, 1.0f, 0.0f));
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
     addLight(new Light());
-	this->ambientLight = glm::vec3(0.3f, 0.3f, 0.3f);
-	// phong = new BlinnPhong(cam->obs, getActualLight(), ambientLight);
 	phong = new BlinnPhong();
 	phong->setObs(cam->obs);
 	phong->setLight(getActualLight());
 	phong->setAmbient(ambientLight);
 
-	intesectLight = false;
 	// cout << "Object_Material: " << getActualObject()->MaterialPtr()->diffuse.x << ", " << getActualObject()->MaterialPtr()->diffuse.y << ", " << getActualObject()->MaterialPtr()->diffuse.z << endl;
 	// cout << "Light: " << getActualLight()->getAmbiental().x << ", " << getActualLight()->getAmbiental().y << ", " << getActualLight()->getAmbiental().z << endl;
 
@@ -125,21 +122,19 @@ float Scene::CastRay(Ray &ray, Payload &payload) {
 
 //        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
 
-		// glm::vec3 p = glm::vec3( glm::vec3(0.0f, 0.0f, cam->zNear) + (info.hitPoint * ray.direction));
-
 		glm::vec3 light_coord = glm::vec3(getActualLight()->getCoord().x, getActualLight()->getCoord().y, getActualLight()->getCoord().z);
 		glm::vec3 L = glm::normalize(light_coord - info.hitPoint);
-		Ray objectlight(info.hitPoint, L);
+		Ray objectlight(info.hitPoint, epsilon * L);
 		IntersectInfo infoLight;
 
 		intesectLight = true;
 		bool intesecta = CheckIntersection(objectlight, infoLight);
-		if (intesecta) cout << "intesecta: True"  << endl;
-		else cout << "intesecta: False" << endl;
+		// if (intesecta) cout << "intesecta: True"  << endl;
+		// else cout << "intesecta: False" << endl;
 		intesectLight = false;
 
 
-		if (!intesecta)
+		if (intesecta)
 			payload.color = (this->ambientLight * info.material->ambient) + getActualLight()->getAmbiental();
 		else
 			payload.color = phong->obtainBlinnPhong(info, light_coord, L);
