@@ -37,17 +37,17 @@ class Object {
 
 /* TODO: Implementar en el punt 2 de l'enunciat*/
 class Sphere : public Object {
-  public:
+public:
     glm::vec3 centerSphere;
     float radio;
-    Sphere(glm::vec3 coord, float rad);
+    Sphere(glm::vec3 coord, float rad, const Material &material = Material());
     bool Intersect(const Ray &ray, IntersectInfo &info) const;  //  To figure out if the Ray hit this object.
 };
 
 /* TODO: Implementar en el punt 2 de l'enunciat*/
 class Plane : public Object {
-  public:
-    Plane(float a0, float b0, float c0, float d0);
+public:
+    Plane(float a0, float b0, float c0, float d0, const Material &material = Material());
     virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
     float a,b,c,d;
 };

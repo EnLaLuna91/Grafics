@@ -33,10 +33,14 @@ Object::Object(const glm::mat4 &transform, const Material &material):
  * @param coor
  * @param rad
  */
-Sphere::Sphere(glm::vec3 coor, float rad):
-    centerSphere(coor),
-    radio(rad)
-	{}
+Sphere::Sphere(glm::vec3 coor, float rad, const Material &material) : Object(glm::mat4(1.0f), material){
+	this->centerSphere = coor;
+	this->radio = rad;
+}
+    // centerSphere(coor),
+    // radio(rad),
+	// material(material)
+	// {}
 
 /* TODO: Implementar en el punt 2 */
 bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
@@ -55,12 +59,15 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
 
     bool ret = false;
 
-//    cout << "distPos: " << distPos << "\tdistNeg: " << distNeg << endl;
+    // cout << "distPos: " << distPos << "\tdistNeg: " << distNeg << endl;
 
-    if ((distPos && distNeg) > 0){
+    if (distPos > 0.0f && distNeg > 0.0f){
         info.time = glm::min(distPos, distNeg);
         ret = true;
-    } else {
+    } else if (distPos < 0.0f && distNeg < 0.0f){
+		info.time = glm::min(distPos, distNeg);
+        ret = false;
+	} else {
         if (distPos < 0){
             info.time = distNeg;
             ret = true;
@@ -88,9 +95,15 @@ bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
  * @param vY
  * @param p
  */
-Plane::Plane(float a0, float b0, float c0, float d0):
-	a(a0),	b(b0),	c(c0),	d(d0)
-	{}
+Plane::Plane(float a0, float b0, float c0, float d0, const Material &material) : Object(glm::mat4(1.0f), material){
+	this->a = a0;
+	this->b = b0;
+	this->c = c0;
+	this->d = d0;
+}
+	// a(a0),	b(b0),	c(c0),	d(d0),
+	// material(material)
+	// {}
 
 /* TODO: Implementar en el punt 2 */
 bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {

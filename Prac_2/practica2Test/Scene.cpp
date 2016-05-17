@@ -6,19 +6,26 @@ Scene::Scene()
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
     addObject(new Sphere(glm::vec3(0.0f, 0.0f, -1.0f), 1.5f));
-    addObject(new Sphere(glm::vec3(0.3f, 1.0f, 1.0f), 0.5f));
-    addObject(new Sphere(glm::vec3(3.0f, 3.0f, 3.0f), 0.5f));
-    addObject(new Sphere(glm::vec3(-3.0f, -3.0f, -3.0f), 0.5f));
-    addObject(new Sphere(glm::vec3(0.3f, 2.0f, 0.5f), 0.3f));
-    addObject(new Sphere(glm::vec3(3.0f, 3.0f, -3.0f), 0.7f));
-    addObject(new Sphere(glm::vec3(-3.0f, 3.0f, -3.0f), 0.7f));
-    addObject(new Sphere(glm::vec3(-3.0f, -1.0f, -2.0f), 0.7f));
-	// addObject(new Plane(0.0f, 0.0f, 1.0f, 0.0f));
+    // addObject(new Sphere(glm::vec3(0.3f, 1.0f, 1.0f), 0.5f));
+    // addObject(new Sphere(glm::vec3(3.0f, 3.0f, 3.0f), 0.5f)); //
+    // addObject(new Sphere(glm::vec3(-3.0f, -3.0f, -3.0f), 0.5f));
+    // addObject(new Sphere(glm::vec3(0.3f, 2.0f, 0.5f), 0.3f));
+    // addObject(new Sphere(glm::vec3(3.0f, 3.0f, -3.0f), 0.7f));
+    // addObject(new Sphere(glm::vec3(-3.0f, 3.0f, -3.0f), 0.7f));
+    // addObject(new Sphere(glm::vec3(-3.0f, -1.0f, -2.0f), 0.7f));
+    Material mat = Material(glm::vec3(0.2f, 0.2f, 0.2f), // Verde
+	    glm::vec3(0.0f, 1.0f, 0.0f),
+	    glm::vec3(1.0f, 1.0f, 1.0f),
+	    float(20.0f));
+	addObject(new Plane(0.0f, 1.0f, 0.0f, 3.0f, mat));
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
     addLight(new Light());
+    // addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f),
+	// 	glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.8f, 0.8f, 0.8f),
+	// 	glm::vec4(-1.0f, -1.0f, -1.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
+	// 	0.0f, 0.0f, 1.0f));
 	phong = new BlinnPhong();
 	phong->setObs(cam->obs);
-	phong->setLight(getActualLight());
 	phong->setAmbient(ambientLight);
 
 	// cout << "Object_Material: " << getActualObject()->MaterialPtr()->diffuse.x << ", " << getActualObject()->MaterialPtr()->diffuse.y << ", " << getActualObject()->MaterialPtr()->diffuse.z << endl;
@@ -45,8 +52,6 @@ Scene::~Scene()
 
 /*
 ** TODO: Metode que testeja la interseccio contra tots els objectes de l'escena
-**
-** Si un objecte es intersecat pel raig, el parametre  de tipus IntersectInfo conte
 ** la informació sobre la interesccio.
 ** El metode retorna true si algun objecte es intersecat o false en cas contrari.
 **
@@ -68,7 +73,7 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 	float lambda = std::numeric_limits<float>::infinity();
     for (int i=0; i<objects.size(); i++){
         if (objects[i]->Intersect(ray,info)){
-			if (intesectLight) return true;
+			if (intesectLight == true && ((info.time >=0) && (info.time <=1) ) ) return true;
 			if (info.time < lambda) {
 				lambda = info.time;
 				infoMin.hitPoint = info.hitPoint;
@@ -122,22 +127,28 @@ float Scene::CastRay(Ray &ray, Payload &payload) {
 
 //        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
 
-		glm::vec3 light_coord = glm::vec3(getActualLight()->getCoord().x, getActualLight()->getCoord().y, getActualLight()->getCoord().z);
-		glm::vec3 L = glm::normalize(light_coord - info.hitPoint);
-		Ray objectlight(info.hitPoint, epsilon * L);
-		IntersectInfo infoLight;
+		payload.color = glm::vec3(0.0f,0.0f,0.0f);
 
-		intesectLight = true;
-		bool intesecta = CheckIntersection(objectlight, infoLight);
-		// if (intesecta) cout << "intesecta: True"  << endl;
-		// else cout << "intesecta: False" << endl;
-		intesectLight = false;
+		for (int i = 0; i < luces.size(); i++){
+			phong->setLight(luces[i]);
+			glm::vec3 light_coord = glm::vec3(luces[i]->getCoord().x, luces[i]->getCoord().y, luces[i]->getCoord().z);
+			glm::vec3 L = glm::normalize(light_coord - info.hitPoint);
+			Ray objectlight(info.hitPoint + epsilon * L, L);
+			IntersectInfo infoLight;
+
+			intesectLight = true;
+			bool intesecta = CheckIntersection(objectlight, infoLight);
+			// if (intesecta) cout << "intesecta: True, Time: " <<  infoLight.time << endl;
+			// else cout << "intesecta: False" << endl;
+			intesectLight = false;
 
 
-		if (intesecta)
-			payload.color = (this->ambientLight * info.material->ambient) + getActualLight()->getAmbiental();
-		else
-			payload.color = phong->obtainBlinnPhong(info, light_coord, L);
+			if (intesecta)
+				payload.color += (this->ambientLight * info.material->ambient) + luces[i]->getAmbiental();
+			else
+				payload.color += phong->obtainBlinnPhong(info, light_coord, L);
+
+		}
 
 
 

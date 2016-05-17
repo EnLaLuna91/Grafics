@@ -56,7 +56,8 @@ public:
 
 private:
 	bool intesectLight = false;
-	const float epsilon = 0.0001;
+	const float epsilon = 0.001;
+	const int MAX_REFLECT = 5;
 };
 
 #endif // SCENE_H

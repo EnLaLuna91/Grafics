@@ -2,9 +2,11 @@
 
 Camera::Camera():
    // obs(glm::vec3(-10.0f,10.0f,10.0f)),
-    obs(glm::vec3(0.0f,0.0f,10.0f)),
+    // obs(glm::vec3(0.0f,0.0f,10.0f)),
+    obs(glm::vec3(5.0f,5.0f,5.0f)),
     vrp(glm::vec3(0.0f, 0.0f, 0.0f)), // punto donde mira la camara
     vup(glm::vec3(0.0f, 1.0f, 0.0f)), // vector de verticalidad
+    // angleObertura(45.0f), zNear(1.0f), zFar(1000.0f), // En este caso el obs mira desde el 9 al -990
     angleObertura(45.0f), zNear(1.0f), zFar(1000.0f), // En este caso el obs mira desde el 9 al -990
     viewportX(640), viewportY(480), aspect(float(viewportX)/float(viewportY))
 {
