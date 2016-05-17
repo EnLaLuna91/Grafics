@@ -113,51 +113,67 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 //  les ombres i les reflexions.
 
 float Scene::CastRay(Ray &ray, Payload &payload) {
+    return castRayRecursive(ray, payload, 0);
+}
 
-    IntersectInfo info;
+float Scene::castRayRecursive(Ray &ray, Payload &payload, int cont){
 
-    if (CheckIntersection(ray,info)) {
-        /* TODO: Canviar aquesta assignacio pel color basat amb la il.luminacio basada amb Phong-Blinn segons
-         * el material de l'objecte i les llums per l'apartat 4 de la practica
-         * I per l'apartat 5, cal fer que tambe es tinguin en compte els rebots de les reflexions.
+	float ret = 0.0;
 
-           Inicialment s'ha posat la direccio del raig per tenir un color diferents per a cada pixel pero
-           payload ha d'anar tenint el color actualitzat segons els rebots.
-        */
+	if (cont < this->MAX_REFLECT){
+		IntersectInfo info;
 
-//        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
+	    if (CheckIntersection(ray,info)) {
+			// cout << "Vuelta: " << cont << endl;
+	        /* TODO: Canviar aquesta assignacio pel color basat amb la il.luminacio basada amb Phong-Blinn segons
+	         * el material de l'objecte i les llums per l'apartat 4 de la practica
+	         * I per l'apartat 5, cal fer que tambe es tinguin en compte els rebots de les reflexions.
 
-		payload.color = glm::vec3(0.0f,0.0f,0.0f);
+	           Inicialment s'ha posat la direccio del raig per tenir un color diferents per a cada pixel pero
+	           payload ha d'anar tenint el color actualitzat segons els rebots.
+	        */
 
-		for (int i = 0; i < luces.size(); i++){
-			phong->setLight(luces[i]);
-			glm::vec3 light_coord = glm::vec3(luces[i]->getCoord().x, luces[i]->getCoord().y, luces[i]->getCoord().z);
-			glm::vec3 L = glm::normalize(light_coord - info.hitPoint);
-			Ray objectlight(info.hitPoint + epsilon * L, L);
-			IntersectInfo infoLight;
+	//        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
 
-			intesectLight = true;
-			bool intesecta = CheckIntersection(objectlight, infoLight);
-			// if (intesecta) cout << "intesecta: True, Time: " <<  infoLight.time << endl;
-			// else cout << "intesecta: False" << endl;
-			intesectLight = false;
+			glm::vec3 color = (this->ambientLight * info.material->ambient);
 
+			for (int i = 0; i < luces.size(); i++){
+				phong->setLight(luces[i]);
+				glm::vec3 light_coord = glm::vec3(luces[i]->getCoord().x, luces[i]->getCoord().y, luces[i]->getCoord().z);
+				glm::vec3 L = glm::normalize(light_coord - info.hitPoint);
+				Ray objectlight(info.hitPoint + epsilon * L, L);
+				IntersectInfo infoLight;
 
-			if (intesecta)
-				payload.color += (this->ambientLight * info.material->ambient) + luces[i]->getAmbiental();
-			else
-				payload.color += phong->obtainBlinnPhong(info, light_coord, L);
-
-		}
+				intesectLight = true;
+				bool intesecta = CheckIntersection(objectlight, infoLight);
+				// if (intesecta) cout << "intesecta: True, Time: " <<  infoLight.time << endl;
+				// else cout << "intesecta: False" << endl;
+				intesectLight = false;
 
 
+				if (intesecta)
+					color += luces[i]->getAmbiental();
+				else
+					color += phong->obtainBlinnPhong(info, light_coord, L);
+			}
 
-        return info.time;
-    }
-    else{
-        payload.color = glm::vec3(0.0f);
-        // Si el ray des de la camera no intersecta amb cap objecte
-        // no s'ha de veure res, encara que també es podria posar el color de la Intensita ambien global
-        return -1.0f;
-    }
+			glm::vec3 R = glm::vec3((-2.0f*(info.normal*ray.direction)) * info.normal - ray.direction);
+
+			Ray rayObject(info.hitPoint + epsilon * R, R);
+
+			cont += 1;
+
+			payload.color = color + info.material->specular * castRayRecursive(rayObject, payload, cont);
+
+	        ret = info.time;
+	    }
+	    else if (cont == 0){
+	        payload.color = glm::vec3(0.0f);
+	        // Si el ray des de la camera no intersecta amb cap objecte
+	        // no s'ha de veure res, encara que també es podria posar el color de la Intensita ambien global
+	        ret = -1.0f;
+	    }
+	}
+	return ret;
+
 }

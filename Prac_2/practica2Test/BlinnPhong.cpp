@@ -20,7 +20,7 @@ glm::vec3 BlinnPhong::obtainBlinnPhong(IntersectInfo &_info, glm::vec3 &light_co
 	// vec3 light_coord = glm::vec3(light->getCoord().x, light->getCoord().y, light->getCoord().z);
 	// vec3 L = glm::normalize(light_coord - info.hitPoint);
 
-    vec3 color = (ambient * info.material->ambient) + (calculateAtenuation(light_coord) * calculatePhong(L));
+    vec3 color = /*(ambient * info.material->ambient) +*/ (calculateAtenuation(light_coord) * calculatePhong(L));
 
 	// cout << "color: " << float(color.x) << ", " << float(color.y) << ", " << float(color.z) << endl;
 
