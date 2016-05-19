@@ -55,7 +55,7 @@ public:
 	BlinnPhong *phong;
 
 private:
-	float castRayRecursive(Ray &ray, Payload &payload, int cont);
+	glm::vec3 castRayRecursive(Ray &ray, Payload &payload);
 	bool intesectLight = false;
 	const float epsilon = 0.001;
 	const int MAX_REFLECT = 5;

@@ -123,8 +123,7 @@ bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
     if(abs(angulo) < 0.001f) return false;
 
     if (lambda < 0) return false; // Si el objeto esta por detras, aunque intersecte no nos interesa porque no lo vamos a ver
-    // cout << "angulo: " << angulo << endl;
-//    else return true;
+
     info.time = lambda;
     info.hitPoint = glm::vec3(ray.origin + (lambda * ray.direction));
     info.normal = normal;

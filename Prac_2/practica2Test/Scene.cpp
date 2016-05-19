@@ -5,32 +5,46 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    addObject(new Sphere(glm::vec3(0.0f, 0.0f, -1.0f), 1.5f));
+    Material m(glm::vec3(0.1f,0.1f,0.1f),
+		glm::vec3(1.0f,1.0f,1.0f),
+		glm::vec3(0.5f,0.5f,0.5f),
+		3.0f);
+	Material mat(glm::vec3(0.2f, 0.2f, 0.2f), // Verde
+	    glm::vec3(0.0f, 1.0f, 0.0f),
+	    glm::vec3(1.0f, 1.0f, 1.0f),
+	    float(20.0f));
+	Material m2(glm::vec3(0.0f, 0.0f, 0.1f),
+	    glm::vec3(0.3f, 0.3f, 0.3f),
+	    glm::vec3(0.0f, 0.0f, 0.9f),
+	    float(3.0f));
+	Material m3(glm::vec3(0.1f, 0.0f, 0.0f),
+	    glm::vec3(0.5f, 0.5f, 0.5f),
+	    glm::vec3(0.0f, 0.0f, 0.0f),
+	    float(3.0f));
+    addObject(new Sphere(glm::vec3(0.0f, 0.0f, -1.0f), 1.5f, mat));
     // addObject(new Sphere(glm::vec3(0.3f, 1.0f, 1.0f), 0.5f));
-    // addObject(new Sphere(glm::vec3(3.0f, 3.0f, 3.0f), 0.5f)); //
-    // addObject(new Sphere(glm::vec3(-3.0f, -3.0f, -3.0f), 0.5f));
+    // addObject(new Sphere(glm::vec3(3.0f, 3.0f, 3.0f), 0.5f));
+    addObject(new Sphere(glm::vec3(3.0f, 3.0f, -2.0f), 1.5f));
     // addObject(new Sphere(glm::vec3(0.3f, 2.0f, 0.5f), 0.3f));
     // addObject(new Sphere(glm::vec3(3.0f, 3.0f, -3.0f), 0.7f));
     // addObject(new Sphere(glm::vec3(-3.0f, 3.0f, -3.0f), 0.7f));
     // addObject(new Sphere(glm::vec3(-3.0f, -1.0f, -2.0f), 0.7f));
-    Material mat = Material(glm::vec3(0.2f, 0.2f, 0.2f), // Verde
-	    glm::vec3(0.0f, 1.0f, 0.0f),
-	    glm::vec3(1.0f, 1.0f, 1.0f),
-	    float(20.0f));
-	addObject(new Plane(0.0f, 1.0f, 0.0f, 3.0f, mat));
+	addObject(new Plane(0.0f, 1.0f, 0.0f, 6.0f, m2));
+	// addObject(new Plane(1.0f, 0.0f, 0.0f, 25.0f, m2));
+	// addObject(new Plane(0.0f, 0.0f, 1.0f, 100.0f, m3));
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
-    addLight(new Light());
-    // addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f),
-	// 	glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.8f, 0.8f, 0.8f),
-	// 	glm::vec4(-1.0f, -1.0f, -1.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
-	// 	0.0f, 0.0f, 1.0f));
+    // addLight(new Light());
+    addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f),
+		glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.8f, 0.8f, 0.8f),
+		glm::vec4(5.0f, 9.0f, -3.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
+		0.0f, 0.0f, 1.0f));
+    addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f),
+		glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.8f, 0.8f, 0.8f),
+		glm::vec4(-3.0f, 6.0f, 3.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
+		0.0f, 0.0f, 1.0f));
 	phong = new BlinnPhong();
 	phong->setObs(cam->obs);
 	phong->setAmbient(ambientLight);
-
-	// cout << "Object_Material: " << getActualObject()->MaterialPtr()->diffuse.x << ", " << getActualObject()->MaterialPtr()->diffuse.y << ", " << getActualObject()->MaterialPtr()->diffuse.z << endl;
-	// cout << "Light: " << getActualLight()->getAmbiental().x << ", " << getActualLight()->getAmbiental().y << ", " << getActualLight()->getAmbiental().z << endl;
-
 }
 
 Scene::~Scene()
@@ -113,18 +127,20 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 //  les ombres i les reflexions.
 
 float Scene::CastRay(Ray &ray, Payload &payload) {
-    return castRayRecursive(ray, payload, 0);
+    // return castRayRecursive(ray, payload);
+    payload.color = castRayRecursive(ray, payload);
+    if (payload.color == glm::vec3(0.0f)) return -1.0f;
+	else return 1.0f;
 }
 
-float Scene::castRayRecursive(Ray &ray, Payload &payload, int cont){
+glm::vec3 Scene::castRayRecursive(Ray &ray, Payload &payload){
 
-	float ret = 0.0;
+	glm::vec3 ret = glm::vec3(0.0f);
 
-	if (cont < this->MAX_REFLECT){
+	if (payload.numBounces < this->MAX_REFLECT){
 		IntersectInfo info;
 
 	    if (CheckIntersection(ray,info)) {
-			// cout << "Vuelta: " << cont << endl;
 	        /* TODO: Canviar aquesta assignacio pel color basat amb la il.luminacio basada amb Phong-Blinn segons
 	         * el material de l'objecte i les llums per l'apartat 4 de la practica
 	         * I per l'apartat 5, cal fer que tambe es tinguin en compte els rebots de les reflexions.
@@ -146,32 +162,32 @@ float Scene::castRayRecursive(Ray &ray, Payload &payload, int cont){
 
 				intesectLight = true;
 				bool intesecta = CheckIntersection(objectlight, infoLight);
-				// if (intesecta) cout << "intesecta: True, Time: " <<  infoLight.time << endl;
-				// else cout << "intesecta: False" << endl;
 				intesectLight = false;
 
-
-				if (intesecta)
-					color += luces[i]->getAmbiental();
-				else
-					color += phong->obtainBlinnPhong(info, light_coord, L);
+				if (!intesecta) color += phong->obtainBlinnPhong(info, light_coord, L);
 			}
 
-			glm::vec3 R = glm::vec3((-2.0f*(info.normal*ray.direction)) * info.normal - ray.direction);
+			float c1 = -glm::dot(info.normal, ray.direction);
+
+			glm::vec3 R = glm::vec3((2.0f * c1 * info.normal) + ray.direction);
 
 			Ray rayObject(info.hitPoint + epsilon * R, R);
+			IntersectInfo infoReflect;
 
-			cont += 1;
+			// int tmp = payload.numBounces;
 
-			payload.color = color + info.material->specular * castRayRecursive(rayObject, payload, cont);
+			payload.numBounces += 1;
+			color = color + info.material->specular * castRayRecursive(rayObject, payload);
 
-	        ret = info.time;
+			// cout << "Vuelta: " << tmp << "\tColor: [" << color.x << ", " << color.y << ", " << color.z << "]" << endl;
+
+	        ret = color;
 	    }
-	    else if (cont == 0){
+	    else{
 	        payload.color = glm::vec3(0.0f);
 	        // Si el ray des de la camera no intersecta amb cap objecte
 	        // no s'ha de veure res, encara que també es podria posar el color de la Intensita ambien global
-	        ret = -1.0f;
+	        ret = glm::vec3(0.0f);
 	    }
 	}
 	return ret;
