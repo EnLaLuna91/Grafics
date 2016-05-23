@@ -5,42 +5,46 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
-    Material m(glm::vec3(0.1f,0.1f,0.1f),
-		glm::vec3(1.0f,1.0f,1.0f),
-		glm::vec3(0.5f,0.5f,0.5f),
-		3.0f);
 	Material mat(glm::vec3(0.2f, 0.2f, 0.2f), // Verde
-	    glm::vec3(0.0f, 1.0f, 0.0f),
-	    glm::vec3(1.0f, 1.0f, 1.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f),
+		glm::vec3(0.2f, 0.2f, 0.2f),
+		float(20.0f));
+    Material m(glm::vec3(0.2f,0.2f,0.2f), // ambiente
+		glm::vec3(0.8f,0.0f,0.0f),  // diffusse
+		glm::vec3(0.2f,0.2f,0.2f), // specular
+		3.0f); // shininess
+    Material m4(glm::vec3(0.2f,0.2f,0.2f), // ambiente
+		glm::vec3(0.0f,0.0f,0.8f),  // diffusse
+		glm::vec3(0.2f,0.2f,0.2f), // specular
+		3.0f); // shininess
+	Material m2(glm::vec3(0.4f, 0.4f, 0.4f),
+	    glm::vec3(0.4, 0.4f, 0.4f),
+	    glm::vec3(0.4f, 0.4f, 0.4f),
 	    float(20.0f));
-	Material m2(glm::vec3(0.0f, 0.0f, 0.1f),
-	    glm::vec3(0.3f, 0.3f, 0.3f),
-	    glm::vec3(0.0f, 0.0f, 0.9f),
-	    float(3.0f));
-	Material m3(glm::vec3(0.1f, 0.0f, 0.0f),
-	    glm::vec3(0.5f, 0.5f, 0.5f),
-	    glm::vec3(0.0f, 0.0f, 0.0f),
-	    float(3.0f));
+	Material m3(glm::vec3(0.01f, 0.01f, 0.01f),
+	    glm::vec3(0.01f, 0.01f, 0.01f),
+	    glm::vec3(0.6f, 0.6f, 0.6f),
+	    float(20.0f));
     addObject(new Sphere(glm::vec3(0.0f, 0.0f, -1.0f), 1.5f, mat));
-    // addObject(new Sphere(glm::vec3(0.3f, 1.0f, 1.0f), 0.5f));
+    addObject(new Sphere(glm::vec3(0.0f, 5.0f, 1.0f), 0.75f, m4));
     // addObject(new Sphere(glm::vec3(3.0f, 3.0f, 3.0f), 0.5f));
-    addObject(new Sphere(glm::vec3(3.0f, 3.0f, -2.0f), 1.5f));
+    addObject(new Sphere(glm::vec3(3.0f, 4.0f, 1.0f), 1.5f, m));
     // addObject(new Sphere(glm::vec3(0.3f, 2.0f, 0.5f), 0.3f));
     // addObject(new Sphere(glm::vec3(3.0f, 3.0f, -3.0f), 0.7f));
     // addObject(new Sphere(glm::vec3(-3.0f, 3.0f, -3.0f), 0.7f));
     // addObject(new Sphere(glm::vec3(-3.0f, -1.0f, -2.0f), 0.7f));
-	addObject(new Plane(0.0f, 1.0f, 0.0f, 6.0f, m2));
-	// addObject(new Plane(1.0f, 0.0f, 0.0f, 25.0f, m2));
-	// addObject(new Plane(0.0f, 0.0f, 1.0f, 100.0f, m3));
+	addObject(new Plane(0.0f, 1.0f, 0.0f, 4.0f, m2));
+	addObject(new Plane(0.0f, 0.0f, 1.0f, 8.0f, m3));
+	addObject(new Plane(-1.0f, 0.0f, 0.0f, 8.0f, m3));
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
     // addLight(new Light());
+    addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f), // ambiental
+		glm::vec3(0.6f, 0.6f, 0.6f), glm::vec3(0.4f, 0.4f, 0.4f), // specular, difusa
+		glm::vec4(-10.0f, 15.0f, 11.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f), // coord, dir
+		0.0f, 0.0f, 1.0f)); // a, b, c
     addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f),
-		glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.8f, 0.8f, 0.8f),
-		glm::vec4(5.0f, 9.0f, -3.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
-		0.0f, 0.0f, 1.0f));
-    addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f),
-		glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.8f, 0.8f, 0.8f),
-		glm::vec4(-3.0f, 6.0f, 3.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
+		glm::vec3(0.55f, 0.55f, 0.55f), glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec4(-25.0f, 9.0f, 11.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
 		0.0f, 0.0f, 1.0f));
 	phong = new BlinnPhong();
 	phong->setObs(cam->obs);
@@ -87,7 +91,7 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 	float lambda = std::numeric_limits<float>::infinity();
     for (int i=0; i<objects.size(); i++){
         if (objects[i]->Intersect(ray,info)){
-			if (intesectLight == true && ((info.time >=0) && (info.time <=1) ) ) return true;
+			if (intesectLight == true && ((info.time >=0.000001f) && (info.time <=1.000001f) ) ) return true;
 			if (info.time < lambda) {
 				lambda = info.time;
 				infoMin.hitPoint = info.hitPoint;
@@ -137,7 +141,7 @@ glm::vec3 Scene::castRayRecursive(Ray &ray, Payload &payload){
 
 	glm::vec3 ret = glm::vec3(0.0f);
 
-	if (payload.numBounces < this->MAX_REFLECT){
+	if (payload.numBounces <= this->MAX_REFLECT){
 		IntersectInfo info;
 
 	    if (CheckIntersection(ray,info)) {

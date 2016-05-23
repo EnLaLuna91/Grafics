@@ -1,9 +1,9 @@
 #include "Camera.h"
 
 Camera::Camera():
-   // obs(glm::vec3(-10.0f,10.0f,10.0f)),
+   obs(glm::vec3(-10.0f,10.0f,10.0f)),
     // obs(glm::vec3(0.0f,0.0f,10.0f)),
-    obs(glm::vec3(6.0f,6.0f,13.0f)),
+    // obs(glm::vec3(5.5f,5.5f,18.0f)),
     // obs(glm::vec3(3.0f,3.0f,10.0f)),
     vrp(glm::vec3(0.0f, 0.0f, 0.0f)), // punto donde mira la camara
     vup(glm::vec3(0.0f, 1.0f, 0.0f)), // vector de verticalidad
