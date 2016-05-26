@@ -5,6 +5,8 @@
 #include <limits>
 #include "Ray.h"
 
+#define EPSILON 0.001f
+
 using namespace std;
 
 class Material {
@@ -55,5 +57,8 @@ public:
 /* TODO: Implementar com a extensio*/
 class Triangle : public Object {
   public:
+	Triangle(glm::vec3 _a, glm::vec3 _b, glm::vec3 _c, const Material &material = Material());
     virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
+	bool pointExistInTriangle(IntersectInfo &info);
+	glm::vec3 a,b,c;
 };

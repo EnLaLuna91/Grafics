@@ -27,15 +27,14 @@ Scene::Scene()
 	    float(20.0f));
     addObject(new Sphere(glm::vec3(0.0f, 0.0f, -1.0f), 1.5f, mat));
     addObject(new Sphere(glm::vec3(0.0f, 5.0f, 1.0f), 0.75f, m4));
-    // addObject(new Sphere(glm::vec3(3.0f, 3.0f, 3.0f), 0.5f));
     addObject(new Sphere(glm::vec3(3.0f, 4.0f, 1.0f), 1.5f, m));
-    // addObject(new Sphere(glm::vec3(0.3f, 2.0f, 0.5f), 0.3f));
-    // addObject(new Sphere(glm::vec3(3.0f, 3.0f, -3.0f), 0.7f));
-    // addObject(new Sphere(glm::vec3(-3.0f, 3.0f, -3.0f), 0.7f));
-    // addObject(new Sphere(glm::vec3(-3.0f, -1.0f, -2.0f), 0.7f));
 	addObject(new Plane(0.0f, 1.0f, 0.0f, 4.0f, m2));
 	addObject(new Plane(0.0f, 0.0f, 1.0f, 8.0f, m3));
 	addObject(new Plane(-1.0f, 0.0f, 0.0f, 8.0f, m3));
+	addObject(new Triangle( glm::vec3(6.0f, 4.0f, 3.0f),
+		glm::vec3(4.0f, 6.0f, 3.0f),
+		glm::vec3(5.0f, 5.0f, 3.0f)));
+
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
     // addLight(new Light());
     addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f), // ambiental

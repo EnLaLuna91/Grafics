@@ -1,18 +1,10 @@
 #include "Object.h"
 
 Material::Material():
-    // ambient(1.0f),
-    // diffuse(1.0f),
-    // specular(1.0f),
-    // shininess(10.0f)
     ambient(0.2f, 0.2f, 0.2f), // Rojo de la practica anterior
     diffuse(0.8f, 0.0f, 0.0f),
     specular(1.0f, 1.0f, 1.0f),
     shininess(20.0f)
-	// ambient(0.2f, 0.2f, 0.2f), // Verde
-    // diffuse(0.15f, 0.8f, 0.15f),
-    // specular(1.0f, 1.0f, 1.0f),
-    // shininess(20.0f)
   {}
 
 Material::Material(glm::vec3 _ambient, glm::vec3 _diffuse, glm::vec3 _specular, float _shininess):
@@ -37,10 +29,6 @@ Sphere::Sphere(glm::vec3 coor, float rad, const Material &material) : Object(glm
 	this->centerSphere = coor;
 	this->radio = rad;
 }
-    // centerSphere(coor),
-    // radio(rad),
-	// material(material)
-	// {}
 
 /* TODO: Implementar en el punt 2 */
 bool Sphere::Intersect(const Ray &ray, IntersectInfo &info) const {
@@ -101,26 +89,16 @@ Plane::Plane(float a0, float b0, float c0, float d0, const Material &material) :
 	this->c = c0;
 	this->d = d0;
 }
-	// a(a0),	b(b0),	c(c0),	d(d0),
-	// material(material)
-	// {}
+
 
 /* TODO: Implementar en el punt 2 */
 bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
-
-
-    /*float lambda = -(d + a*ray.origin.x+b*ray.origin.y+c*ray.origin.z)/(a*ray.direction.x+b*ray.direction.y+c*ray.direction.z);
-    cout << "lambda: " << lambda << endl;
-    if (lambda < 0){
-        return false;}
-    else {return true;}*/
-
     glm::vec3 normal = glm::vec3(a,b,c);
 
     float lambda = -((d + glm::dot(normal,ray.origin))/glm::dot(normal,ray.direction));
 
     float angulo = glm::dot( ray.direction,normal);
-    if(abs(angulo) < 0.001f) return false;
+    if(abs(angulo) < EPSILON ) return false;
 
     if (lambda < 0) return false; // Si el objeto esta por detras, aunque intersecte no nos interesa porque no lo vamos a ver
 
@@ -130,5 +108,57 @@ bool Plane::Intersect(const Ray &ray, IntersectInfo &info) const {
     return true;
 }
 
+Triangle::Triangle(glm::vec3 _a, glm::vec3 _b, glm::vec3 _c, const Material &material) : Object(glm::mat4(1.0f), material){
+	this->a = _a;
+	this->b = _b;
+	this->c = _c;
+}
+
 /* TODO: Implementar com a extensio */
-bool Triangle::Intersect(const Ray &ray, IntersectInfo &info) const { return -1.0f; }
+bool Triangle::Intersect(const Ray &ray, IntersectInfo &info) const {
+
+	bool ret = false;
+
+	// vec3(AB = B-A), vec3(AC = C-A), vec3(normal = AB x AC)
+	glm::vec3 normal = glm::cross((this->b - this->a), (this->c - this->a));
+
+	// Calcular la d a partir de un punto del triangulo
+	float d = (normal.x * this->a.x) + (normal.y * this->a.y) + (normal.z * this->a.z);
+
+	// Ya que el triangulo es una parte del plano, reutilizamos la formula
+	Plane p = new Plane(normal.x, normal.y, normal.z, this->MaterialPtr());
+
+	// Si el rayo intersecta con el plano, no quiere decir que intesercte con el triangulo,
+	// porque este es una parte del plano
+	if (p.Intersect(ray, info)){
+		// float lambda = - (glm::dot(normal,ray.origin) + d) / glm::dot(normal, ray.direction);
+		// if (lambda < 0) return false;
+		// info.time = lambda;
+	    // info.hitPoint = glm::vec3(ray.origin + (lambda * ray.direction));
+	    // info.normal = normal;
+	    ret = pointExistInTriangle(info);
+	}
+
+	return ret;
+}
+
+bool Triangle::pointExistInTriangle(IntersectInfo &info){
+
+
+	glm::vec3 ab = this->b - this->a;
+	glm::vec3 bc = this->c - this->b;
+	glm::vec3 ca = this->a - this->c;
+
+	glm::vec3 u = info.hitPoint - this->a;
+	glm::vec3 w = info.hitPoint - this->b;
+	glm::vec3 v = info.hitPoint - this->c;
+
+	// if(glm::dot(info.hitPoint, glm::cross(ab, u)) > EPSILON &&
+	// 	glm::dot(n, glm::cross(bc,w)) > EPSILON &&
+	// 	glm::dot(n, glm::cross(ca,v)) > EPSILON) exist =
+
+	return (glm::dot(info.hitPoint, glm::cross(ab, u)) > EPSILON &&
+		glm::dot(info.hitPoint, glm::cross(bc,w)) > EPSILON &&
+		glm::dot(info.hitPoint, glm::cross(ca,v)) > EPSILON ? true : false);
+
+}
