@@ -20,47 +20,47 @@ public:
 
     void IniViewProjMatrices();
 
-// Camera:
-// Vectors base del sistema de coordenades de camera
-/*
-** obs es la posicio de l'observador
-*/
-glm::vec3 obs;
-/*
-** vrp es el View Reference Point
-*/
-glm::vec3 vrp;
-/*
- ** vup es el vector de verticalitat
- **/
-glm::vec3 vup;
+	// Camera:
+	// Vectors base del sistema de coordenades de camera
+	/*
+	** obs es la posicio de l'observador
+	*/
+	glm::vec3 obs;
+	/*
+	** vrp es el View Reference Point
+	*/
+	glm::vec3 vrp;
+	/*
+	 ** vup es el vector de verticalitat
+	 **/
+	glm::vec3 vup;
 
-// Tipus de projeccio: Perspectiva
-/*
- *  Angle obertura de la camera
- */
-float angleObertura;
-/*
- *  Pla de retallat anterior: zNear
- */
-float zNear;
-/*
- * Pla de retallat posterior: zFar
- */
-float zFar;
+	// Tipus de projeccio: Perspectiva
+	/*
+	 *  Angle obertura de la camera
+	 */
+	float angleObertura;
+	/*
+	 *  Pla de retallat anterior: zNear
+	 */
+	float zNear;
+	/*
+	 * Pla de retallat posterior: zFar
+	 */
+	float zFar;
 
-// Viewport
-int viewportX;
-int viewportY;
+	// Viewport
+	int viewportX;
+	int viewportY;
 
-/*
- * Aspect (viewportX / viewportY)
- */
-float aspect;
+	/*
+	 * Aspect (viewportX / viewportY)
+	 */
+	float aspect;
 
-// Matrius de visualitzacio
-glm::mat4 viewMatrix;
-glm::mat4 projMatrix;
+	// Matrius de visualitzacio
+	glm::mat4 viewMatrix;
+	glm::mat4 projMatrix;
 
 };
 

@@ -32,6 +32,7 @@ public:
 		float _b,
 		float _c);
 
+	// Getters de la luz
 	glm::vec3 getAmbiental() { return ambiental; }
     glm::vec3 getSpecular() { return specular; }
 	glm::vec3 getDifusa() { return difusa; }

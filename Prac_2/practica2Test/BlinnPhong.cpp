@@ -1,11 +1,5 @@
 #include "BlinnPhong.h"
 
-// BlinnPhong::BlinnPhong(glm::vec3 &_obs, Light *_light, glm::vec3 &_ambientLight):
-//     obs(_obs),
-//     light(_light),
-//     ambient(_ambientLight)
-//     {}
-
 BlinnPhong::BlinnPhong(){}
 
 /**

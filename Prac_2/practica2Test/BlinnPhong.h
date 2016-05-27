@@ -25,9 +25,6 @@ protected:
 	vec3 ambient;
 public:
 	BlinnPhong();
-    // BlinnPhong(glm::vec3 &_obs,
-	// 	Light *_light,
-	// 	glm::vec3 &_ambientLight);
 	glm::vec3 obtainBlinnPhong(IntersectInfo &_info, glm::vec3 &light_coord, glm::vec3 &L);
 	void setObs(glm::vec3 vObs) { obs = vObs; }
 	void setLight(Light* luz) { light = luz; }

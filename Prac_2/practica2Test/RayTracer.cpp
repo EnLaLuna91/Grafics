@@ -72,6 +72,7 @@ void Render()
             Payload payload;
             // Creacio del raig
             // HELP: Ray(const glm::vec3 &origin, const glm::vec3 &direction)
+            // Ray ray(glm::vec3(pixelPosWorldZnear.x, pixelPosWorldZnear.y, pixelPosWorldZnear.z), glm::vec3(direction.x, direction.y, direction.z)) ;
             Ray ray(scene->cam->obs, glm::vec3(direction.x, direction.y, direction.z)) ;
             // Ray ray(scene->cam->obs, direction) ;
 

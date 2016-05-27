@@ -140,7 +140,6 @@ bool Scene::CheckIntersection(const Ray &ray, IntersectInfo &info) {
 //  les ombres i les reflexions.
 
 float Scene::CastRay(Ray &ray, Payload &payload) {
-    // return castRayRecursive(ray, payload);
     payload.color = castRayRecursive(ray, payload);
     if (payload.color == glm::vec3(0.0f)) return -1.0f;
 	else return 1.0f;

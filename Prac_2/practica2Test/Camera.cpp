@@ -8,10 +8,10 @@ Camera::Camera():
     vrp(glm::vec3(0.0f, 0.0f, 0.0f)), // punto donde mira la camara
     vup(glm::vec3(0.0f, 1.0f, 0.0f)), // vector de verticalidad
     angleObertura(45.0f), zNear(1.0f), zFar(1000.0f), // En este caso el obs mira desde el 9 al -990
+	// angleObertura(((glm::atan((150/2.0)/glm::length((vrp.x,vrp.y,vrp.z)-obs)))*2)*180/3.14), zNear(1.0f), zFar(1000.0f),
     viewportX(640), viewportY(480), aspect(float(viewportX)/float(viewportY))
 {
 }
-
 
 Camera::Camera(const glm::vec3 &_obs,
                const glm::vec3 &_vrp,

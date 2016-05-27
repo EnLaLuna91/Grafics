@@ -127,7 +127,8 @@ Triangle::~Triangle(){
 void Triangle::generatePlane(){
 	// vec3(AB = B-A), vec3(AC = C-A), vec3(normal = AB x AC)
 	glm::vec3 normal = glm::normalize(glm::cross((this->b - this->a), (this->c - this->a)));
-	cout << "normal: [" << normal.x << ", " << normal.y << ", " << normal.z << "] "  << endl;
+	// cout << "normal: [" << normal.x << ", " << normal.y << ", " << normal.z << "] "  << endl;
+	
 	// Calcular la d a partir de un punto del triangulo
 	float d = (normal.x * this->a.x) + (normal.y * this->a.y) + (normal.z * this->a.z);
 
