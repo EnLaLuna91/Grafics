@@ -57,6 +57,8 @@ public:
 private:
 	glm::vec3 castRayRecursive(Ray &ray, Payload &payload);
 	glm::vec3 sombras(IntersectInfo &info);
+	void inicialiceObjects();
+	void inicialiceLights();
 	bool intesectLight = false;
 	const float epsilon = 0.001;
 	const int MAX_REFLECT = 5;
