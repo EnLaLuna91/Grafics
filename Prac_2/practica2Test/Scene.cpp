@@ -58,6 +58,11 @@ void Scene::inicialiceObjects(){
 		glm::vec3(0.01f, 0.01f, 0.01f),	// diffusse
 		glm::vec3(0.6f, 0.6f, 0.6f),	// specular
 		float(20.0f));	// shininess
+	// Gris Espejo (Oscuro)
+	Material grayMirror2(glm::vec3(0.01f, 0.01f, 0.01f), // ambiente
+			glm::vec3(0.25f, 0.25f, 0.25f),	// diffusse
+			glm::vec3(0.6f, 0.6f, 0.6f),	// specular
+			float(20.0f));	// shininess
 	// Rosa
 	Material pink(glm::vec3(0.2f,0.2f,0.2f),	// ambiente
 			glm::vec3(0.98f, 0.04f, 0.7f),  	// diffusse
@@ -67,7 +72,7 @@ void Scene::inicialiceObjects(){
 	addObject(new Sphere(glm::vec3(0.0f, 5.0f, 1.0f), 0.75f, blue));
 	addObject(new Sphere(glm::vec3(3.0f, 4.0f, 1.0f), 1.5f, red));
 	addObject(new Plane(0.0f, 1.0f, 0.0f, 4.0f, grayMirror));
-	addObject(new Plane(0.0f, 0.0f, 1.0f, 8.0f, blackMirror));
+	addObject(new Plane(0.0f, 0.0f, 1.0f, 8.0f, grayMirror2));
 	addObject(new Plane(-1.0f, 0.0f, 0.0f, 8.0f, blackMirror));
 	addObject(new Triangle( glm::vec3(3.0f, 2.0f, 0.0f),
 		glm::vec3(3.0f, 1.0f, 2.0f),
