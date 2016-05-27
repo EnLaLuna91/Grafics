@@ -5,44 +5,54 @@ Scene::Scene()
     // Afegeix la camera a l'escena
     cam = new Camera();
     // TODO: Cal crear els objectes de l'escena (punt 2 de l'enunciat)
+    // Verde
 	Material mat(glm::vec3(0.2f, 0.2f, 0.2f), // Verde
 		glm::vec3(0.0f, 1.0f, 0.0f),
 		glm::vec3(0.2f, 0.2f, 0.2f),
 		float(20.0f));
+	// Rojo
     Material m(glm::vec3(0.2f,0.2f,0.2f), // ambiente
 		glm::vec3(0.8f,0.0f,0.0f),  // diffusse
 		glm::vec3(0.2f,0.2f,0.2f), // specular
 		3.0f); // shininess
+	// Azul
     Material m4(glm::vec3(0.2f,0.2f,0.2f), // ambiente
 		glm::vec3(0.0f,0.0f,0.8f),  // diffusse
 		glm::vec3(0.2f,0.2f,0.2f), // specular
 		3.0f); // shininess
+	// Gris Espejo
 	Material m2(glm::vec3(0.4f, 0.4f, 0.4f),
 	    glm::vec3(0.4, 0.4f, 0.4f),
 	    glm::vec3(0.4f, 0.4f, 0.4f),
 	    float(20.0f));
+	// Negro Espejo
 	Material m3(glm::vec3(0.01f, 0.01f, 0.01f),
 	    glm::vec3(0.01f, 0.01f, 0.01f),
 	    glm::vec3(0.6f, 0.6f, 0.6f),
 	    float(20.0f));
+	// Rosa
+	Material m5(glm::vec3(0.2f,0.2f,0.2f), // ambiente
+		glm::vec3(0.98f, 0.04f, 0.7f),  // diffusse
+		glm::vec3(0.2f,0.2f,0.2f), // specular
+		3.0f); // shininess
     addObject(new Sphere(glm::vec3(0.0f, 0.0f, -1.0f), 1.5f, mat));
     addObject(new Sphere(glm::vec3(0.0f, 5.0f, 1.0f), 0.75f, m4));
     addObject(new Sphere(glm::vec3(3.0f, 4.0f, 1.0f), 1.5f, m));
 	addObject(new Plane(0.0f, 1.0f, 0.0f, 4.0f, m2));
 	addObject(new Plane(0.0f, 0.0f, 1.0f, 8.0f, m3));
 	addObject(new Plane(-1.0f, 0.0f, 0.0f, 8.0f, m3));
-	addObject(new Triangle( glm::vec3(6.0f, 4.0f, 3.0f),
-		glm::vec3(4.0f, 6.0f, 3.0f),
-		glm::vec3(5.0f, 5.0f, 3.0f)));
+	addObject(new Triangle( glm::vec3(3.0f, 2.0f, 0.0f),
+		glm::vec3(3.0f, 1.0f, 2.0f),
+		glm::vec3(4.0f, 3.0f, 3.0f), m5));
 
     // TODO: Cal afegir llums a l'escena (punt 4 de l'enunciat)
     // addLight(new Light());
     addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f), // ambiental
-		glm::vec3(0.6f, 0.6f, 0.6f), glm::vec3(0.4f, 0.4f, 0.4f), // specular, difusa
-		glm::vec4(-10.0f, 15.0f, 11.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f), // coord, dir
+		glm::vec3(0.7f, 0.7f, 0.7f), glm::vec3(0.4f, 0.4f, 0.4f), // specular, difusa
+		glm::vec4(-9.0f, 10.0f, 11.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f), // coord, dir
 		0.0f, 0.0f, 1.0f)); // a, b, c
     addLight(new Light(glm::vec3(0.2f, 0.2f, 0.2f),
-		glm::vec3(0.55f, 0.55f, 0.55f), glm::vec3(0.5f, 0.5f, 0.5f),
+		glm::vec3(0.65f, 0.65f, 0.65f), glm::vec3(0.5f, 0.5f, 0.5f),
 		glm::vec4(-25.0f, 9.0f, 11.0f, 1.0f), glm::vec4(2.0f, 2.0f, 2.0f, 1.0f),
 		0.0f, 0.0f, 1.0f));
 	phong = new BlinnPhong();
@@ -152,23 +162,7 @@ glm::vec3 Scene::castRayRecursive(Ray &ray, Payload &payload){
 	           payload ha d'anar tenint el color actualitzat segons els rebots.
 	        */
 
-	//        payload.color = glm::vec3(fabs(ray.direction.x),fabs(ray.direction.y),fabs(ray.direction.z)) ;
-
-			glm::vec3 color = (this->ambientLight * info.material->ambient);
-
-			for (int i = 0; i < luces.size(); i++){
-				phong->setLight(luces[i]);
-				glm::vec3 light_coord = glm::vec3(luces[i]->getCoord().x, luces[i]->getCoord().y, luces[i]->getCoord().z);
-				glm::vec3 L = glm::normalize(light_coord - info.hitPoint);
-				Ray objectlight(info.hitPoint + epsilon * L, L);
-				IntersectInfo infoLight;
-
-				intesectLight = true;
-				bool intesecta = CheckIntersection(objectlight, infoLight);
-				intesectLight = false;
-
-				if (!intesecta) color += phong->obtainBlinnPhong(info, light_coord, L);
-			}
+			glm::vec3 color = sombras(info);
 
 			float c1 = -glm::dot(info.normal, ray.direction);
 
@@ -187,7 +181,6 @@ glm::vec3 Scene::castRayRecursive(Ray &ray, Payload &payload){
 	        ret = color;
 	    }
 	    else{
-	        payload.color = glm::vec3(0.0f);
 	        // Si el ray des de la camera no intersecta amb cap objecte
 	        // no s'ha de veure res, encara que també es podria posar el color de la Intensita ambien global
 	        ret = glm::vec3(0.0f);
@@ -195,4 +188,29 @@ glm::vec3 Scene::castRayRecursive(Ray &ray, Payload &payload){
 	}
 	return ret;
 
+}
+
+/**
+ * [Scene::sombras description]
+ * Función que calcula las sombras para cada luz
+ * @param  info [description]
+ * @return      [description]
+ */
+glm::vec3 Scene::sombras(IntersectInfo &info){
+	glm::vec3 color = (this->ambientLight * info.material->ambient);
+
+	for (int i = 0; i < luces.size(); i++){
+		phong->setLight(luces[i]);
+		glm::vec3 light_coord = glm::vec3(luces[i]->getCoord().x, luces[i]->getCoord().y, luces[i]->getCoord().z);
+		glm::vec3 L = glm::normalize(light_coord - info.hitPoint);
+		Ray objectlight(info.hitPoint + epsilon * L, L);
+		IntersectInfo infoLight;
+
+		intesectLight = true;
+		bool intesecta = CheckIntersection(objectlight, infoLight);
+		intesectLight = false;
+
+		if (!intesecta) color += phong->obtainBlinnPhong(info, light_coord, L);
+	}
+	return color;
 }

@@ -112,6 +112,27 @@ Triangle::Triangle(glm::vec3 _a, glm::vec3 _b, glm::vec3 _c, const Material &mat
 	this->a = _a;
 	this->b = _b;
 	this->c = _c;
+	generatePlane();
+}
+
+Triangle::~Triangle(){
+	if (p) delete p;
+}
+
+/**
+ * [Triangle::generatePlane description]
+ * Calcula la normal y genera un nuevo plano para poder usar su intersect,
+ * ya que le triangulo vive dentro del plano
+ */
+void Triangle::generatePlane(){
+	// vec3(AB = B-A), vec3(AC = C-A), vec3(normal = AB x AC)
+	glm::vec3 normal = glm::normalize(glm::cross((this->b - this->a), (this->c - this->a)));
+	cout << "normal: [" << normal.x << ", " << normal.y << ", " << normal.z << "] "  << endl;
+	// Calcular la d a partir de un punto del triangulo
+	float d = (normal.x * this->a.x) + (normal.y * this->a.y) + (normal.z * this->a.z);
+
+	// Ya que el triangulo es una parte del plano, reutilizamos la formula
+	p = new Plane(normal.x, normal.y, normal.z, d);
 }
 
 /* TODO: Implementar com a extensio */
@@ -119,30 +140,22 @@ bool Triangle::Intersect(const Ray &ray, IntersectInfo &info) const {
 
 	bool ret = false;
 
-	// vec3(AB = B-A), vec3(AC = C-A), vec3(normal = AB x AC)
-	glm::vec3 normal = glm::cross((this->b - this->a), (this->c - this->a));
-
-	// Calcular la d a partir de un punto del triangulo
-	float d = (normal.x * this->a.x) + (normal.y * this->a.y) + (normal.z * this->a.z);
-
-	// Ya que el triangulo es una parte del plano, reutilizamos la formula
-	Plane p = new Plane(normal.x, normal.y, normal.z, this->MaterialPtr());
-
-	// Si el rayo intersecta con el plano, no quiere decir que intesercte con el triangulo,
-	// porque este es una parte del plano
-	if (p.Intersect(ray, info)){
-		// float lambda = - (glm::dot(normal,ray.origin) + d) / glm::dot(normal, ray.direction);
-		// if (lambda < 0) return false;
-		// info.time = lambda;
-	    // info.hitPoint = glm::vec3(ray.origin + (lambda * ray.direction));
-	    // info.normal = normal;
-	    ret = pointExistInTriangle(info);
-	}
+	// Si el rayo intersecta con el plano, no quiere decir que
+	// intesercte con el triangulo, porque el punto puede estar
+	// fuera del triangulo
+	if (p->Intersect(ray, info))
+		ret = pointExistInTriangle(info);
 
 	return ret;
 }
 
-bool Triangle::pointExistInTriangle(IntersectInfo &info){
+/**
+ * [Triangle::pointExistInTriangle description]
+ * Comprueba que el punto que estamos comprobando es parte del triangulo
+ * @param  info [description]
+ * @return      [description]
+ */
+bool Triangle::pointExistInTriangle(IntersectInfo &info) const{
 
 
 	glm::vec3 ab = this->b - this->a;
@@ -152,10 +165,6 @@ bool Triangle::pointExistInTriangle(IntersectInfo &info){
 	glm::vec3 u = info.hitPoint - this->a;
 	glm::vec3 w = info.hitPoint - this->b;
 	glm::vec3 v = info.hitPoint - this->c;
-
-	// if(glm::dot(info.hitPoint, glm::cross(ab, u)) > EPSILON &&
-	// 	glm::dot(n, glm::cross(bc,w)) > EPSILON &&
-	// 	glm::dot(n, glm::cross(ca,v)) > EPSILON) exist =
 
 	return (glm::dot(info.hitPoint, glm::cross(ab, u)) > EPSILON &&
 		glm::dot(info.hitPoint, glm::cross(bc,w)) > EPSILON &&

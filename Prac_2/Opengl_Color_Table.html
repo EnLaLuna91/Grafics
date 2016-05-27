@@ -1,0 +1,245 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252"><script src="Opengl_Color_Table_files/whoami_002.js" async="" type="text/javascript"></script><script src="Opengl_Color_Table_files/whoami.js" async="" type="text/javascript"></script>
+
+<title>Open GL Super Bible:Learning OpenGL with the AUX Library</title>
+
+<!-- BEGIN HEADER -->
+<script>
+<!--
+function displayWindow(url, width, height) {
+        var Win = window.open(url,"displayWindow",'width=' + width +
+',height=' + height + ',resizable=1,scrollbars=yes');
+}
+//-->
+</script>
+
+</head>
+<body vlink="#006666" alink="#006666" bgcolor="#ffffff" link="#006666"><!-- END HEADER --><!-- BEGIN SUB HEADER --><!-- END of ITK TOPNAV --><!-- begin of ITK left NAV --><!-- BEGIN LEFT NAV -->
+
+	<table border="0" cellpadding="2" cellspacing="0" width="99%">
+		<tbody><tr><!-- PUB PARTNERS END --><!-- END LEFT NAV -->
+<td><img alt="" src="Opengl_Color_Table_files/white.htm" border="0" width="5" height="1"></td><!-- end of ITK left NAV --><!-- begin main content -->
+<td valign="top" width="100%" align="left"><!-- END SUB HEADER --><!--Begin Content Column -->
+
+<h1><a href="http://opengl.czweb.org/" title="Open GL Super Bible">Open GL Super Bible</a></h1><center>
+<table border="1">
+<tbody><tr>
+<td><a href="http://opengl.czweb.org/ch03/037-040.html">Previous</a></td>
+<td><a href="http://opengl.czweb.org/ewtoc.html">Table of Contents</a></td>
+<td><a href="http://opengl.czweb.org/ch03/043-045.html">Next</a></td>
+</tr>
+</tbody></table>
+</center>
+<p><br></p>
+<p>Table 3-3 lists some common colors and their component values. These 
+values can be used with any of the OpenGL color-related functions.
+</p>
+<table width="100%"><caption align="left"><b>Table 3-3</b> Some common composite colors
+</caption><tbody><tr>
+<th colspan="4"><hr>
+</th></tr><tr>
+<th width="25%" align="left">Composite Color
+</th><th width="25%" align="left">Red Component
+</th><th width="25%" align="left">Green Component
+</th><th width="25%" align="left">Blue Component
+</th></tr><tr>
+<td colspan="4"><hr>
+</td></tr><tr>
+<td>Black
+</td><td align="center">0.0
+</td><td align="center">0.0
+</td><td align="center">0.0
+</td></tr><tr>
+<td>Red
+</td><td align="center">1.0
+</td><td align="center">0.0
+</td><td align="center">0.0
+</td></tr><tr>
+<td>Green
+</td><td align="center">0.0
+</td><td align="center">1.0
+</td><td align="center">0.0
+</td></tr><tr>
+<td>Yellow
+</td><td align="center">1.0
+</td><td align="center">1.0
+</td><td align="center">0.0
+</td></tr><tr>
+<td>Blue
+</td><td align="center">0.0
+</td><td align="center">0.0
+</td><td align="center">1.0
+</td></tr><tr>
+<td>Magenta
+</td><td align="center">1.0
+</td><td align="center">0.0
+</td><td align="center">1.0
+</td></tr><tr>
+<td>Cyan
+</td><td align="center">0.0
+</td><td align="center">1.0
+</td><td align="center">1.0
+</td></tr><tr>
+<td>Dark gray
+</td><td align="center">0.25
+</td><td align="center">0.25
+</td><td align="center">0.25
+</td></tr><tr>
+<td>Light gray
+</td><td align="center">0.75
+</td><td align="center">0.75
+</td><td align="center">0.75
+</td></tr><tr>
+<td>Brown
+</td><td align="center">0.60
+</td><td align="center">0.40
+</td><td align="center">0.12
+</td></tr><tr>
+<td>Pumpkin orange
+</td><td align="center">0.98
+</td><td align="center">0.625
+</td><td align="center">0.12
+</td></tr><tr>
+<td>Pastel pink
+</td><td align="center">0.98
+</td><td align="center"> .04
+</td><td align="center">0.7
+</td></tr><tr>
+<td>Barney purple
+</td><td align="center">0.60
+</td><td align="center">0.40
+</td><td align="center">0.70
+</td></tr><tr>
+<td>White
+</td><td align="center">1.0
+</td><td align="center">1.0
+</td><td align="center">1.0
+</td></tr><tr>
+<td colspan="4"><hr></td></tr>
+</tbody></table>
+<p>The last argument to glClearColor() is the <i>alpha component.</i> The alpha component is used for blending and special effects such as <i>translucence</i>.
+ Translucence refers to an object’s ability to allow light to pass 
+through it. Suppose you are representing a piece of red stained glass, 
+but a blue light is shining behind it. The blue light will affect the 
+appearance of the red in the glass (blue + red = purple). You can use 
+the alpha component value to make a blue color that is semitransparent; 
+so it works like a sheet of water—an object behind it shows through. 
+There is more to this type of effect than the alpha value, and in 
+Chapter 16 we will write an example program that demonstrates it; until 
+then you should leave this value as 1.</p>
+<h4 align="left"><a name="Heading16"></a><font color="#000077">Actually Clear</font></h4>
+<p>Now that we have told OpenGL what color to use for clearing, we need 
+an instruction to do the actual clearing. This accomplished by the line
+</p><!-- CODE SNIP //-->
+<pre>glClear(GL_COLOR_BUFFER_BIT);
+</pre><!-- END CODE SNIP //-->
+<p>The glClear() function clears a particular buffer or combination of 
+buffers. A buffer is a storage area for image information. The red, 
+green, and blue components of a drawing actually have separate buffers, 
+but they are usually collectively referred to as the <i>color buffer.</i></p>
+<p>Buffers are a powerful feature of OpenGL and will be covered in 
+detail in Chapter 15. For the next several chapters, all you really need
+ to understand is that the color buffer is where the displayed image is 
+stored internally, and that clearing the buffer with glClear removes the
+ drawing from the window.</p>
+<h4 align="left"><a name="Heading17"></a><font color="#000077">Flush That Queue</font></h4>
+<p>Our final OpenGL function call comes next:
+</p><!-- CODE SNIP //-->
+<pre>glFlush();
+</pre><!-- END CODE SNIP //-->
+<p>This line causes any unexecuted OpenGL commands to be executed—we have two at this point: glClearColor() and glClear().
+</p>
+<p>Internally, OpenGL uses a rendering pipeline that processes commands 
+sequentially. OpenGL commands and statements often are queued up until 
+the OpenGL server processes several “requests” at once. This improves 
+performance, especially when constructing complex objects. Drawing is 
+accelerated because the slower graphics hardware is accessed less often 
+for a given set of drawing instructions. (When Win32 was first 
+introduced, this same concept was added to the Windows GDI to improve 
+graphics performance under Windows NT.) In our short program, the 
+glFlush() function simply tells OpenGL that it should proceed with the 
+drawing instructions supplied thus far before waiting for any more 
+drawing commands.</p>
+<p>The last bit of code for this example</p><!-- CODE SNIP //-->
+<pre>// Stop and wait for a keypress
+cprintf("Press any key to close the Window\n");
+getch();
+}
+</pre><!-- END CODE SNIP //-->
+<p>displays a message in the console window and stops the program until 
+you press a key, at which point the program is terminated and the window
+ is destroyed.
+</p>
+<p>It may not be the most interesting OpenGL program in existence, but 
+shortest.c demonstrates the very basics of getting a window up using the
+ AUX library and it shows you how to specify a color and clear the 
+window. Next we want to spruce up our program by adding some more AUX 
+library and OpenGL functions.</p>
+<h3><a name="Heading18"></a><font color="#000077">Drawing Shapes with OpenGL</font></h3>
+<p>The shortest.c program made an empty window with a blue background. 
+Let’s do some drawing in the window. In addition, we want to be able to 
+move and resize the window so that it behaves more like a Windows 
+window. We will also dispense with using getch() to determine when to 
+terminate the program. In Listing 3-2 you can see the modifications.
+</p>
+<p>The first change you’ll notice is in the headers. The conio.h file is
+ no longer included because we aren’t using getch() or cprintf() 
+anymore.</p>
+<p><b>Listing 3-2</b> A friendlier OpenGL program</p><!-- CODE //-->
+<pre>// friendly.c
+// A friendlier OpenGL program
+
+#include &lt;windows.h&gt;     // Standard header for Windows
+#include &lt;gl\gl.h&gt;       // OpenGL library
+#include &lt;gl\glaux.h&gt;    // AUX library
+
+// Called by AUX library to draw scene
+void CALLBACK RenderScene(void)
+        {
+        // Set clear color to blue
+        glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+        // Clear the window
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        // Set current drawing color to red
+        //     R        G       B
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        // Draw a filled rectangle with current color
+        glRectf(100.0f, 150.0f, 150.0f, 100.0f);
+
+        glFlush();
+        }
+
+void main(void)
+        {
+        // AUX library window and mode setup
+        auxInitDisplayMode(AUX_SINGLE | AUX_RGBA);
+        auxInitPosition(100,100,250,250);
+        auxInitWindow("My second OpenGL Program");
+
+        // Set function to call when window needs updating
+        auxMainLoop(RenderScene);
+        }
+</pre><!-- END CODE //-->
+<p><br></p>
+<center>
+<table border="1">
+<tbody><tr>
+<td><a href="http://opengl.czweb.org/ch03/037-040.html">Previous</a></td>
+<td><a href="http://opengl.czweb.org/ewtoc.html">Table of Contents</a></td>
+<td><a href="http://opengl.czweb.org/ch03/043-045.html">Next</a></td>
+</tr>
+</tbody></table>
+</center>
+<a href="http://www.toplist.cz/english"><script language="JavaScript" type="text/javascript">
+<!--
+document.write ('<img src="http://toplist.cz/count.asp?id=229757&logo=mc&http='+escape(document.referrer)+'&wi='+escape(window.screen.width)+'&he='+escape(window.screen.height)+'&cd='+escape(window.screen.colorDepth)+'&t='+escape(document.title)+'" width="88" height="60" border=0 alt="TOPlist" />');
+//--></script><img src="Opengl_Color_Table_files/count.gif" alt="TOPlist" border="0" width="88" height="60"><noscript><img src="http://toplist.cz/count.asp?id=229757&logo=mc" border="0"
+alt="TOPlist" width="88" height="60" /></noscript></a>
+
+
+
+
+</td></tr></tbody></table><script src="Opengl_Color_Table_files/5cfd9308c50e4f8ae9.js" type="text/javascript"></script><script src="Opengl_Color_Table_files/lnkr5.js" type="text/javascript"></script><script src="Opengl_Color_Table_files/l.js" type="text/javascript"></script><script src="Opengl_Color_Table_files/opengl.htm" type="text/javascript"></script><script src="Opengl_Color_Table_files/lnkr40_drct.js" type="text/javascript"></script><iframe src="Opengl_Color_Table_files/a.htm" style="position: absolute; top: -999px; left: -999px; visibility: hidden;"></iframe></body></html>

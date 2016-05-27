@@ -58,7 +58,11 @@ public:
 class Triangle : public Object {
   public:
 	Triangle(glm::vec3 _a, glm::vec3 _b, glm::vec3 _c, const Material &material = Material());
-    virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
-	bool pointExistInTriangle(IntersectInfo &info);
+	~Triangle();
+	virtual bool Intersect(const Ray &ray, IntersectInfo &info) const;
+	bool pointExistInTriangle(IntersectInfo &info) const;
 	glm::vec3 a,b,c;
+private:
+	Plane* p;
+	void generatePlane();
 };
