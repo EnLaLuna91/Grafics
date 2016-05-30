@@ -184,7 +184,6 @@ glm::vec3 Scene::castRayRecursive(Ray &ray, Payload &payload){
 			glm::vec3 R = glm::vec3((2.0f * c1 * info.normal) + ray.direction);
 
 			Ray rayObject(info.hitPoint + epsilon * R, R);
-			IntersectInfo infoReflect;
 
 			// int tmp = payload.numBounces;
 
